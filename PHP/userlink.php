@@ -25,22 +25,22 @@ $sql ="SELECT * FROM userlink WHERE id='$id'";
 
  function addlink ($obj){
 
-   $sql="INSERT INTO userlink (id, typeID, LinkID) VALUES ( '$obj->typeid', '$obj->linkid')";
-   mysql_query($sql);
+   $sqladd="INSERT INTO userlink (id, typeID, LinkID) VALUES ( '$obj->typeid', '$obj->linkid')";
+    mysqli_query($GLOBALS["db"], $sqladd);
  }
 
 
 function deletelink ($obj){
 
-$sql="DELETE FROM userlink WHERE ID = '$obj->ID'";
-        mysql_query($sql);
+$sqldelete="DELETE FROM userlink WHERE ID = '$obj->ID'";
+        mysqli_query($GLOBALS["db"], $sqldelete);
 
 }
 
 function updatelink (){
 
- $sql="UPDATE userlink SET typeID ='$typeid', LinkID ='$linkid' ";
-  mysql_query($sql);
+ $sqlupdate="UPDATE userlink SET typeID ='$typeid', LinkID ='$linkid' ";
+   mysqli_query($GLOBALS["db"], $sqlupdate);
 
 }
 

@@ -36,19 +36,24 @@ class Users
     else{
       return 0;
     }
+
   }
 
   static function insertUser($obj){
 
     $insert_user_query ="INSERT INTO users (firstName, lastName, email, password, Bdate, typeID) VALUES ('$obj->firstname', '$obj->lastname', '$obj->email', '$obj->password', '$obj->bdate', '$obj->typeid')";
-    mysqli_query($GLOBALS["db"], $insert_user_query);
 
+    if (mysqli_query($GLOBALS["db"], $insert_user_query)) {
+      return 1;
+    }else {
+      return 0;
+    }
 
   }
 
   static function updateUser($obj){
 
-    $update_user_query = "UPDATE users SET firstName='$obj->firstname', lastName='$obj->lastname', email='$obj->email', password='$obj->password', 
+    $update_user_query = "UPDATE users SET firstName='$obj->firstname', lastName='$obj->lastname', email='$obj->email', password='$obj->password',
       Bdate='$obj->bdate', typeID='$obj->typeid'";
     mysqli_query($GLOBALS["db"], $update_user_query) or die(mysqli_error($mysqli));
     if (mysqli_affected_rows($GLOBALS["db"]) == 1) {
@@ -57,7 +62,6 @@ class Users
     else{
       return 0;
     }
-
 
   }
 
@@ -94,10 +98,9 @@ class Users
         $this->bdate = $row["Bdate"];
         $this->typeid = $row["typeID"];
       }
-
     }
   }
-}
 
+}
 
 ?>

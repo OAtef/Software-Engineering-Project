@@ -2,23 +2,23 @@
 <html>
 <head>
     <title>Insert Page </title>
-      
+
     <!-- Latest compiled and minified Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-          
+
 </head>
 <body>
-  
+
     <!-- container -->
     <div class="container">
-   
+
         <div class="page-header">
             <h1>Create New User</h1>
         </div>
 
-        
+
         <!-- html form here where the product information will be entered -->
-    <form action="create.php" method="post">
+    <form action="doInsertUser.php" method="post">
         <table class='table table-hover table-responsive table-bordered'>
             <tr>
                 <td>First Name</td>
@@ -56,34 +56,11 @@
 
     </div> <!-- end .container -->
 
-    <?php
-
-            include_once('users.php');
-
-            if (isset($_POST['add_user'])) {
-
-                $obj = new Users(NULL);
-
-                $obj->firstname = $_POST['fname'];
-                $obj->lastname = $_POST["lname"];
-                $obj->email = $_POST["email"];
-                $obj->password = $_POST["password"];
-                $obj->bdate = $_POST["bdate"];
-                $obj->typeid = $_POST["usertype"];
-
-                $obj::insertUser($obj);
-
-            }
-
-
-        ?>
-
-      
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-   
+
 <!-- Latest compiled and minified Bootstrap JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
+
 </body>
 </html>

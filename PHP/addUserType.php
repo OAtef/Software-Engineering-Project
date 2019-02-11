@@ -1,6 +1,6 @@
 <?php
 
-innclude('dbConnection.php');
+include('dbConnection.php');
 
 $TypeName;
 $LinksID; //array
@@ -18,5 +18,4 @@ for ($i=0; $i < $linksID.size(); $i++) {
   $InsertTypeLinksQuery = "INSERT INTO userlink () VALUES ()"; //related links
   $result = mysqli_query($db, $InsertTypeLinksQuery);
 }
-
 ?>

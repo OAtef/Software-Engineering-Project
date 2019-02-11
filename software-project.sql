@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 11, 2019 at 08:46 AM
+-- Generation Time: Feb 11, 2019 at 06:44 PM
 -- Server version: 5.7.21
 -- PHP Version: 5.6.35
 
@@ -64,13 +64,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   `firstName` varchar(30) NOT NULL,
   `lastName` varchar(30) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `username` varchar(20) NOT NULL,
   `password` int(20) NOT NULL,
   `Bdate` date NOT NULL,
   `typeID` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `typeID` (`typeID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`ID`, `firstName`, `lastName`, `email`, `password`, `Bdate`, `typeID`) VALUES
+(3, 'xy', 'x', 'x', 22, '2019-01-01', 1),
+(5, 'xx', 'xx', 'xx@x.xom', 12, '2018-12-04', 1),
+(6, 'ss', 'ss', 's@s.com', 15, '2019-01-14', 1);
 
 -- --------------------------------------------------------
 

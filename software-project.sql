@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 08, 2019 at 05:38 PM
+-- Generation Time: Feb 11, 2019 at 08:46 AM
 -- Server version: 5.7.21
 -- PHP Version: 5.6.35
 
@@ -64,11 +64,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   `firstName` varchar(30) NOT NULL,
   `lastName` varchar(30) NOT NULL,
   `email` varchar(50) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `password` int(20) NOT NULL,
   `Bdate` date NOT NULL,
   `typeID` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `typeID` (`typeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -79,9 +81,16 @@ CREATE TABLE IF NOT EXISTS `users` (
 DROP TABLE IF EXISTS `usertype`;
 CREATE TABLE IF NOT EXISTS `usertype` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `typeName` int(30) NOT NULL,
+  `typeName` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usertype`
+--
+
+INSERT INTO `usertype` (`id`, `typeName`) VALUES
+(1, 'Admin');
 
 --
 -- Constraints for dumped tables

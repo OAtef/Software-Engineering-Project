@@ -19,24 +19,27 @@ $sql ="SELECT * FROM userlink WHERE id='$id'";
         $this->typeid = $row["typeID"];
         $this->linkid = $row["LinkID"];
        
+                                     }
+                                               }
+  }
 
  function addlink ($obj){
 
-   $sql="INSERT INTO `userlink` (`id`, `typeID`, `LinkID`) VALUES ( '$obj->typeid', '$obj->linkid')";
+   $sql="INSERT INTO userlink (id, typeID, LinkID) VALUES ( '$obj->typeid', '$obj->linkid')";
    mysql_query($sql);
  }
 
 
 function deletelink ($obj){
 
-$sql="DELETE FROM `userlink` WHERE `userlink`.`ID` = '$obj->ID'";
+$sql="DELETE FROM userlink WHERE ID = '$obj->ID'";
         mysql_query($sql);
 
 }
 
 function updatelink (){
 
- $sql="UPDATE `userlink` SET `typeID` ='$typeid', `LinkID` ='$linkid' ";
+ $sql="UPDATE userlink SET typeID ='$typeid', LinkID ='$linkid' ";
   mysql_query($sql);
 
 }

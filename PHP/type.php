@@ -9,7 +9,7 @@ class Types
 
    function __construct($id){
 
-      $sql ="SELECT * FROM users WHERE id='$id'";
+      $sql ="SELECT * FROM usertype WHERE id='$id'";
       $result = mysqli_query($GLOBALS["db"], $sql);
 
       if(mysqli_num_rows($result) == 1){
@@ -24,14 +24,15 @@ class Types
     }
   static function addusertype($obj){
 
-    $add_user_query="INSERT INTO usertype (id, typeName)  VALUES ('$obj->$ID', '$obj->$typename')";
+    $add_user_query="INSERT INTO usertype (id, typeName) VALUES ('$obj->ID', '$obj->typename')";
+    
       mysqli_query($GLOBALS["db"], $add_user_query);
 
   }
 
   static function deleteusertype($obj){
 
-      $delete_user_query = "DELETE FROM usertype WHERE usertype.id = $obj->$ID";
+      $delete_user_query = "DELETE FROM usertype WHERE usertype.id = $obj->ID";
       mysqli_query($GLOBALS["db"], $delete_user_query);
       if (mysqli_affected_rows($GLOBALS["db"]) == 1) {
         return 1;
@@ -44,7 +45,7 @@ class Types
 
   static function updateusertype($obj){
 
-        $update_user_query = "UPDATE usertype SET id='$obj->$ID', typeName='$obj->$typename'";
+        $update_user_query = "UPDATE usertype SET id='$obj->ID', typeName='$obj->typename'";
       mysqli_query($GLOBALS["db"], $update_user_query) or die(mysqli_error($mysqli));
       if (mysqli_affected_rows($GLOBALS["db"]) == 1) {
             return 1;
@@ -52,6 +53,23 @@ class Types
           else{
             return 0;
           }
+
+  }
+
+  static function selectAllUsers(){
+
+    $select_users_query ="SELECT * FROM usertype ORDER BY id";
+    $dataSet = mysqli_query($GLOBALS["db"], $select_users_query);
+
+    $i=0;
+    $result_arr = NULL;
+
+    while($row = mysqli_fetch_array($dataSet)){
+      $myobj = new Types($row["id"]);
+      $result_arr[$i] = $myobj;
+      $i++;
+    }
+    return $result_arr;
 
   }
   

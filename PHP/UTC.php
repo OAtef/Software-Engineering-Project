@@ -35,10 +35,8 @@
         <div class="page-header">
             <h1>Create New User Type</h1>
         </div>
-
-        
         <!-- html form here where the product information will be entered -->
-    <form action="UTC.php" method="post">
+    <form action="doInsertUserType.php" method="post">
         <table class='table table-hover table-responsive table-bordered'>
            
               <tr>
@@ -55,7 +53,7 @@
                 <td></td>
                 <td>
                     <input type='submit' value='Save' class='btn btn-primary' name="add_usertype" />
-                    <a href='UTR.php' class='btn btn-danger'>Back to read user types</a>
+                    <a href='UTI.php' class='btn btn-danger'>Back to read user types</a>
                 </td>
             </tr>
         </table>
@@ -63,22 +61,6 @@
 
     </div> <!-- end .container -->
 
-    <?php
-
-            include_once('type.php');
-
-            if (isset($_POST['add_usertype'])) {
-
-                $obj = new Types(NULL);
-
-                $obj->ID = $_POST['usertypeid'];
-                $obj->typename = $_POST["usertypename"];
-                $obj::addusertype($obj);
-
-            }
-
-
-        ?>
 
       
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

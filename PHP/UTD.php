@@ -3,8 +3,7 @@
 include_once('type.php');
  
 try {
-     
-    // get record ID
+     // get record ID
     // isset() is a PHP function used to verify if a value is there or not
     $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
  
@@ -14,7 +13,7 @@ try {
     if($return == 1){
         // redirect to read records page and 
         // tell the user record was deleted
-        header('Location: index.php?action=deleted');
+        header('Location: UTI.php?action=deleted');
     }else{
         die('Unable to delete record.');
     }

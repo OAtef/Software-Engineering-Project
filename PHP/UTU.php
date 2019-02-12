@@ -48,8 +48,8 @@
 
                 try{
 
-                    $obj->ID = $_POST['id'];
-                    $obj->typename = $_POST["typeName"];
+                    $obj->ID = $_POST['usertypeid'];
+                    $obj->typename = $_POST["usertypename"];
                   
 
                     $return = Types::updateusertype($obj);
@@ -80,7 +80,12 @@
         </tr>
         <tr>
             <td>User Type ID</td>
+           
             <td><input type='text' name='usertypeid' value="<?php echo htmlspecialchars($usertypeid, ENT_QUOTES);  ?>" class='form-control' /></td>
+            <td>
+                <input type='submit' value='Save Changes' class='btn btn-primary' name="update_usertype" />
+                <a href='UTI.php' class='btn btn-danger'>Back to read products</a>
+            </td>
         </tr>
      
         

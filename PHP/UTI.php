@@ -93,7 +93,7 @@
 
 <script type='text/javascript'>
 // confirm record deletion
-function delete_user( id ){
+function delete_usertype( id ){
 
     var answer = confirm('Are you sure?');
     if (answer){

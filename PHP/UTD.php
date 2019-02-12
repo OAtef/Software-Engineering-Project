@@ -7,8 +7,8 @@ try {
     // isset() is a PHP function used to verify if a value is there or not
     $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
  
-   $obj = new Types(NULL);
-   $return = $obj::deleteusertype($id);
+   $obj = new Types($id);
+   $return = Types::deleteusertype($obj);
      
     if($return == 1){
         // redirect to read records page and 

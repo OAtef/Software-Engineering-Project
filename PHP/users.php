@@ -53,8 +53,10 @@ class Users
 
   static function updateUser($obj){
 
+    
     $update_user_query = "UPDATE users SET firstName='$obj->firstname', lastName='$obj->lastname', email='$obj->email', password='$obj->password',
       Bdate='$obj->bdate', typeID='$obj->typeid'";
+
     mysqli_query($GLOBALS["db"], $update_user_query) or die(mysqli_error($mysqli));
     if (mysqli_affected_rows($GLOBALS["db"]) == 1) {
       return 1;

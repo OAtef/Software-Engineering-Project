@@ -32,7 +32,7 @@ class Types
 
   static function deleteusertype($obj){
 
-      $delete_user_query = "DELETE FROM usertype WHERE usertype.id = $obj->ID";
+      $delete_user_query = "DELETE FROM usertype WHERE id = $obj->ID";
       mysqli_query($GLOBALS["db"], $delete_user_query);
       if (mysqli_affected_rows($GLOBALS["db"]) == 1) {
         return 1;
@@ -44,10 +44,12 @@ class Types
   }
 
   static function updateusertype($obj){
+   $update =  "UPDATE usertype SET id='$obj->ID' ,typeName='$obj->typename' WHERE usertype.id!='1' AND '$obj->ID' != '1'" ;
+       // $update_user_query = "UPDATE usertype SET id='$obj->ID',typeName='$obj->typename' WHERE ";    
+        mysqli_query($GLOBALS["db"], $update) or die(mysqli_error($mysqli));
 
-        $update_user_query = "UPDATE usertype SET id='$obj->ID', typeName='$obj->typename'";
-      mysqli_query($GLOBALS["db"], $update_user_query) or die(mysqli_error($mysqli));
-      if (mysqli_affected_rows($GLOBALS["db"]) == 1) {
+        
+        if (mysqli_affected_rows($GLOBALS["db"]) == 1) {
             return 1;
           }
           else{

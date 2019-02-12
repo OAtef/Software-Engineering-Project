@@ -54,7 +54,7 @@
                         echo "<th>User Type ID</th>";
                         echo "</tr>";
 
-                   for($i=0; $i < $num; $i++){
+                   for($i=1; $i < $num; $i++){
 
                         // creating new table row per record
                         echo "<tr>";

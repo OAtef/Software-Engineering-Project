@@ -5,6 +5,23 @@ class Users
 {
   public $user_values = array();
 
+  static function login($email, $pass){
+
+    $query = "SELECT userID FROM tb_option_user_values WHERE value='$email'";
+    $result = mysqli_query($GLOBALS["db"], $query);
+    $userID = mysqli_fetch_array($result);
+
+    $query2 = "SELECT userID FROM tb_option_user_values WHERE value='$pass' and userID='$userID[0]'";
+    $result2 = mysqli_query($GLOBALS["db"], $query2);
+
+    if(mysqli_num_rows($result2) > 0){
+      echo 1;
+    }
+    else{
+      echo 0;
+    }
+  }
+
   static function get_values($str, $startDelimiter, $endDelimiter) {
     $contents = array();
     $startDelimiterLength = strlen($startDelimiter);
@@ -14,7 +31,7 @@ class Users
     while (false !== ($contentStart = strpos($str, $startDelimiter, $startFrom))) {
       $contentStart += $startDelimiterLength;
       $contentEnd = strpos($str, $endDelimiter, $contentStart);
-      
+
       if (false === $contentEnd) {
         break;
       }
@@ -23,7 +40,7 @@ class Users
       $contents[] = str_replace('%40', '@', $v);
       $startFrom = $contentEnd + $endDelimiterLength;
     }
-  
+
     return $contents;
   }
 
@@ -38,7 +55,7 @@ class Users
 
     $headers_rows = array();
 
-    $query ="SELECT optionID FROM rtb_option_user where usertypeID='$usertypeID'"; 
+    $query ="SELECT optionID FROM rtb_option_user where usertypeID='$usertypeID'";
     $result_OU = mysqli_query($GLOBALS["db"], $query);
 
     while($row = mysqli_fetch_array($result_OU)){
@@ -50,38 +67,38 @@ class Users
         # $array[$key] = $value;
         $headers_rows[$head_row[0]] = $head_row[1];
       }
-      
+
     }
     echo json_encode($headers_rows);  # array contains the resulted names of headers and types of fileds
-  
+
   }
 
   static function select_users($usertypeID){
 
-    $select_users_query ="SELECT id FROM tb_users where usertypeID='$usertypeID'"; # return the ids
+    $select_users_query ="SELECT id FROM tb_users where usertypeID='$usertypeID' AND isdeleted!='1'"; # return the ids
     $ids_resulted = mysqli_query($GLOBALS["db"], $select_users_query);
 
-    $query ="SELECT optionID FROM rtb_option_user where usertypeID='$usertypeID'"; # returns the optionIDs
-    $result_OU = mysqli_query($GLOBALS["db"], $query);
-
     $i=0;
-    $result_arr = NULL; # array of objects
-    $val_arr = array(); # a temp array
+    $result_arr = array(); # array of objects
+
     while($rowID = mysqli_fetch_array($ids_resulted)){
+      $val_arr = array(); # a temp array
+
+      $query ="SELECT optionID FROM rtb_option_user where usertypeID='$usertypeID'"; # returns the optionIDs
+      $result_OU = mysqli_query($GLOBALS["db"], $query);
+
       while($rowOU = mysqli_fetch_array($result_OU)){
-        
-        $value_query = "SELECT value FROM tb_option_user_values WHERE optionUserID='$rowOU[0]' AND userID='$rowID[0]'"; # returns a single memeber value(1)
+
+        $value_query = "SELECT value FROM tb_option_user_values WHERE optionUserID='$rowOU[0]' AND userID='$rowID[0]' AND isdeleted!='1'"; # returns a single memeber value(1)
         $value_result = mysqli_query($GLOBALS["db"], $value_query);
-        $x = 0;
-        
-        while($row = mysqli_fetch_array($value_result)) {
-          $val = $row[$x];
-          array_push($val_arr, $val);
-          $x++;
-        }
-        
+
+        $row = mysqli_fetch_array($value_result);
+        $val = $row[0];
+        //echo $val;
+        array_push($val_arr, $val);
+
       }
-    
+
       $myobj = new Users($val_arr);
       $val_arr = array(); # to empty the temp array
       $result_arr[$i] = $myobj;
@@ -98,7 +115,7 @@ class Users
 
     $userID_query = "SELECT userID FROM tb_option_user_values WHERE value='$oldEmail'";
     $userID_result = mysqli_query($GLOBALS["db"], $userID_query);
-    
+
     $query_ou ="SELECT optionID FROM rtb_option_user WHERE usertypeID='$usertypeID'"; # returns the optionIDs
     $resultOU = mysqli_query($GLOBALS["db"], $query_ou);
 
@@ -108,7 +125,7 @@ class Users
      while($rowID = mysqli_fetch_array($userID_result)){
       $i = 0;
       while($rowOU = mysqli_fetch_array($resultOU)){
-        
+
         $query = "UPDATE tb_option_user_values SET value='$form_vals[$i]',updatedTime='$timespan' WHERE userID='$rowID[0]' AND optionUserID='$rowOU[0]'";
         mysqli_query($GLOBALS["db"], $query);
 
@@ -116,12 +133,12 @@ class Users
            echo "ok";
         }else{
          echo mysqli_error($GLOBALS["db"]);
-       } 
-       
+       }
+
        $i++;
-        
+
       }
-    } 
+    }
 
   }
 
@@ -129,7 +146,7 @@ class Users
 
     $timespan = date("M,d,Y h:i:s");
 
-    $query = "INSERT INTO tb_users (usertypeID, createdTime) VALUES ('$usertypeID', '$timespan')";
+    $query = "INSERT INTO tb_users (usertypeID, isdeleted) VALUES ('$usertypeID', 0)";
     $result = mysqli_query($GLOBALS["db"], $query);
     $userID = mysqli_insert_id($GLOBALS["db"]);
 
@@ -141,17 +158,17 @@ class Users
 
     $i = 0;
     while($rowOU = mysqli_fetch_array($resultOU)){
-        
-      $query = "INSERT tb_option_user_values (userID, optionUserID, value, createdTime) VALUES ('$userID', '$rowOU[0]', '$form_vals[$i]', '$timespan')";
+
+      $query = "INSERT tb_option_user_values (userID, optionUserID, value, isdeleted) VALUES ('$userID', '$rowOU[0]', '$form_vals[$i]', 0)";
       mysqli_query($GLOBALS["db"], $query);
 
       if (mysqli_affected_rows($GLOBALS["db"]) == 1) {
       }else{
         echo mysqli_error($GLOBALS["db"]);
-      } 
+      }
 
       $i++;
-        
+
       }
   }
 
@@ -168,16 +185,16 @@ class Users
     while($rowID = mysqli_fetch_array($userID_result)){
 
 
-      $query2 = "UPDATE tb_option_user_values ou,tb_users u SET ou.updatedTime='$timespan', ou.isdeleted=1, u.updatedTime='$timespan', u.isdeleted=1 
-          WHERE ou.userID='$rowID[0]' AND u.userID='$rowID[0]'";
+      $query2 = "UPDATE tb_option_user_values, tb_users SET tb_option_user_values.updatedTime='$timespan', tb_option_user_values.isdeleted=1, tb_users.updatedTime='$timespan', tb_users.isdeleted=1
+          WHERE tb_option_user_values.userID='$rowID[0]' AND tb_users.id='$rowID[0]'";
         mysqli_query($GLOBALS["db"], $query2);
 
         if (mysqli_affected_rows($GLOBALS["db"]) == 1) {
           echo "ok";
        }else{
         echo mysqli_error($GLOBALS["db"]);
-      }  
-    } 
+      }
+    }
   }
 
   function __construct($val_arr){
@@ -187,17 +204,17 @@ class Users
     }
 
   }
-  
+
 }
 
 if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
-  
+
   $function2call = $_POST['function2call'];
-  $usertypeID = $_POST['usertypeID'];  
+  $usertypeID = $_POST['usertypeID'];
   $user = new users(NULL);
 
   switch($function2call) {
-      case 'tableHeader' : 
+      case 'tableHeader' :
         $user::tableHeader($usertypeID);
         break;
 
@@ -205,11 +222,11 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
         $user::select_users($usertypeID);
         break;
 
-      case 'update_user' : 
+      case 'update_user' :
         $arr = $_POST['arr'];
         $oldEmail = $_POST['oldEmail'];
         $user::update_user($oldEmail, $usertypeID, $arr);
-        break; 
+        break;
 
       case 'insert_user' :
         $arr = $_POST['arr'];
@@ -219,6 +236,11 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
       case 'delete_user' :
         $oldEmail = $_POST['oldEmail'];
         $user::delete_user($oldEmail);
+        break;
+      case 'login' :
+        $email = $_POST['email'];
+        $pass = $_POST['password'];
+        $user::login($email, $pass);
         break;
   }
 }

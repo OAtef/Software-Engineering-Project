@@ -3,11 +3,13 @@ var users = new Array();
 var usertypeID;
 var oldemail;
 
+var utidd; // for checking and not repeating html
+var utid; // for checking and not repeating html
+
 $(document).ready(function(){
 
-    $("#tablediv").hide();
-    $("#update_form_div").hide();
-    $("#insert_form_div").hide();
+    $("#emails").hide();
+    $("#foundationMembers").hide();
 
     $.ajax({ url: '../Model/usertypes.php',
     data: {function2call: 'list_usertypes'},
@@ -22,8 +24,10 @@ $(document).ready(function(){
 
             var str1 = arr[i];
             var str2 = arr[++i];
-           $("<a class='dropdown-item' id='link-" + str1 + "' href='#' onclick='usertypetable(this);return false;'>" + str2 + "</a>").appendTo("#dropdown-usertype-table");
-           $("<a class='dropdown-item' id='link-" + str1 + "' href='#' onclick='insertUser(this);return false;'>" + str2 + "</a>").appendTo("#dropdown-usertype-insert");
+           $("<a class='dropdown-item userTable' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-table");
+           $("<a class='dropdown-item insertUser' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-insert");
+           $("<a class='dropdown-item emailTable' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-email-table");
+
 
            i += 2;
        }
@@ -33,6 +37,29 @@ $(document).ready(function(){
        console.log(data);
    }
 });
+
+    $(document).on('click','.dropdown-item',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var id = $(this).attr('id');
+        usertypeID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+        if($(this).hasClass('userTable')){
+            usertypetable(id);
+        }
+        else if($(this).hasClass('insertUser')){
+            insertUser(id);
+
+        }
+        else if($(this).hasClass('emailTable')){
+
+        }
+       
+        return false;
+       
+    });
 
     $(document).on('click','#saveChangesBtn',function(e){
 
@@ -66,11 +93,14 @@ $(document).ready(function(){
         e.preventDefault();
         e.stopImmediatePropagation();
 
-
+        resetTable();
+    $("#sucess_div").hide();
 
     $("#tablediv").show();
     $("#update_form_div").hide();
     $("#insert_form_div").hide();
+    $("#foundationMembers").show();
+    $("#emails").hide();
        
     return false;
        
@@ -80,10 +110,12 @@ $(document).ready(function(){
 
         e.preventDefault();
         e.stopImmediatePropagation();
-           
+
+        $("#foundationMembers").show();
         $("#tablediv").hide();
         $("#update_form_div").hide();
         $("#insert_form_div").show();
+        $("#emails").hide();
 
         return false;
            
@@ -115,14 +147,35 @@ $(document).ready(function(){
         return false;
        
     });
+
+    $(document).on('click','.updatebtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var id = $(this).attr('id');
+        updateUser(id);
+       
+        return false;
+       
+    });
+    
+    $(document).on('click','.deletebtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var id = $(this).attr('id');
+        console.log(id);
+        deleteUser(id);
+       
+        return false;
+       
+    });
     
 });
 
-var utidd; // for checking and not repeating html
-function insertUser(xx){
-
-    var ida = xx.id;
-    usertypeID = ida.substr(ida.indexOf('-')+1, ida.indexOf('-'));
+function insertUser(){
 
     if(usertypeID != utidd){
 
@@ -159,16 +212,13 @@ function insertUser(xx){
 
 }
 
-var utid; // for checking and not repeating html
-function usertypetable(xx){
 
-    var ida = xx.id;
-    usertypeID = ida.substr(ida.indexOf('-')+1, ida.indexOf('-'));
+function usertypetable(){
 
     if(usertypeID != utid){
         utid = usertypeID;
 
-        var div = document.getElementById("tablediv");
+        var div = document.getElementById("theTable");
         var table = ' <div class="table-responsive"> <br> <table class="table table-bordered userstable" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';   
     
         $.ajax({ 
@@ -201,26 +251,30 @@ function usertypetable(xx){
                     type: 'POST',
                     dataType: "JSON",
                     success: function(data) {
+
+                        console.log(data);
     
                         users = data;
             
                         var obj_size = data.length;
                         var arr_size = data[0].user_values.length;
             
-                        var a =0, b=0;
+                        var a =0;
             
                         table += "<tbody>";
                         while(a < obj_size){
                             table += "<tr>";
-                            
+
+                            console.log(data[a]);
+                            var b=0;
                             while (b < arr_size){
                                 //console.log(data[a].user_values[b]);
                                 table += "<td>" + (data[a].user_values[b]) + "</td>";
                                 b += 1;
                             }
     
-                            table += "<td> <a id='update-" + a + "' href='#' onclick='updateUser(this); return false;' class='btn btn-primary m-r-1em editbtn'>Edit</a> " +
-                            "<a href='#' onclick='deleteUser(this); return false;' class='btn btn-danger'>Delete</a> </td> </tr>";    
+                            table += "<td> <a id='update-" + a + "' href='#' class='btn btn-primary m-r-1em updatebtn'>Edit</a> " +
+                            "<a id='del-" + a + "' href='#' class='btn btn-danger deletebtn'>Delete</a> </td> </tr>";    
                             
                             a += 1;
     
@@ -228,9 +282,7 @@ function usertypetable(xx){
             
                         div.innerHTML+= table + '</body>';
                         
-                        var script = document.createElement("script"); //Make a script DOM node
-                        script.src = '../../js/demo/datatables-demo.js'; //Set it's src to the provided URL
-                        document.body.appendChild(script);
+
                     },
                     error: function(data){
                         console.log(data);
@@ -254,8 +306,7 @@ function updateUser(xx){
     $("#tablediv").hide();
     $("#update_form_div").show();
 
-    var ida = xx.id;
-    user_obj_index = ida.substr(ida.indexOf('-')+1, ida.indexOf('-'));
+    user_obj_index = xx.substr(xx.indexOf('-')+1, xx.indexOf('-'));
     
     var formdiv = document.getElementById("update_form_div");
 
@@ -284,8 +335,7 @@ function updateUser(xx){
 
 function deleteUser(xx){
 
-    var ida = xx.id;
-    user_obj_index = ida.substr(ida.indexOf('-')+1, ida.indexOf('-'));
+    user_obj_index = xx.substr(xx.indexOf('-')+1, xx.indexOf('-'));
 
     var i = 0;
     while (i < users[user_obj_index].user_values.length) {        
@@ -325,5 +375,10 @@ function deleteUser(xx){
 
 }
 
+function resetTable(){
+    utid = 0;
+    $("#theTable").empty();
+
+}
 
 

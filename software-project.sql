@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 01, 2019 at 11:18 AM
+-- Generation Time: Mar 03, 2019 at 07:42 PM
 -- Server version: 5.6.37
 -- PHP Version: 5.6.31
 
@@ -397,7 +397,7 @@ CREATE TABLE IF NOT EXISTS `tb_option_user_values` (
   `createdTime` timestamp NOT NULL,
   `updatedTime` timestamp NOT NULL,
   `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_option_user_values`
@@ -408,7 +408,12 @@ INSERT INTO `tb_option_user_values` (`id`, `optionUserID`, `value`, `userID`, `c
 (2, 2, 'hegazy', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
 (3, 3, 'habiba@gmail.com', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
 (4, 4, '2008-11-11', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(5, 5, '123', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0');
+(5, 5, '123', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
+(12, 2, 'atef', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'1'),
+(13, 3, 'omar@gmail.com', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'1'),
+(14, 4, '2017-01-31', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'1'),
+(11, 1, 'omar', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'1'),
+(15, 5, '123', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'1');
 
 -- --------------------------------------------------------
 
@@ -481,14 +486,15 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
   `createdTime` timestamp NOT NULL,
   `updatedTime` timestamp NOT NULL,
   `isdeleted` bit(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_users`
 --
 
 INSERT INTO `tb_users` (`id`, `usertypeID`, `addressID`, `createdTime`, `updatedTime`, `isdeleted`) VALUES
-(1, 1, 111, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0');
+(1, 1, 111, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
+(10, 1, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'1');
 
 -- --------------------------------------------------------
 
@@ -684,7 +690,7 @@ ALTER TABLE `tb_options`
 -- AUTO_INCREMENT for table `tb_option_user_values`
 --
 ALTER TABLE `tb_option_user_values`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `tb_payment_method`
 --
@@ -699,7 +705,7 @@ ALTER TABLE `tb_project`
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tb_usertype`
 --

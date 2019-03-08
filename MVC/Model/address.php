@@ -39,20 +39,17 @@ class Address
     return json_encode($json);
   }
 
-  function __construct($x){
-  }
-
 }
 
 if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
-  
+
   $function2call = $_POST['function2call'];
   $SelectedID = $_POST["addressID"];
   $address = new Address(NULL);
 
   switch($function2call) {
-      case 'GetAddressChildren': 
-        $address::GetAddressChildren($SelectedID);
+      case 'GetAddressChildren':
+        echo $address::GetAddressChildren($SelectedID);
         break;
   }
 }

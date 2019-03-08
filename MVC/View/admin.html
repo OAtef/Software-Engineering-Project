@@ -39,7 +39,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="login.html">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -72,7 +72,7 @@
         </a>
         <div id="collapseOne" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header"> ..... :</h6>
+            <h6 class="collapse-header"> Members Interface :</h6>
             <a class="collapse-item" id="addMemBtn" href="user.html"> Add a Member</a>
             <a class="collapse-item" id="list_edit_btn" href="user.html" >List and Edit </a>
           </div>
@@ -86,7 +86,7 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">... :</h6>
+            <h6 class="collapse-header">Messages Interface :</h6>
             <a class="collapse-item" href="#" id='multiMsg'> Multi Message </a>
           </div>
         </div>
@@ -99,7 +99,7 @@
         </a>
         <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">... :</h6>
+            <!-- <h6 class="collapse-header">... :</h6> -->
             <a class="collapse-item" href="Settings.html"> Settings </a>
           </div>
         </div>
@@ -342,30 +342,59 @@
             <div class="card-body">
 
                 <div id="sucess_div" class='alert alert-success' style="display: none"> Record was updated. </div>
+                <div id="error_div" class='alert alert-danger' style="display: none"> Something Wrong Happend. </div>
 
               <div id="tablediv">
-                  <div class="dropdown mb-4">
-                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Choose
-                      </button>
-                          
-                      <div id="dropdown-usertype-table" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
-                      </div>
-                    </div>
-                    <div id="theTable">
+                <div class='row'>
+                    <div class="dropdown mb-4 col-sm-2">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Type L1
+                        </button>
 
-                    </div>
+                        <div id="dropdown-usertype-table1" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        </div>
+                      </div>
+
+                      <div class="dropdown mb-4 col-sm-2">
+                        <button class="t2 btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Type L2
+                        </button>
+
+                        <div id="dropdown-usertype-table2" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        </div>
+                      </div>
+                </div>
+                <div id="theTable"></div>
               </div>
               <div id="update_form_div"></div>
-              <div id="insert_form_div">   
-                  <div class="dropdown mb-4">
-                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Choose
-                      </button>
-                          
-                      <div id="dropdown-usertype-insert" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+              <div id="insert_form_div">
+                <div class='row'>
+                    <div class="dropdown mb-4 col-sm-2">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Choose1
+                          </button>
+
+                          <div id="dropdown-usertype-insert" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                          </div>
                       </div>
-                    </div>            
+
+                      <div class="dropdown mb-4 col-sm-2">
+                        <button class="i2 btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Choose2
+                        </button>
+
+                        <div id="dropdown-usertype-insert2" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        </div>
+                      </div>
+                </div>
+                <div id="insert_form"></div>
+
+              </div>
+
+
+                  <div class="dropdown mb-4">
+
+                    </div>
               </div>
           </div>
           </div>
@@ -375,13 +404,13 @@
               <h6 class="m-0 font-weight-bold text-primary"> Emails </h6>
             </div>
             <div class="card-body">
-              
+
               <div class='hide_to_send_email'>
                   <div class="dropdown mb-4">
                       <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Choose
                       </button>
-                          
+
                       <div id="dropdown-email-table" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
                       </div>
                     </div>
@@ -392,7 +421,7 @@
                             <span class="icon text-white-50">
                               <i class="fas fa-arrow-right"></i>
                             </span>
-                            <span class="text">write email</span>  
+                            <span class="text">write email</span>
                       </a>
                 </div>
 
@@ -404,8 +433,8 @@
                       <span class="icon text-white-50">
                         <i class="fas fa-arrow-left"></i>
                       </span>
-                      <span class="text">Back</span>  
-                </a>  
+                      <span class="text">Back</span>
+                </a>
                   <form method="post" id="reused_form" >
                       <label for="sendto">Send to:</label>
                       <input id="sendto" type="text" name="Name" required maxlength="50">
@@ -423,17 +452,9 @@
               </div>
             </div>
 
-              <!-- Emails -->
-
-
 
           </div>
 
-          <!--                     <div> 
-                      <label  style="margin-right: 20px; " for="email"> Type your email </label>
-                        <input type  = "text" name="email" id="email" style="height: 250px ; width:500px;" >
-                        <button  style="margin-left: 20px; height: 50px ; width:150px;" class="btn btn-primary btn-icon-split" for="email" type ="submit">Send to all selected users</button>
-                    </div> -->
       <!-- End of Main Content -->
 
       <!-- Footer -->
@@ -481,7 +502,6 @@
 
   <!-- Ajax -->
   <script src="../Controller/user.js"></script>
-  <script src="../Controller/emails.js"></script>
 
   <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/jquery/jquery.min.js"></script>

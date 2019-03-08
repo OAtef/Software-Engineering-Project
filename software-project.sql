@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2019 at 07:42 PM
+-- Generation Time: Mar 06, 2019 at 04:25 PM
 -- Server version: 5.6.37
 -- PHP Version: 5.6.31
 
@@ -23,88 +23,63 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rtb_html_links`
+-- Table structure for table `rtb_option_donation_reason`
 --
 
-CREATE TABLE IF NOT EXISTS `rtb_html_links` (
-  `id` int(11) NOT NULL,
-  `htmlID` int(11) NOT NULL,
-  `linkID` int(11) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rtb_option_payment`
---
-
-CREATE TABLE IF NOT EXISTS `rtb_option_payment` (
+CREATE TABLE IF NOT EXISTS `rtb_option_donation_reason` (
   `id` int(11) NOT NULL,
   `optionID` int(11) NOT NULL,
-  `paymentID` int(11) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rtb_option_user`
---
-
-CREATE TABLE IF NOT EXISTS `rtb_option_user` (
-  `id` int(11) NOT NULL,
-  `optionID` int(11) NOT NULL,
-  `usertypeID` int(11) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `rtb_option_user`
---
-
-INSERT INTO `rtb_option_user` (`id`, `optionID`, `usertypeID`, `createdTime`, `updatedTime`, `isdeleted`) VALUES
-(1, 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(2, 2, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(3, 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(4, 4, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(5, 5, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rtb_usertype_links`
---
-
-CREATE TABLE IF NOT EXISTS `rtb_usertype_links` (
-  `id` int(11) NOT NULL,
-  `typeID` int(11) NOT NULL,
-  `linkID` int(11) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
+  `donationReasonID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rtb_user_donation`
+-- Table structure for table `rtb_option_payment_type`
 --
 
-CREATE TABLE IF NOT EXISTS `rtb_user_donation` (
+CREATE TABLE IF NOT EXISTS `rtb_option_payment_type` (
   `id` int(11) NOT NULL,
-  `userID` int(11) NOT NULL,
-  `donationID` int(11) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `optionID` int(11) NOT NULL,
+  `payment_typeID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rtb_option_projectCategory`
+--
+
+CREATE TABLE IF NOT EXISTS `rtb_option_projectCategory` (
+  `id` int(11) NOT NULL,
+  `optionID` int(11) NOT NULL,
+  `projectcategoryID` int(11) NOT NULL,
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rtb_option_usertype`
+--
+
+CREATE TABLE IF NOT EXISTS `rtb_option_usertype` (
+  `id` int(11) NOT NULL,
+  `optionID` int(11) NOT NULL,
+  `usertypeID` int(11) NOT NULL,
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rtb_option_usertype`
+--
+
+INSERT INTO `rtb_option_usertype` (`id`, `optionID`, `usertypeID`, `isdeleted`) VALUES
+(1, 1, 1, 0),
+(2, 2, 1, 0),
+(3, 3, 1, 0),
+(4, 4, 1, 0),
+(5, 5, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -114,13 +89,11 @@ CREATE TABLE IF NOT EXISTS `rtb_user_donation` (
 
 CREATE TABLE IF NOT EXISTS `rtb_user_project` (
   `id` int(11) NOT NULL,
-  `roleID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `projectID` int(11) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `roleID` int(11) NOT NULL,
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -130,215 +103,57 @@ CREATE TABLE IF NOT EXISTS `rtb_user_project` (
 
 CREATE TABLE IF NOT EXISTS `tb_address` (
   `id` int(11) NOT NULL,
-  `address_name` varchar(255) DEFAULT NULL,
-  `addresstypeID` int(11) DEFAULT NULL,
-  `parentID` int(11) DEFAULT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=112 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tb_address`
---
-
-INSERT INTO `tb_address` (`id`, `address_name`, `addresstypeID`, `parentID`, `createdTime`, `updatedTime`, `isdeleted`) VALUES
-(1, 'Egypt', 1, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(2, 'Alexandria', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(3, 'Aswan', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(4, 'Asyut', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(5, 'Beni Suef', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(6, 'Beheira', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(7, 'Cairo', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(8, 'Damietta', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(9, 'Dakahlia', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(10, 'El Wadi El Gedid', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(11, 'Faiyum', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(12, 'Gharbia', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(13, 'Giza', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(14, 'Ismailia', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(15, 'Kafr El Sheikh', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(16, 'Luxor', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(17, 'Monufia', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(18, 'Minya', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(19, 'Matruh', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(20, 'North Sinai', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(21, 'Port Said', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(22, 'Qena', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(23, 'Qalyubia', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(24, 'Red Sea', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(25, 'Suez', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(26, 'Sharqia', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(27, 'South Sinai', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(28, 'Sohag', 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(31, 'Kafr al-Zayat', 2, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(30, 'El Mahalla', 2, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(29, 'Tanta', 2, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(34, 'Port Said', 2, 21, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(35, 'Giza', 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(63, 'Cairo', 2, 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(32, 'Zifta', 2, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(33, 'Basyoun', 2, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(36, 'Samannoud', 2, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(37, 'Alexandria', 2, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(38, 'Ismailia', 2, 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(39, 'At-Tall al-Kabir', 2, 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(40, 'Suez', 2, 25, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(41, 'Kom Ombo', 2, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(42, 'Aswan', 2, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(43, 'Edfu', 2, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(44, 'El Kharga', 2, 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(45, 'El-Kanater al-Kyria', 2, 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(46, 'Banha', 2, 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(47, 'Shibin al-Qanater', 2, 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(48, 'Shubra el-Khema', 2, 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(49, 'Khusus', 2, 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(50, 'Qalyub', 2, 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(51, 'Khanka', 2, 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(52, 'El Ubour', 2, 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(53, 'Tukh', 2, 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(54, 'Kafr el-Dawwar', 2, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(55, 'Rashed', 2, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(56, 'Abul Matamir', 2, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(57, 'Damanhur', 2, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(58, 'Edko', 2, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(59, 'Hosh Issa', 2, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(60, 'Abu Hummus', 2, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(61, 'El-Delengat', 2, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(62, 'Etay el-Barud', 2, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(64, '\r\nMarsa Matruh\r\n', 2, 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(65, 'Al-Hammam', 2, 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(66, 'Damietta', 2, 8, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(67, 'El-Matareya', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(68, 'Bilqas', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(69, 'Senbellawein', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(70, 'Talkha', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(71, 'Dikirnis', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(72, 'El-Gamalia', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(73, 'Sherbin', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(74, 'El Mansoura', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(75, 'Mit Ghamr', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(76, 'Manzala', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(77, 'Minyet al-Nasr', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(78, 'Luxor', 2, 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(79, 'Qus', 2, 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(80, 'Dishna', 2, 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(81, 'Farshut', 2, 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(82, 'Qena', 2, 22, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(83, 'Aja', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(84, 'Al-Kurdy', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(85, 'Bani Ubayd', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(86, 'Ma?allah Damanah', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(87, 'Mit Salsil', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(88, 'Nabaruh', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(89, 'Tama al-Amdid', 2, 9, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(90, 'As-Santah', 2, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(91, 'Burj al-Arab', 2, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(92, 'Qutur', 2, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(93, '6th of October', 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(94, 'Sheikh Zayed', 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(95, 'El Hawamdeya', 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(96, 'Al Badrashin', 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(97, 'El-Saf', 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(98, 'Atfih', 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(99, 'Al Ayat', 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(100, 'Abu an Numros', 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(101, 'Bawiti', 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(102, 'Awsim', 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(104, 'Kirdasah', 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(105, 'Madinat Burj al-Arab al-Jadidah ', 2, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(103, 'Kafr Shukr', 2, 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(106, 'Qaha', 2, 23, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(107, 'Siwa', 2, 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(108, 'As-Sallum', 2, 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(109, 'Badr', 2, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(110, 'Shubrakhit', 2, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(111, 'Nasr City', 4, 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0');
+  `address_name` varchar(300) NOT NULL,
+  `parentID` int(11) NOT NULL DEFAULT '0',
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_addresstype`
+-- Table structure for table `tb_donation_reason`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_addresstype` (
-  `id` int(11) NOT NULL,
-  `addresstype_name` varchar(255) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tb_addresstype`
---
-
-INSERT INTO `tb_addresstype` (`id`, `addresstype_name`, `createdTime`, `updatedTime`, `isdeleted`) VALUES
-(1, 'Country', '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(2, 'City', '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(3, 'Governorate', '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(4, 'District', '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(5, 'Street', '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tb_donate_reason`
---
-
-CREATE TABLE IF NOT EXISTS `tb_donate_reason` (
+CREATE TABLE IF NOT EXISTS `tb_donation_reason` (
   `id` int(11) NOT NULL,
   `reason` varchar(300) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `sendtoID` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_donation`
+-- Table structure for table `tb_event_type`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_donation` (
+CREATE TABLE IF NOT EXISTS `tb_event_type` (
   `id` int(11) NOT NULL,
-  `amount` int(11) NOT NULL,
-  `donationReasonID` int(11) NOT NULL,
-  `PaymentypeID` int(11) NOT NULL,
-  `projecttypeID` int(11) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `event_type_name` int(11) NOT NULL,
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_html`
+-- Table structure for table `tb_gender`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_html` (
+CREATE TABLE IF NOT EXISTS `tb_gender` (
   `id` int(11) NOT NULL,
-  `htmltext` varchar(400) DEFAULT NULL,
-  `linkID` int(11) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `gender_name` varchar(300) NOT NULL,
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_links`
+-- Table structure for table `tb_nationality`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_links` (
+CREATE TABLE IF NOT EXISTS `tb_nationality` (
   `id` int(11) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `filename` varchar(255) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
+  `nationality_name` varchar(300) NOT NULL,
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -349,23 +164,34 @@ CREATE TABLE IF NOT EXISTS `tb_links` (
 
 CREATE TABLE IF NOT EXISTS `tb_options` (
   `id` int(11) NOT NULL,
-  `name` varchar(300) NOT NULL,
-  `type` varchar(300) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `option_name` varchar(300) NOT NULL,
+  `option_type` varchar(300) NOT NULL,
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_options`
 --
 
-INSERT INTO `tb_options` (`id`, `name`, `type`, `createdTime`, `updatedTime`, `isdeleted`) VALUES
-(1, 'First Name', 'text', '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(2, 'Last Name', 'text', '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(3, 'Email', 'email', '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(5, 'Password', 'password', '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(4, 'Birth Date', 'date', '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0');
+INSERT INTO `tb_options` (`id`, `option_name`, `option_type`, `isdeleted`) VALUES
+(1, 'First Name', 'text', 0),
+(2, 'Last Name', 'text', 0),
+(3, 'Email', 'email', 0),
+(4, 'Password', 'password', 0),
+(5, 'Birth Date', 'date', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_option_donation_values`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_option_donation_values` (
+  `id` int(11) NOT NULL,
+  `optionDrID` int(11) NOT NULL,
+  `value` varchar(300) NOT NULL,
+  `donationID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -375,13 +201,24 @@ INSERT INTO `tb_options` (`id`, `name`, `type`, `createdTime`, `updatedTime`, `i
 
 CREATE TABLE IF NOT EXISTS `tb_option_payment_values` (
   `id` int(11) NOT NULL,
-  `pmOptionID` int(11) NOT NULL,
+  `optionPaymentID` int(11) NOT NULL,
   `value` varchar(300) NOT NULL,
-  `donationID` int(11) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `paymentID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_option_project_values`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_option_project_values` (
+  `id` int(11) NOT NULL,
+  `optionProjectID` int(11) NOT NULL,
+  `value` varchar(300) NOT NULL,
+  `projectID` int(11) NOT NULL,
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -394,26 +231,8 @@ CREATE TABLE IF NOT EXISTS `tb_option_user_values` (
   `optionUserID` int(11) NOT NULL,
   `value` varchar(300) NOT NULL,
   `userID` int(11) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tb_option_user_values`
---
-
-INSERT INTO `tb_option_user_values` (`id`, `optionUserID`, `value`, `userID`, `createdTime`, `updatedTime`, `isdeleted`) VALUES
-(1, 1, 'habiba', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(2, 2, 'hegazy', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(3, 3, 'habiba@gmail.com', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(4, 4, '2008-11-11', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(5, 5, '123', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(12, 2, 'atef', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'1'),
-(13, 3, 'omar@gmail.com', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'1'),
-(14, 4, '2017-01-31', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'1'),
-(11, 1, 'omar', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'1'),
-(15, 5, '123', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'1');
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -423,11 +242,20 @@ INSERT INTO `tb_option_user_values` (`id`, `optionUserID`, `value`, `userID`, `c
 
 CREATE TABLE IF NOT EXISTS `tb_payment_method` (
   `id` int(11) NOT NULL,
-  `method_name` varchar(300) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `userID` int(11) NOT NULL,
+  `pay_method_typeID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_payment_type`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_payment_type` (
+  `id` int(11) NOT NULL,
+  `method_name` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -437,27 +265,34 @@ CREATE TABLE IF NOT EXISTS `tb_payment_method` (
 
 CREATE TABLE IF NOT EXISTS `tb_project` (
   `id` int(11) NOT NULL,
-  `name` varchar(300) NOT NULL,
-  `addressID` int(11) NOT NULL,
-  `membercount` int(11) DEFAULT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `projectcategoryID` int(11) NOT NULL,
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_projecttype`
+-- Table structure for table `tb_project_category`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_projecttype` (
+CREATE TABLE IF NOT EXISTS `tb_project_category` (
   `id` int(11) NOT NULL,
-  `projecttype_name` varchar(300) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `category_name` varchar(300) NOT NULL,
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_request_donation`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_request_donation` (
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `donationReasonID` int(11) NOT NULL,
+  `paymentMethodID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -467,11 +302,20 @@ CREATE TABLE IF NOT EXISTS `tb_projecttype` (
 
 CREATE TABLE IF NOT EXISTS `tb_role` (
   `id` int(11) NOT NULL,
-  `rolename` varchar(300) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `role_name` varchar(300) NOT NULL,
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_send_to`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_send_to` (
+  `id` int(11) NOT NULL,
+  `receiver_name` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -482,19 +326,8 @@ CREATE TABLE IF NOT EXISTS `tb_role` (
 CREATE TABLE IF NOT EXISTS `tb_users` (
   `id` int(11) NOT NULL,
   `usertypeID` int(11) NOT NULL,
-  `addressID` int(11) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tb_users`
---
-
-INSERT INTO `tb_users` (`id`, `usertypeID`, `addressID`, `createdTime`, `updatedTime`, `isdeleted`) VALUES
-(1, 1, 111, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0'),
-(10, 1, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'1');
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -504,84 +337,110 @@ INSERT INTO `tb_users` (`id`, `usertypeID`, `addressID`, `createdTime`, `updated
 
 CREATE TABLE IF NOT EXISTS `tb_usertype` (
   `id` int(11) NOT NULL,
-  `usertype_name` varchar(255) NOT NULL,
-  `createdTime` timestamp NOT NULL,
-  `updatedTime` timestamp NOT NULL,
-  `isdeleted` bit(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `usertype_name` varchar(300) NOT NULL,
+  `parentID` int(11) DEFAULT '0',
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_usertype`
 --
 
-INSERT INTO `tb_usertype` (`id`, `usertype_name`, `createdTime`, `updatedTime`, `isdeleted`) VALUES
-(1, 'Admin', '0000-00-00 00:00:00', '0000-00-00 00:00:00', b'0');
+INSERT INTO `tb_usertype` (`id`, `usertype_name`, `parentID`, `isdeleted`) VALUES
+(1, 'Admin', 0, 0),
+(2, 'Donar', 0, 0),
+(3, 'New Donar', 2, 0),
+(4, 'VIP Donar', 2, 0),
+(5, 'HL Admin', 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_user_log`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_user_log` (
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `eventtypeID` int(11) NOT NULL,
+  `createdTime` timestamp NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `rtb_html_links`
+-- Indexes for table `rtb_option_donation_reason`
 --
-ALTER TABLE `rtb_html_links`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `rtb_option_payment`
---
-ALTER TABLE `rtb_option_payment`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `rtb_option_user`
---
-ALTER TABLE `rtb_option_user`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `rtb_usertype_links`
---
-ALTER TABLE `rtb_usertype_links`
+ALTER TABLE `rtb_option_donation_reason`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `typeID` (`typeID`),
-  ADD KEY `LinkID` (`linkID`);
+  ADD KEY `optionID` (`optionID`),
+  ADD KEY `donationReasonID` (`donationReasonID`);
+
+--
+-- Indexes for table `rtb_option_payment_type`
+--
+ALTER TABLE `rtb_option_payment_type`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `optionID` (`optionID`),
+  ADD KEY `payment_typeID` (`payment_typeID`);
+
+--
+-- Indexes for table `rtb_option_projectCategory`
+--
+ALTER TABLE `rtb_option_projectCategory`
+  ADD KEY `projectcategoryID` (`projectcategoryID`),
+  ADD KEY `optionID` (`optionID`);
+
+--
+-- Indexes for table `rtb_option_usertype`
+--
+ALTER TABLE `rtb_option_usertype`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `optionID` (`optionID`),
+  ADD KEY `usertypeID` (`usertypeID`);
+
+--
+-- Indexes for table `rtb_user_project`
+--
+ALTER TABLE `rtb_user_project`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `roleID` (`roleID`),
+  ADD KEY `projectID` (`projectID`),
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indexes for table `tb_address`
 --
 ALTER TABLE `tb_address`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tb_donation_reason`
+--
+ALTER TABLE `tb_donation_reason`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `parentID` (`parentID`);
+  ADD KEY `sendtoID` (`sendtoID`);
 
 --
--- Indexes for table `tb_addresstype`
+-- Indexes for table `tb_event_type`
 --
-ALTER TABLE `tb_addresstype`
+ALTER TABLE `tb_event_type`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tb_donate_reason`
+-- Indexes for table `tb_gender`
 --
-ALTER TABLE `tb_donate_reason`
+ALTER TABLE `tb_gender`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tb_donation`
+-- Indexes for table `tb_nationality`
 --
-ALTER TABLE `tb_donation`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tb_html`
---
-ALTER TABLE `tb_html`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tb_links`
---
-ALTER TABLE `tb_links`
+ALTER TABLE `tb_nationality`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -591,28 +450,72 @@ ALTER TABLE `tb_options`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tb_option_donation_values`
+--
+ALTER TABLE `tb_option_donation_values`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `donationID` (`donationID`),
+  ADD KEY `optionDrID` (`optionDrID`);
+
+--
 -- Indexes for table `tb_option_payment_values`
 --
 ALTER TABLE `tb_option_payment_values`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `optionPaymentID` (`optionPaymentID`),
+  ADD KEY `paymentID` (`paymentID`);
+
+--
+-- Indexes for table `tb_option_project_values`
+--
+ALTER TABLE `tb_option_project_values`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `projectcategoryID` (`optionProjectID`),
+  ADD KEY `projectID` (`projectID`);
 
 --
 -- Indexes for table `tb_option_user_values`
 --
 ALTER TABLE `tb_option_user_values`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userID` (`userID`),
+  ADD KEY `optionUserID` (`optionUserID`);
 
 --
 -- Indexes for table `tb_payment_method`
 --
 ALTER TABLE `tb_payment_method`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pay_method_typeID` (`pay_method_typeID`),
+  ADD KEY `userID` (`userID`);
+
+--
+-- Indexes for table `tb_payment_type`
+--
+ALTER TABLE `tb_payment_type`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tb_project`
 --
 ALTER TABLE `tb_project`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `projectcategoryID` (`projectcategoryID`);
+
+--
+-- Indexes for table `tb_project_category`
+--
+ALTER TABLE `tb_project_category`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tb_request_donation`
+--
+ALTER TABLE `tb_request_donation`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userID` (`userID`),
+  ADD KEY `donationReasonID` (`donationReasonID`),
+  ADD KEY `paymentMethodID` (`paymentMethodID`);
 
 --
 -- Indexes for table `tb_role`
@@ -621,10 +524,17 @@ ALTER TABLE `tb_role`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tb_send_to`
+--
+ALTER TABLE `tb_send_to`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usertypeID` (`usertypeID`);
 
 --
 -- Indexes for table `tb_usertype`
@@ -633,53 +543,61 @@ ALTER TABLE `tb_usertype`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tb_user_log`
+--
+ALTER TABLE `tb_user_log`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `eventtypeID` (`eventtypeID`),
+  ADD KEY `userID` (`userID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `rtb_html_links`
+-- AUTO_INCREMENT for table `rtb_option_donation_reason`
 --
-ALTER TABLE `rtb_html_links`
+ALTER TABLE `rtb_option_donation_reason`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `rtb_option_payment`
+-- AUTO_INCREMENT for table `rtb_option_payment_type`
 --
-ALTER TABLE `rtb_option_payment`
+ALTER TABLE `rtb_option_payment_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `rtb_option_user`
+-- AUTO_INCREMENT for table `rtb_option_usertype`
 --
-ALTER TABLE `rtb_option_user`
+ALTER TABLE `rtb_option_usertype`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT for table `rtb_usertype_links`
+-- AUTO_INCREMENT for table `rtb_user_project`
 --
-ALTER TABLE `rtb_usertype_links`
+ALTER TABLE `rtb_user_project`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tb_address`
 --
 ALTER TABLE `tb_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=112;
---
--- AUTO_INCREMENT for table `tb_addresstype`
---
-ALTER TABLE `tb_addresstype`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `tb_donation`
---
-ALTER TABLE `tb_donation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `tb_html`
+-- AUTO_INCREMENT for table `tb_donation_reason`
 --
-ALTER TABLE `tb_html`
+ALTER TABLE `tb_donation_reason`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `tb_links`
+-- AUTO_INCREMENT for table `tb_event_type`
 --
-ALTER TABLE `tb_links`
+ALTER TABLE `tb_event_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tb_gender`
+--
+ALTER TABLE `tb_gender`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tb_nationality`
+--
+ALTER TABLE `tb_nationality`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tb_options`
@@ -687,14 +605,34 @@ ALTER TABLE `tb_links`
 ALTER TABLE `tb_options`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT for table `tb_option_donation_values`
+--
+ALTER TABLE `tb_option_donation_values`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tb_option_payment_values`
+--
+ALTER TABLE `tb_option_payment_values`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tb_option_project_values`
+--
+ALTER TABLE `tb_option_project_values`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `tb_option_user_values`
 --
 ALTER TABLE `tb_option_user_values`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT for table `tb_payment_method`
 --
 ALTER TABLE `tb_payment_method`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tb_payment_type`
+--
+ALTER TABLE `tb_payment_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tb_project`
@@ -702,15 +640,135 @@ ALTER TABLE `tb_payment_method`
 ALTER TABLE `tb_project`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `tb_project_category`
+--
+ALTER TABLE `tb_project_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tb_request_donation`
+--
+ALTER TABLE `tb_request_donation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tb_role`
+--
+ALTER TABLE `tb_role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tb_send_to`
+--
+ALTER TABLE `tb_send_to`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `tb_usertype`
 --
 ALTER TABLE `tb_usertype`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `tb_user_log`
+--
+ALTER TABLE `tb_user_log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `rtb_option_donation_reason`
+--
+ALTER TABLE `rtb_option_donation_reason`
+  ADD CONSTRAINT `rtb_option_donation_reason_ibfk_1` FOREIGN KEY (`optionID`) REFERENCES `tb_options` (`id`),
+  ADD CONSTRAINT `rtb_option_donation_reason_ibfk_2` FOREIGN KEY (`donationReasonID`) REFERENCES `tb_donation_reason` (`id`);
+
+--
+-- Constraints for table `rtb_option_payment_type`
+--
+ALTER TABLE `rtb_option_payment_type`
+  ADD CONSTRAINT `rtb_option_payment_type_ibfk_1` FOREIGN KEY (`optionID`) REFERENCES `tb_options` (`id`),
+  ADD CONSTRAINT `rtb_option_payment_type_ibfk_2` FOREIGN KEY (`payment_typeID`) REFERENCES `tb_payment_type` (`id`);
+
+--
+-- Constraints for table `rtb_option_projectCategory`
+--
+ALTER TABLE `rtb_option_projectCategory`
+  ADD CONSTRAINT `rtb_option_projectcategory_ibfk_1` FOREIGN KEY (`optionID`) REFERENCES `tb_options` (`id`),
+  ADD CONSTRAINT `rtb_option_projectcategory_ibfk_2` FOREIGN KEY (`projectcategoryID`) REFERENCES `tb_project_category` (`id`);
+
+--
+-- Constraints for table `rtb_option_usertype`
+--
+ALTER TABLE `rtb_option_usertype`
+  ADD CONSTRAINT `rtb_option_usertype_ibfk_1` FOREIGN KEY (`optionID`) REFERENCES `tb_options` (`id`),
+  ADD CONSTRAINT `rtb_option_usertype_ibfk_2` FOREIGN KEY (`usertypeID`) REFERENCES `tb_usertype` (`id`);
+
+--
+-- Constraints for table `rtb_user_project`
+--
+ALTER TABLE `rtb_user_project`
+  ADD CONSTRAINT `rtb_user_project_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `tb_users` (`id`),
+  ADD CONSTRAINT `rtb_user_project_ibfk_2` FOREIGN KEY (`projectID`) REFERENCES `tb_project` (`id`),
+  ADD CONSTRAINT `rtb_user_project_ibfk_3` FOREIGN KEY (`roleID`) REFERENCES `tb_role` (`id`);
+
+--
+-- Constraints for table `tb_donation_reason`
+--
+ALTER TABLE `tb_donation_reason`
+  ADD CONSTRAINT `tb_donation_reason_ibfk_1` FOREIGN KEY (`sendtoID`) REFERENCES `tb_send_to` (`id`);
+
+--
+-- Constraints for table `tb_option_payment_values`
+--
+ALTER TABLE `tb_option_payment_values`
+  ADD CONSTRAINT `tb_option_payment_values_ibfk_1` FOREIGN KEY (`optionPaymentID`) REFERENCES `rtb_option_payment_type` (`id`),
+  ADD CONSTRAINT `tb_option_payment_values_ibfk_2` FOREIGN KEY (`paymentID`) REFERENCES `tb_payment_method` (`id`);
+
+--
+-- Constraints for table `tb_option_project_values`
+--
+ALTER TABLE `tb_option_project_values`
+  ADD CONSTRAINT `tb_option_project_values_ibfk_1` FOREIGN KEY (`optionProjectID`) REFERENCES `tb_options` (`id`),
+  ADD CONSTRAINT `tb_option_project_values_ibfk_2` FOREIGN KEY (`projectID`) REFERENCES `tb_project` (`id`);
+
+--
+-- Constraints for table `tb_option_user_values`
+--
+ALTER TABLE `tb_option_user_values`
+  ADD CONSTRAINT `tb_option_user_values_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `tb_users` (`id`),
+  ADD CONSTRAINT `tb_option_user_values_ibfk_2` FOREIGN KEY (`optionUserID`) REFERENCES `rtb_option_usertype` (`id`);
+
+--
+-- Constraints for table `tb_payment_method`
+--
+ALTER TABLE `tb_payment_method`
+  ADD CONSTRAINT `tb_payment_method_ibfk_1` FOREIGN KEY (`pay_method_typeID`) REFERENCES `tb_payment_type` (`id`),
+  ADD CONSTRAINT `tb_payment_method_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `tb_users` (`id`);
+
+--
+-- Constraints for table `tb_request_donation`
+--
+ALTER TABLE `tb_request_donation`
+  ADD CONSTRAINT `tb_request_donation_ibfk_1` FOREIGN KEY (`donationReasonID`) REFERENCES `tb_donation_reason` (`id`),
+  ADD CONSTRAINT `tb_request_donation_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `tb_users` (`id`),
+  ADD CONSTRAINT `tb_request_donation_ibfk_3` FOREIGN KEY (`paymentMethodID`) REFERENCES `tb_payment_method` (`id`);
+
+--
+-- Constraints for table `tb_users`
+--
+ALTER TABLE `tb_users`
+  ADD CONSTRAINT `tb_users_ibfk_1` FOREIGN KEY (`usertypeID`) REFERENCES `tb_usertype` (`id`);
+
+--
+-- Constraints for table `tb_user_log`
+--
+ALTER TABLE `tb_user_log`
+  ADD CONSTRAINT `tb_user_log_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `tb_users` (`id`),
+  ADD CONSTRAINT `tb_user_log_ibfk_2` FOREIGN KEY (`eventtypeID`) REFERENCES `tb_event_type` (`id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

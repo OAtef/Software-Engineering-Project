@@ -20,15 +20,15 @@ $(document).on('click','#loginBtn',function(e){
         else{
 
             $.ajax({ url: '../Model/users.php',
-            data: {function2call: 'login', email: email, password: pass}, // check if userID of that email does match the userID of th password 
-            type: 'POST',                                                   // in case of security compare hashes 
+            data: {function2call: 'login', email: email, password: pass}, // check if userID of that email does match the userID of th password
+            type: 'POST',                                                   // in case of security compare hashes
             dataType: "JSON",
             success: function(data) {
 
                 console.log(data);
 
                 if(data == 1){
-                    // direct it to index.html
+                    // direct it to admin.html
                     window.location.href = "admin.html";
                 }
                 else{
@@ -43,11 +43,7 @@ $(document).on('click','#loginBtn',function(e){
         }
 
     }
-   
+
     return false;
-   
+
 });
-
-
-
-

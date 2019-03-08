@@ -1,21 +1,25 @@
 var headers = new Array();
 var users = new Array();
+var userID;
 var usertypeID;
-var oldemail;
+var parentID;
 
-var utidd; // for checking and not repeating html
-var utid; // for checking and not repeating html
+var utid_insert; // for checking and not repeating html
+var utid_update; 
 
 $(document).ready(function(){
 
     $("#emails").hide();
     $("#foundationMembers").hide();
+    $('.t2').hide();
+    $('.i2').hide();
 
     $.ajax({ url: '../Model/usertypes.php',
-    data: {function2call: 'list_usertypes'},
+    data: {function2call: 'Get_usertype_children', usertypeID: 0},
     type: 'POST',
     dataType: "JSON",
     success: function(data) {
+
        var arr = new Array();
 
        arr = data;
@@ -24,85 +28,34 @@ $(document).ready(function(){
 
             var str1 = arr[i];
             var str2 = arr[++i];
-           $("<a class='dropdown-item userTable' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-table");
-           $("<a class='dropdown-item insertUser' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-insert");
-           $("<a class='dropdown-item emailTable' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-email-table");
+           $("<a class='dropdown1 dropdown-item' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-table1");
+           $("<a class='dropdown1 dropdown-item' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-insert");
 
-
-           i += 2;
+           i += 1;
        }
        
     },
     error: function(data){
        console.log(data);
    }
-});
-
-    $(document).on('click','.dropdown-item',function(e){
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        var id = $(this).attr('id');
-        usertypeID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
-
-        if($(this).hasClass('userTable')){
-            usertypetable(id);
-        }
-        else if($(this).hasClass('insertUser')){
-            insertUser(id);
-
-        }
-        else if($(this).hasClass('emailTable')){
-
-        }
-       
-        return false;
-       
     });
 
-    $(document).on('click','#saveChangesBtn',function(e){
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        var form_arr = $('form').serialize();
-        form_arr += '&';
-        //var len = Object.keys(headers).length;
-
-        $.ajax({
-            url: "../Model/users.php",
-            type: "POST",
-            data: {function2call: 'update_user', usertypeID: usertypeID, oldEmail: oldemail, arr: form_arr},
-            success: function(data) {
-                console.log(data);
-                $("#sucess_div").css("display", "block");
-            },
-            error: function(data){
-                console.log(data);
-                //$("#errormsg").html(data.responseText);
-            }
-        }); 
-       
-        return false;
-       
-    });
+    // show and hide clicks
 
     $(document).on('click','#list_edit_btn',function(e){
 
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        resetTable();
-    $("#sucess_div").hide();
-
-    $("#tablediv").show();
-    $("#update_form_div").hide();
-    $("#insert_form_div").hide();
-    $("#foundationMembers").show();
-    $("#emails").hide();
-       
-    return false;
+        $("#theTable").empty();
+        $("#sucess_div").hide();
+        $("#tablediv").show();
+        $("#update_form_div").hide();
+        $("#insert_form_div").hide();
+        $("#foundationMembers").show();
+        $("#emails").hide();
+        
+        return false;
        
     });
 
@@ -110,7 +63,8 @@ $(document).ready(function(){
 
         e.preventDefault();
         e.stopImmediatePropagation();
-
+        
+        $("#insert_form").empty();
         $("#foundationMembers").show();
         $("#tablediv").hide();
         $("#update_form_div").hide();
@@ -121,41 +75,14 @@ $(document).ready(function(){
            
     });
 
-    $(document).on('click','#addMemberBtn',function(e){
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        var form_arr = $('form').serialize();
-        form_arr += '&';
-        //var len = Object.keys(headers).length;
-
-        $.ajax({
-            url: "../Model/users.php",
-            type: "POST",
-            data: {function2call: 'insert_user', usertypeID: usertypeID, arr: form_arr},
-            success: function(data) {
-                console.log(data);
-                $("#sucess_div").css("display", "block");
-            },
-            error: function(data){
-                console.log(data);
-                //$("#errormsg").html(data.responseText);
-            }
-        }); 
-       
-        return false;
-       
-    });
-
     $(document).on('click','.updatebtn',function(e){
 
         e.preventDefault();
         e.stopImmediatePropagation();
 
         var id = $(this).attr('id');
+        
         updateUser(id);
-       
         return false;
        
     });
@@ -166,8 +93,139 @@ $(document).ready(function(){
         e.stopImmediatePropagation();
 
         var id = $(this).attr('id');
-        console.log(id);
+
         deleteUser(id);
+        return false;
+       
+    });
+
+    $(document).on('click','.dropdown1',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var id = $(this).attr('id');
+        parentID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+        $.ajax({ url: '../Model/usertypes.php',
+        data: {function2call: 'Get_usertype_children', usertypeID: parentID},
+        type: 'POST',
+        dataType: "JSON",
+        success: function(data) {
+
+            if(data != null){
+                
+                $('#dropdown-usertype-table2').empty();
+                $("#dropdown-usertype-insert2").empty();
+
+                var i = 0;
+                while(i < data.length){
+         
+                     var str1 = data[i];
+                     var str2 = data[++i];
+                    $("<a class='dropdown2 dropdown-item userTable' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-table2");
+                    $("<a class='dropdown2 dropdown-item insertUser' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-insert2");
+         
+         
+                    i += 1;
+                }
+
+                $('.t2').show();
+                $('.i2').show();
+
+            }
+           
+        },
+        error: function(data){
+           console.log(data);
+       }
+        });
+
+       
+        return false;
+       
+    });
+
+    $(document).on('click','.dropdown2',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var id = $(this).attr('id');
+        usertypeID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+        if($(this).hasClass('userTable')){
+            $('#theTable').empty();
+            usertypetable();
+        }
+        else if($(this).hasClass('insertUser')){
+            if(usertypeID != utid_insert){
+                $('#insert_form').empty();
+                insertUser();
+            }else{
+                $('#insert_form').show();
+            }
+        }
+       
+        return false;
+       
+    });
+
+    // functions
+
+    $(document).on('click','#saveChangesBtn',function(e){ // update
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var form_arr = $('form').serialize();
+        form_arr += '&';
+
+        $.ajax({
+            url: "../Model/users.php",
+            type: "POST",
+            data: {function2call: 'update_user', parentID: parentID, userID: userID, arr: form_arr},
+            success: function(data) {
+                console.log(data);
+                $("#sucess_div").css("display", "block");
+            },
+            error: function(data){
+                console.log(data);
+                $("#error_div").css("display", "block");
+                //$("#errormsg").html(data.responseText);
+            }
+        }); 
+       
+        return false;
+       
+    });
+
+    $(document).on('click','#addMemberBtn',function(e){ // insert
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var form_arr = $('#insertForm').serialize();
+        form_arr += '&';
+        console.log(form_arr);
+
+        $.ajax({
+            url: "../Model/users.php",
+            type: "POST",
+            data: {function2call: 'insert_user', usertypeID: usertypeID, arr: form_arr, parentID: parentID},
+            success: function(data) {
+                console.log(data);
+                $("#sucess_div").css("display", "block");
+                for(var key in headers){
+                    $('td[name='+key+']').val("");
+                }
+            },
+            error: function(data){
+                console.log(data);
+                $("#error_div").css("display", "block");
+                //$("#errormsg").html(data.responseText);
+            }
+        }); 
        
         return false;
        
@@ -177,30 +235,36 @@ $(document).ready(function(){
 
 function insertUser(){
 
-    if(usertypeID != utidd){
+        utid_insert = usertypeID;
 
-        utidd = usertypeID;
-
-        var formdiv = document.getElementById("insert_form_div");
+        var formdiv = document.getElementById("insert_form");
 
         var form = " <form id='insertForm' method='post'> " +
             " <div class='table-responsive'> <table class='table table-hover table-bordered'> <tbody> ";
 
         $.ajax({ 
-            url: '../Model/users.php',
-            data: {function2call: 'tableHeader', usertypeID: usertypeID},
+            url: '../Model/options.php',
+            data: {function2call: 'label_header', parentID: parentID},
             type: 'POST',
             dataType: "JSON",
             success: function(data) {
-                headers = data;
-                for (var key in headers) {        
-                    form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' /></td>"; 
+
+                if(data.length != 0){
+                        
+                    headers = data;
+                    for (var key in headers) {        
+                        form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' /></td>"; 
+                    }
+    
+                    form += "</tr> <tr> <td>  </td> <td> <input id='addMemberBtn' type='submit' value='Add Member' class='btn btn-primary' name='saveChangesBtn'/> " + 
+                        "</td> </tr> </tbody> </table> </div> </form>";
+                            
+                    formdiv.innerHTML+= form;
+                }else{
+                    form += "<div class='alert alert-danger'> No Options Exist for such User Type </div></body>";
+                    formdiv.innerHTML+= form;
                 }
 
-                form += "</tr> <tr> <td>  </td> <td> <input id='addMemberBtn' type='submit' value='Add Member' class='btn btn-primary' name='saveChangesBtn'/> " + 
-                    "</td> </tr> </tbody> </table> </div> </form>";
-                        
-                formdiv.innerHTML+= form;
 
             },
             error: function(data){
@@ -208,88 +272,94 @@ function insertUser(){
                 //$("#errormsg").html(data.responseText);
             }
         });   
-    }
 
 }
 
-
 function usertypetable(){
-
-    if(usertypeID != utid){
-        utid = usertypeID;
 
         var div = document.getElementById("theTable");
         var table = ' <div class="table-responsive"> <br> <table class="table table-bordered userstable" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';   
     
         $.ajax({ 
-            url: '../Model/users.php',
-            data: {function2call: 'tableHeader', usertypeID: usertypeID},
+            url: '../Model/options.php',
+            data: {function2call: 'label_header', parentID: parentID},
             type: 'POST',
             dataType: "JSON",
             success: function(data) {
-    
-                headers = data;
-                
-                for (var key in headers) {
-                    table += "<th>" + (key) + "</th>";
-                }
-    
-                table += "<th> Control </th>";
-    
-                table += "</tr> </thead> <tfoot> <tr>";
-                for (var key in headers) {
-                    table += "<th>" + (key) + "</th>";
-                }
-    
-                table += "<th> Control </th>";
-    
-                table += "</tr> </tfoot>";
-    
-                $.ajax({ 
-                    url: '../Model/users.php',
-                    data: {function2call: 'select_users', usertypeID: usertypeID},
-                    type: 'POST',
-                    dataType: "JSON",
-                    success: function(data) {
 
-                        console.log(data);
+                if(data != null){
     
-                        users = data;
-            
-                        var obj_size = data.length;
-                        var arr_size = data[0].user_values.length;
-            
-                        var a =0;
-            
-                        table += "<tbody>";
-                        while(a < obj_size){
-                            table += "<tr>";
-
-                            console.log(data[a]);
-                            var b=0;
-                            while (b < arr_size){
-                                //console.log(data[a].user_values[b]);
-                                table += "<td>" + (data[a].user_values[b]) + "</td>";
-                                b += 1;
-                            }
-    
-                            table += "<td> <a id='update-" + a + "' href='#' class='btn btn-primary m-r-1em updatebtn'>Edit</a> " +
-                            "<a id='del-" + a + "' href='#' class='btn btn-danger deletebtn'>Delete</a> </td> </tr>";    
-                            
-                            a += 1;
-    
-                        }
-            
-                        div.innerHTML+= table + '</body>';
-                        
-
-                    },
-                    error: function(data){
-                        console.log(data);
-                        //$("#errormsg").html(data.responseText);
+                    headers = data;
+                    
+                    for (var key in headers) {
+                        table += "<th>" + (key) + "</th>";
                     }
+        
+                    table += "<th> Control </th>";
+        
+                    table += "</tr> </thead> <tfoot> <tr>";
+                    for (var key in headers) {
+                        table += "<th>" + (key) + "</th>";
+                    }
+        
+                    table += "<th> Control </th>";
+        
+                    table += "</tr> </tfoot>";
+        
+                    $.ajax({ 
+                        url: '../Model/users.php',
+                        data: {function2call: 'list_users', usertypeID: usertypeID, parentID: parentID},
+                        type: 'POST',
+                        dataType: "JSON",
+                        success: function(data) {
+
+                            if(data != null){
+
+                                users = data;
+                    
+                                var obj_size = data.length;
+                                var arr_size = data[0].user_values.length;
+                    
+                                var a =0;
+                    
+                                table += "<tbody>";
+                                while(a < obj_size){
+                                    table += "<tr>";
+
+                                    console.log(data[a]);
+                                    var b=1;
+                                    while (b < arr_size){
+                                        console.log(data[a].user_values[b]);
+                                        table += "<td>" + (data[a].user_values[b]) + "</td>";
+                                        b += 1;
+                                    }
             
-                }); 
+                                    table += "<td> <a id='update-" + a + "' href='#' class='btn btn-primary btn-circle m-r-1em updatebtn'><i class='fa fa-edit'></i></a> " +
+                                    "<a id='del-" + a + "' href='#' class='btn btn-danger btn-circle deletebtn'><i class='fas fa-trash'></i></a> </td> </tr>";    
+                                    
+                                    a += 1;
+            
+                                }
+
+                                table += '</body>';
+                                div.innerHTML+= table;
+
+                            }
+                        },
+                        error: function(data){
+                            console.log(data);
+                            //$("#errormsg").html(data.responseText);
+                        }
+                
+                    }); 
+
+
+                    var script = document.createElement("script"); //Make a script DOM node
+                    script.src = '../../js/demo/datatables-demo.js'; //Set it's src to the provided URL
+                    document.body.appendChild(script);
+                } else{
+                    // notify no data input managed for such a usertype
+                }
     
             },
             error: function(data){
@@ -297,88 +367,66 @@ function usertypetable(){
                 //$("#errormsg").html(data.responseText);
             }
         });   
-    }
-
 }
 
-function updateUser(xx){
+function updateUser(id){
 
-    $("#tablediv").hide();
-    $("#update_form_div").show();
+    var user_obj_index = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+    userID = users[user_obj_index].user_values[0];
 
-    user_obj_index = xx.substr(xx.indexOf('-')+1, xx.indexOf('-'));
-    
-    var formdiv = document.getElementById("update_form_div");
+    if(userID != utid_update){
 
-    var form = " <form id='updateForm' method='post'> " +
-        " <div class='table-responsive'> <table class='table table-hover table-bordered'> <tbody> ";
+        utid_update = usertypeID;
+        $("#update_form_div").empty();
+        $("#tablediv").hide();
+        $("#update_form_div").show();
 
-        var i = 0;
-    for (var key in headers) {        
-        form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' value='" + users[user_obj_index].user_values[i] + "' /></td>"; 
+        var formdiv = document.getElementById("update_form_div");
+
+        var form = " <form id='updateForm' method='post'> " +
+            " <div class='table-responsive'> <table class='table table-hover table-bordered'> <tbody> ";
+
+        var i = 1;
+        for (var key in headers) {        
+            form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' value='" + users[user_obj_index].user_values[i] + "' /></td>"; 
+            i++;
+        }
+
+        form += "</tr> <tr> <td>  </td> <td> <input id='saveChangesBtn' type='submit' value='Save Changes' class='btn btn-primary' name='saveChangesBtn'/> " + 
+            "</td> </tr> </tbody> </table> </div> </form>";
+
+            // <a href="index.php" style="position: absolute; margin-left: 2px;" class="btn btn-danger">Back to read products</a>
         
-        if((users[user_obj_index].user_values[i]).includes("@")){
+        formdiv.innerHTML+= form;
 
-            oldemail = users[user_obj_index].user_values[i];
-        }
-
-        i++;
+    }else{
+        $("#update_form_div").show();
     }
-
-    form += "</tr> <tr> <td>  </td> <td> <input id='saveChangesBtn' type='submit' value='Save Changes' class='btn btn-primary' name='saveChangesBtn'/> " + 
-        " <a href='index.php' style='position: absolute; margin-left: 2px;' class='btn btn-danger'>Back to read products</a> </td> </tr> </tbody> </table> </div> </form>";
-
-            
-    formdiv.innerHTML+= form;
-    
 }
 
-function deleteUser(xx){
+function deleteUser(id){
 
-    user_obj_index = xx.substr(xx.indexOf('-')+1, xx.indexOf('-'));
-
-    var i = 0;
-    while (i < users[user_obj_index].user_values.length) {        
-        if((users[user_obj_index].user_values[i]).includes("@")){
-            oldemail = users[user_obj_index].user_values[i];
-        }
-
-        i++;
-    }
-
+    var user_obj_index = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+    userID = users[user_obj_index].user_values[0];
 
     $.ajax({ 
         url: '../Model/users.php',
-        data: {function2call: 'delete_user', usertypeID: usertypeID, oldEmail: oldemail},
+        data: {function2call: 'delete_user', usertypeID: usertypeID, userID: userID},
         type: 'POST',
-        dataType: "JSON",
         success: function(data) {
-
+            $("#sucess_div").css("display", "block");
+            $("#theTable").hide();
+            $("#theTable").empty();
+            usertypetable();
+            $("#theTable").show();
             // notifiy done sucessfully 
-
         },
         error: function(data){
             console.log(data);
+            $("#error_div").css("display", "block");
             //$("#errormsg").html(data.responseText);
         }
     });
-
-
-
-
-
-
-
-
-
-
-
-}
-
-function resetTable(){
-    utid = 0;
-    $("#theTable").empty();
-
 }
 
 

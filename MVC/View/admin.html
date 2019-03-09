@@ -18,6 +18,13 @@
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+  <!--  -->
+  <!-- <link type="text/css" href="../../css/extra/bootstrap.min.css" rel="stylesheet"> -->
+  <link type="text/css" href="../../css/extra/bootstrap-responsive.min.css" rel="stylesheet">
+  <link type="text/css" href="../../css/extra/theme.css" rel="stylesheet">
+  <link type="text/css" href="../../css/extra/font-awesome.css" rel="stylesheet">
+  <!--  -->
+
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -73,8 +80,8 @@
         <div id="collapseOne" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header"> Members Interface :</h6>
-            <a class="collapse-item" id="addMemBtn" href="user.html"> Add a Member</a>
-            <a class="collapse-item" id="list_edit_btn" href="user.html" >List and Edit </a>
+            <a class="collapse-item" id="addMemBtn" href=""> Add a Member</a>
+            <a class="collapse-item" id="list_edit_btn" href="">List and Edit </a>
           </div>
         </div>
       </li>
@@ -82,7 +89,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fa fa-envelope-open"></i>
-          <span >Emails</span>
+          <span>Emails</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -94,10 +101,23 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fa fa-envelope-open"></i>
+          <span>Project Managment</span>
+        </a>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Tasks Interface :</h6>
+            <a class="collapse-item" href="#" id='Tasksbtn'> Assign Tasks </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
           <span>Settings</span>
         </a>
-        <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">... :</h6> -->
             <a class="collapse-item" href="Settings.html"> Settings </a>
@@ -333,127 +353,233 @@
         </nav>
         <!-- End of Topbar -->
 
-          <!-- Main Content -->
+        <!-- Main Content -->
 
-          <div id="foundationMembers" class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary"> Foundation Members</h6>
-            </div>
-            <div class="card-body">
-
-                <div id="sucess_div" class='alert alert-success' style="display: none"> Record was updated. </div>
-                <div id="error_div" class='alert alert-danger' style="display: none"> Something Wrong Happend. </div>
-
-              <div id="tablediv">
-                <div class='row'>
-                    <div class="dropdown mb-4 col-sm-2">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Type L1
-                        </button>
-
-                        <div id="dropdown-usertype-table1" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        </div>
-                      </div>
-
-                      <div class="dropdown mb-4 col-sm-2">
-                        <button class="t2 btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Type L2
-                        </button>
-
-                        <div id="dropdown-usertype-table2" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        </div>
-                      </div>
-                </div>
-                <div id="theTable"></div>
-              </div>
-              <div id="update_form_div"></div>
-              <div id="insert_form_div">
-                <div class='row'>
-                    <div class="dropdown mb-4 col-sm-2">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Choose1
-                          </button>
-
-                          <div id="dropdown-usertype-insert" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
-                          </div>
-                      </div>
-
-                      <div class="dropdown mb-4 col-sm-2">
-                        <button class="i2 btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Choose2
-                        </button>
-
-                        <div id="dropdown-usertype-insert2" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
-                        </div>
-                      </div>
-                </div>
-                <div id="insert_form"></div>
-
-              </div>
-
-
-                  <div class="dropdown mb-4">
-
-                    </div>
-              </div>
+        <div id="foundationMembers" class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"> Foundation Members</h6>
           </div>
-          </div>
+          <div class="card-body">
 
-          <div id="emails" class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary"> Emails </h6>
-            </div>
-            <div class="card-body">
+            <div id="sucess_div" class='alert alert-success' style="display: none"> Record was updated. </div>
+            <div id="error_div" class='alert alert-danger' style="display: none"> Something Wrong Happend. </div>
 
-              <div class='hide_to_send_email'>
-                  <div class="dropdown mb-4">
-                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Choose
-                      </button>
+            <div id="tablediv">
+              <div class='row'>
+                <div class="dropdown mb-4 col-sm-2">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Type L1
+                  </button>
 
-                      <div id="dropdown-email-table" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
-                      </div>
-                    </div>
-                <div id="table_email_list">
-
-                      <h6 class="m-0 font-weight-bold text-primary" style="display: inline;">Select Users You Would Like to Send email to</h6>
-                      <a href="#" class="btn btn-primary btn-icon-split" id='tosendform' style="float: right;margin-right: 20px;">
-                            <span class="icon text-white-50">
-                              <i class="fas fa-arrow-right"></i>
-                            </span>
-                            <span class="text">write email</span>
-                      </a>
+                  <div id="dropdown-usertype-table1" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                  </div>
                 </div>
 
-              </div>
+                <div class="dropdown mb-4 col-sm-2">
+                  <button class="t2 btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Type L2
+                  </button>
 
-              <div id="emailForm">
-                  <div id="sucess_div" class='alert alert-success' style="display: none"> Message was Send </div>
-                  <a href="#" class="btn btn-primary btn-icon-split" id='back_to_email_list'>
-                      <span class="icon text-white-50">
-                        <i class="fas fa-arrow-left"></i>
-                      </span>
-                      <span class="text">Back</span>
-                </a>
-                  <form method="post" id="reused_form" >
-                      <label for="sendto">Send to:</label>
-                      <input id="sendto" type="text" name="Name" required maxlength="50">
-                      <br>
-                      <label for="fromwhom">From: </label>
-                      <input id="fromwhom" type="email" name="Email" required maxlength="50">
-                      <br>
-                      <label for="message">Message:</label>
-                      <textarea id="message" name="Message" rows="10" maxlength="6000" required></textarea>
-                      <br>
-                      <!-- <button class="button-primary" type="submit" >Send</button> -->
-                      <a href="#" class="btn btn-facebook btn-block" id="SendEmailBtn"> Send</a>
-                  </form>
-
+                  <div id="dropdown-usertype-table2" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                  </div>
+                </div>
               </div>
+              <div id="theTable"></div>
+            </div>
+            <div id="update_form_div"></div>
+            <div id="insert_form_div">
+              <div class='row'>
+                <div class="dropdown mb-4 col-sm-2">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Choose1
+                  </button>
+
+                  <div id="dropdown-usertype-insert" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                  </div>
+                </div>
+
+                <div class="dropdown mb-4 col-sm-2">
+                  <button class="i2 btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Choose2
+                  </button>
+
+                  <div id="dropdown-usertype-insert2" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                  </div>
+                </div>
+              </div>
+              <div id="insert_form"></div>
+
             </div>
 
 
+            <div class="dropdown mb-4">
+
+            </div>
           </div>
+        </div>
+
+        <!-- Tasks Control -->
+        <div id="TasksForm" class="span9 shadow">
+          <div class="content">
+
+            <div class="module message">
+              <div class="module-head">
+                <h3>Task Management Tool</h3>
+              </div>
+              <div class="module-option clearfix">
+                <div class="pull-left">
+                  Filter : &nbsp;
+                  <div class="btn-group">
+                    <button class="btn">All</button>
+                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li>All</li>
+                      <li>In Progress</li>
+                      <li>Done</li>
+                      <li class="divider"></li>
+                      <li>New task</li>
+                      <li>Overdue Task</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="pull-right">
+                  <a href="#" class="btn btn-primary">Create Task</a>
+                </div>
+              </div>
+              <div class="module-body table">
+
+                <table class="table table-message">
+                  <tbody>
+                    <tr class="heading">
+                      <td class="cell-icon"></td>
+                      <td class="cell-title">Task</td>
+                      <td class="cell-status hidden-phone hidden-tablet">Status</td>
+                      <td class="cell-time align-right">Due Date</td>
+                    </tr>
+                    <tr class="task">
+                      <td class="cell-icon"><i class="icon-checker high"></i></td>
+                      <td class="cell-title">
+                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                      </td>
+                      <td class="cell-status hidden-phone hidden-tablet"><b class="due">Missed</b></td>
+                      <td class="cell-time align-right">Just Now</td>
+                    </tr>
+                    <tr class="task">
+                      <td class="cell-icon"><i class="icon-checker"></i></td>
+                      <td class="cell-title">
+                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                      </td>
+                      <td class="cell-status hidden-phone hidden-tablet"><b class="due">Missed</b></td>
+                      <td class="cell-time align-right">Just Now</td>
+                    </tr>
+                    <tr class="task">
+                      <td class="cell-icon"><i class="icon-checker"></i></td>
+                      <td class="cell-title">
+                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                      </td>
+                      <td class="cell-status hidden-phone hidden-tablet"><b class="due">Missed</b></td>
+                      <td class="cell-time align-right">Yesterday</td>
+                    </tr>
+                    <tr class="task resolved">
+                      <td class="cell-icon"><i class="icon-checker high"></i></td>
+                      <td class="cell-title">
+                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                      </td>
+                      <td class="cell-status hidden-phone hidden-tablet"></td>
+                      <td class="cell-time align-right">15 July 2014</td>
+                    </tr>
+                    <tr class="task resolved">
+                      <td class="cell-icon"><i class="icon-checker high"></i></td>
+                      <td class="cell-title">
+                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                      </td>
+                      <td class="cell-status hidden-phone hidden-tablet"></td>
+                      <td class="cell-time align-right">15 July 2014</td>
+                    </tr>
+                    <tr class="task resolved">
+                      <td class="cell-icon"><i class="icon-checker high"></i></td>
+                      <td class="cell-title">
+                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                      </td>
+                      <td class="cell-status hidden-phone hidden-tablet"></td>
+                      <td class="cell-time align-right">15 July 2014</td>
+                    </tr>
+                    <tr class="task resolved">
+                      <td class="cell-icon"><i class="icon-checker high"></i></td>
+                      <td class="cell-title">
+                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                      </td>
+                      <td class="cell-status hidden-phone hidden-tablet"></td>
+                      <td class="cell-time align-right">15 July 2014</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="module-foot">
+              </div>
+            </div>
+          </div>
+        </div><!--/.span9-->
+
+      </div>
+
+      <div id="emails" class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary"> Emails </h6>
+        </div>
+        <div class="card-body">
+
+          <div class='hide_to_send_email'>
+            <div class="dropdown mb-4">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Choose
+              </button>
+
+              <div id="dropdown-email-table" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+              </div>
+            </div>
+            <div id="table_email_list">
+
+              <h6 class="m-0 font-weight-bold text-primary" style="display: inline;">Select Users You Would Like to Send email to</h6>
+              <a href="#" class="btn btn-primary btn-icon-split" id='tosendform' style="float: right;margin-right: 20px;">
+                <span class="icon text-white-50">
+                  <i class="fas fa-arrow-right"></i>
+                </span>
+                <span class="text">write email</span>
+              </a>
+            </div>
+
+          </div>
+
+          <div id="emailForm">
+            <div id="sucess_div" class='alert alert-success' style="display: none"> Message was Send </div>
+            <a href="#" class="btn btn-primary btn-icon-split" id='back_to_email_list'>
+              <span class="icon text-white-50">
+                <i class="fas fa-arrow-left"></i>
+              </span>
+              <span class="text">Back</span>
+            </a>
+            <form method="post" id="reused_form">
+              <label for="sendto">Send to:</label>
+              <input id="sendto" type="text" name="Name" required maxlength="50">
+              <br>
+              <label for="fromwhom">From: </label>
+              <input id="fromwhom" type="email" name="Email" required maxlength="50">
+              <br>
+              <label for="message">Message:</label>
+              <textarea id="message" name="Message" rows="10" maxlength="6000" required></textarea>
+              <br>
+              <!-- <button class="button-primary" type="submit" >Send</button> -->
+              <a href="#" class="btn btn-facebook btn-block" id="SendEmailBtn"> Send</a>
+            </form>
+
+          </div>
+        </div>
+
+
+      </div>
 
       <!-- End of Main Content -->
 
@@ -519,6 +645,30 @@
 
   <!-- Page level custom scripts -->
   <script src="../../js/demo/datatables-demo.js"></script>
+
+  <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 -->
+
+  <!-- Dont remove below comments -->
+
+  <!-- <script src="../scripts/jquery-1.9.1.min.js" type="text/javascript"></script> -->
+  <!-- <script src="../scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script> -->
+  <!-- <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script> -->
+  <!-- <script src="../scripts/flot/jquery.flot.js" type="text/javascript"></script> -->
+  <!-- <script src="../scripts/datatables/jquery.dataTables.js" type="text/javascript"></script> -->
+  <!-- <script type="text/javascript">
+  $(document).ready(function() {
+      $('.table-message tbody tr').click(
+        function()
+        {
+          $(this).toggleClass('resolved');
+        }
+      );
+    } );
+  </script> -->
+
+  <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 -->
+
+  <!-- Dont remove above comments -->
 
 </body>
 

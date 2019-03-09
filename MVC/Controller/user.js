@@ -5,14 +5,22 @@ var usertypeID;
 var parentID;
 
 var utid_insert; // for checking and not repeating html
-var utid_update; 
+var utid_update;
 
 $(document).ready(function(){
 
     $("#emails").hide();
     $("#foundationMembers").hide();
+    // $("#TasksForm").hide();
     $('.t2').hide();
     $('.i2').hide();
+
+    $('.table-message tbody tr').click(
+      function()
+      {
+        $(this).toggleClass('resolved');
+      }
+    );
 
     $.ajax({ url: '../Model/usertypes.php',
     data: {function2call: 'Get_usertype_children', usertypeID: 0},
@@ -33,7 +41,7 @@ $(document).ready(function(){
 
            i += 1;
        }
-       
+
     },
     error: function(data){
        console.log(data);
@@ -47,6 +55,7 @@ $(document).ready(function(){
         e.preventDefault();
         e.stopImmediatePropagation();
 
+        $("#TasksForm").hide();
         $("#theTable").empty();
         $("#sucess_div").hide();
         $("#tablediv").show();
@@ -54,16 +63,17 @@ $(document).ready(function(){
         $("#insert_form_div").hide();
         $("#foundationMembers").show();
         $("#emails").hide();
-        
+
         return false;
-       
+
     });
 
     $(document).on('click','#addMemBtn',function(e){
 
         e.preventDefault();
         e.stopImmediatePropagation();
-        
+
+        $("#TasksForm").hide();
         $("#insert_form").empty();
         $("#foundationMembers").show();
         $("#tablediv").hide();
@@ -72,7 +82,24 @@ $(document).ready(function(){
         $("#emails").hide();
 
         return false;
-           
+
+    });
+
+    $(document).on('click','#Tasksbtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#TasksForm").show();
+        $("#insert_form").empty();
+        $("#foundationMembers").hide();
+        $("#tablediv").hide();
+        $("#update_form_div").hide();
+        $("#insert_form_div").hide();
+        $("#emails").hide();
+
+        return false;
+
     });
 
     $(document).on('click','.updatebtn',function(e){
@@ -81,12 +108,12 @@ $(document).ready(function(){
         e.stopImmediatePropagation();
 
         var id = $(this).attr('id');
-        
+
         updateUser(id);
         return false;
-       
+
     });
-    
+
     $(document).on('click','.deletebtn',function(e){
 
         e.preventDefault();
@@ -96,7 +123,7 @@ $(document).ready(function(){
 
         deleteUser(id);
         return false;
-       
+
     });
 
     $(document).on('click','.dropdown1',function(e){
@@ -114,19 +141,19 @@ $(document).ready(function(){
         success: function(data) {
 
             if(data != null){
-                
+
                 $('#dropdown-usertype-table2').empty();
                 $("#dropdown-usertype-insert2").empty();
 
                 var i = 0;
                 while(i < data.length){
-         
+
                      var str1 = data[i];
                      var str2 = data[++i];
                     $("<a class='dropdown2 dropdown-item userTable' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-table2");
                     $("<a class='dropdown2 dropdown-item insertUser' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-insert2");
-         
-         
+
+
                     i += 1;
                 }
 
@@ -134,16 +161,16 @@ $(document).ready(function(){
                 $('.i2').show();
 
             }
-           
+
         },
         error: function(data){
            console.log(data);
        }
         });
 
-       
+
         return false;
-       
+
     });
 
     $(document).on('click','.dropdown2',function(e){
@@ -166,9 +193,9 @@ $(document).ready(function(){
                 $('#insert_form').show();
             }
         }
-       
+
         return false;
-       
+
     });
 
     // functions
@@ -194,10 +221,10 @@ $(document).ready(function(){
                 $("#error_div").css("display", "block");
                 //$("#errormsg").html(data.responseText);
             }
-        }); 
-       
+        });
+
         return false;
-       
+
     });
 
     $(document).on('click','#addMemberBtn',function(e){ // insert
@@ -225,12 +252,12 @@ $(document).ready(function(){
                 $("#error_div").css("display", "block");
                 //$("#errormsg").html(data.responseText);
             }
-        }); 
-       
+        });
+
         return false;
-       
+
     });
-    
+
 });
 
 function insertUser(){
@@ -242,7 +269,7 @@ function insertUser(){
         var form = " <form id='insertForm' method='post'> " +
             " <div class='table-responsive'> <table class='table table-hover table-bordered'> <tbody> ";
 
-        $.ajax({ 
+        $.ajax({
             url: '../Model/options.php',
             data: {function2call: 'label_header', parentID: parentID},
             type: 'POST',
@@ -250,15 +277,15 @@ function insertUser(){
             success: function(data) {
 
                 if(data.length != 0){
-                        
+
                     headers = data;
-                    for (var key in headers) {        
-                        form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' /></td>"; 
+                    for (var key in headers) {
+                        form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' /></td>";
                     }
-    
-                    form += "</tr> <tr> <td>  </td> <td> <input id='addMemberBtn' type='submit' value='Add Member' class='btn btn-primary' name='saveChangesBtn'/> " + 
+
+                    form += "</tr> <tr> <td>  </td> <td> <input id='addMemberBtn' type='submit' value='Add Member' class='btn btn-primary' name='saveChangesBtn'/> " +
                         "</td> </tr> </tbody> </table> </div> </form>";
-                            
+
                     formdiv.innerHTML+= form;
                 }else{
                     form += "<div class='alert alert-danger'> No Options Exist for such User Type </div></body>";
@@ -271,16 +298,16 @@ function insertUser(){
                 console.log(data);
                 //$("#errormsg").html(data.responseText);
             }
-        });   
+        });
 
 }
 
 function usertypetable(){
 
         var div = document.getElementById("theTable");
-        var table = ' <div class="table-responsive"> <br> <table class="table table-bordered userstable" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';   
-    
-        $.ajax({ 
+        var table = ' <div class="table-responsive"> <br> <table class="table table-bordered userstable" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';
+
+        $.ajax({
             url: '../Model/options.php',
             data: {function2call: 'label_header', parentID: parentID},
             type: 'POST',
@@ -288,25 +315,25 @@ function usertypetable(){
             success: function(data) {
 
                 if(data != null){
-    
+
                     headers = data;
-                    
+
                     for (var key in headers) {
                         table += "<th>" + (key) + "</th>";
                     }
-        
+
                     table += "<th> Control </th>";
-        
+
                     table += "</tr> </thead> <tfoot> <tr>";
                     for (var key in headers) {
                         table += "<th>" + (key) + "</th>";
                     }
-        
+
                     table += "<th> Control </th>";
-        
+
                     table += "</tr> </tfoot>";
-        
-                    $.ajax({ 
+
+                    $.ajax({
                         url: '../Model/users.php',
                         data: {function2call: 'list_users', usertypeID: usertypeID, parentID: parentID},
                         type: 'POST',
@@ -316,12 +343,12 @@ function usertypetable(){
                             if(data != null){
 
                                 users = data;
-                    
+
                                 var obj_size = data.length;
                                 var arr_size = data[0].user_values.length;
-                    
+
                                 var a =0;
-                    
+
                                 table += "<tbody>";
                                 while(a < obj_size){
                                     table += "<tr>";
@@ -333,12 +360,12 @@ function usertypetable(){
                                         table += "<td>" + (data[a].user_values[b]) + "</td>";
                                         b += 1;
                                     }
-            
+
                                     table += "<td> <a id='update-" + a + "' href='#' class='btn btn-primary btn-circle m-r-1em updatebtn'><i class='fa fa-edit'></i></a> " +
-                                    "<a id='del-" + a + "' href='#' class='btn btn-danger btn-circle deletebtn'><i class='fas fa-trash'></i></a> </td> </tr>";    
-                                    
+                                    "<a id='del-" + a + "' href='#' class='btn btn-danger btn-circle deletebtn'><i class='fas fa-trash'></i></a> </td> </tr>";
+
                                     a += 1;
-            
+
                                 }
 
                                 table += '</body>';
@@ -350,8 +377,8 @@ function usertypetable(){
                             console.log(data);
                             //$("#errormsg").html(data.responseText);
                         }
-                
-                    }); 
+
+                    });
 
 
                     var script = document.createElement("script"); //Make a script DOM node
@@ -360,13 +387,13 @@ function usertypetable(){
                 } else{
                     // notify no data input managed for such a usertype
                 }
-    
+
             },
             error: function(data){
                 console.log(data);
                 //$("#errormsg").html(data.responseText);
             }
-        });   
+        });
 }
 
 function updateUser(id){
@@ -387,16 +414,16 @@ function updateUser(id){
             " <div class='table-responsive'> <table class='table table-hover table-bordered'> <tbody> ";
 
         var i = 1;
-        for (var key in headers) {        
-            form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' value='" + users[user_obj_index].user_values[i] + "' /></td>"; 
+        for (var key in headers) {
+            form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' value='" + users[user_obj_index].user_values[i] + "' /></td>";
             i++;
         }
 
-        form += "</tr> <tr> <td>  </td> <td> <input id='saveChangesBtn' type='submit' value='Save Changes' class='btn btn-primary' name='saveChangesBtn'/> " + 
+        form += "</tr> <tr> <td>  </td> <td> <input id='saveChangesBtn' type='submit' value='Save Changes' class='btn btn-primary' name='saveChangesBtn'/> " +
             "</td> </tr> </tbody> </table> </div> </form>";
 
             // <a href="index.php" style="position: absolute; margin-left: 2px;" class="btn btn-danger">Back to read products</a>
-        
+
         formdiv.innerHTML+= form;
 
     }else{
@@ -409,7 +436,7 @@ function deleteUser(id){
     var user_obj_index = id.substr(id.indexOf('-')+1, id.indexOf('-'));
     userID = users[user_obj_index].user_values[0];
 
-    $.ajax({ 
+    $.ajax({
         url: '../Model/users.php',
         data: {function2call: 'delete_user', usertypeID: usertypeID, userID: userID},
         type: 'POST',
@@ -419,7 +446,7 @@ function deleteUser(id){
             $("#theTable").empty();
             usertypetable();
             $("#theTable").show();
-            // notifiy done sucessfully 
+            // notifiy done sucessfully
         },
         error: function(data){
             console.log(data);
@@ -428,5 +455,3 @@ function deleteUser(id){
         }
     });
 }
-
-

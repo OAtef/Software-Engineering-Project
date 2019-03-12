@@ -2,65 +2,64 @@
 
 class DbConnection {
 
-    public $servername = "localhost";
-		public $username = "root";
-		public $password = "";
-		public $db = "software";
-    public static $con;
-    public $dbConnection;
-    public static $instance;
+    private $servername = "localhost";
+		private $username = "root";
+		private $password = "";
+		private $db = "software";
+    private $con;
+    private $dbConnection;
 
     private function __construct(){
         $this->dbConnection = $this->connect();
 		}
-
-		public static function getInstance(){// create only one object for databse
-			if(!isset(self::$instance)){
+		
+		public static function getInstance(){// create only one object for databse 
+			if((!isset(self::$instance)){
 				self::$instance = new DbConnection();
 			}
 			return self::$instance;
 		}
 
-    public function connect(){
-        self::$con = mysqli_connect($this->servername, $this->username, $this->password);
+    private function connect(){
+        $this->con = mysqli_connect($this->servername,$this->username,$this->password);
 
-        if (self::$con){
-            mysqli_select_db(self::$con, $this->db);
-            return self::$con;
-        }
+        if ($this->con){
+            mysql_select_db($this->db, $this->con);
+            return $this->con;
+        }      
         else{
             die("Failed to connect: ". mysqli_connect_error());
         }
     }
 
-    public static function query($query) {
+    private function query($query) {
 
-			$result = mysqli_query(self::$con, $query);
-
+			$result = mysqli_query($this->con, $query);
+		
 			if ($result === false) {
 				die("Failed to query: ". mysqli_connect_error());
 			}
-
+			
 			if (mysqli_num_rows($result) == 0) {
 				return array();
 			}
-
+			
 			$rows_vals = array();
 			while ($row = mysqli_fetch_assoc($result)) {
 				$rows_vals[] = $row;
 			}
 
 			mysqli_free_result($result);
-
+			
 			return $rows_vals;
     }
 
-    public static function where($conditions) {
+    private function where($conditions) {
 			$where = "";
 			if (!empty($conditions) && is_array($conditions)) {
 				$where = array();
 				foreach ($conditions as $field => $value) {
-									$where[] = " $field = ";
+									$where[] = " $field = '".$this->escape($value)."' ";
 				}
 				if (!empty($where)) {
 					$where = " WHERE " . join(" AND ", $where);
@@ -73,18 +72,20 @@ class DbConnection {
 
     public static function select($table, $whereArr) {
 			$fields = "*";
-      $where = '';
-
+      $where = '';	
+		
 			if (!empty($whereArr)) {
-				$where = self::where($whereArr);
+				$where = $this->where($whereArr);
 			}
-
+			
 			$query = "SELECT $fields FROM $table $where";
-			return self::query($query);
+			return $this->query($query);
     }
 
     public static function insert($table, $data) {
-
+			$fields = $this->escapeArray(array_keys($data));
+			$values = $this->escapeArray(array_values($data));
+			
 			foreach ($values as $k => $val) {
 				if (is_null($val)) {
 					$values[$k] = 'NULL';
@@ -92,16 +93,16 @@ class DbConnection {
 					$values[$k] = "'$val'";
 				}
 			}
-
+			
 			$query = "INSERT INTO $table(`".join("`,`",$fields)."`) VALUES(".join(",", $values).")";
-
+					
 			return mysqli_query($this->con, $query);
 		}
 
     public static function lastId(){
 			return mysqli_insert_id($this->con);
     }
-
+    
     public static function delete($table, $whereArr){
       $where = where($whereArr);
 
@@ -114,21 +115,21 @@ class DbConnection {
 			if (!empty($opts['where'])) {
 				$where = $this->where($opts['where']);
 			}
-
+			
 			$update = array();
 			foreach ($data as $field => $value) {
 				$update[] = "`$field` = '". mysqli_real_escape_string($this->con, $value) ."'";
 			}
-
+			
 			$query = "UPDATE $table SET ".join(" , ", $update)." $where";
-
+			
 			return $this->execute($query);
 		}
-
+		
 		public function getAffectedRows(){
 			return mysqli_affected_rows($this->con);
     }
-
+    
     public function disconnect(){
       return mysqli_close($con);
     }

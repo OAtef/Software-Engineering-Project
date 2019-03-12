@@ -9,11 +9,12 @@ var utid_update;
 
 $(document).ready(function(){
 
-    $("#emails").hide();
+    $("#emailsPage").hide();
     $("#foundationMembers").hide();
-    // $("#TasksForm").hide();
+    $("#tasksPage").hide();
     $('.t2').hide();
     $('.i2').hide();
+    // $("#settingsPage").hide();
 
     $('.table-message tbody tr').click(
       function()
@@ -22,8 +23,8 @@ $(document).ready(function(){
       }
     );
 
-    $.ajax({ url: '../Model/usertypes.php',
-    data: {function2call: 'Get_usertype_children', usertypeID: 0},
+    $.ajax({ url: '../Controller/userTypesControl.php',
+    data: {function2call: 'list', usertypeID: 0},
     type: 'POST',
     dataType: "JSON",
     success: function(data) {
@@ -38,6 +39,7 @@ $(document).ready(function(){
             var str2 = arr[++i];
            $("<a class='dropdown1 dropdown-item' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-table1");
            $("<a class='dropdown1 dropdown-item' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-insert");
+           $("<a class='dropdown1 dropdown-item' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-MainUserType");
 
            i += 1;
        }
@@ -45,7 +47,7 @@ $(document).ready(function(){
     },
     error: function(data){
        console.log(data);
-   }
+    }
     });
 
     // show and hide clicks
@@ -55,14 +57,15 @@ $(document).ready(function(){
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        $("#TasksForm").hide();
+        $("#tasksPage").hide();
         $("#theTable").empty();
         $("#sucess_div").hide();
         $("#tablediv").show();
         $("#update_form_div").hide();
         $("#insert_form_div").hide();
         $("#foundationMembers").show();
-        $("#emails").hide();
+        $("#emailsPage").hide();
+        $("#settingsPage").hide();
 
         return false;
 
@@ -73,13 +76,14 @@ $(document).ready(function(){
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        $("#TasksForm").hide();
+        $("#tasksPage").hide();
         $("#insert_form").empty();
         $("#foundationMembers").show();
         $("#tablediv").hide();
         $("#update_form_div").hide();
         $("#insert_form_div").show();
-        $("#emails").hide();
+        $("#emailsPage").hide();
+        $("#settingsPage").hide();
 
         return false;
 
@@ -90,16 +94,95 @@ $(document).ready(function(){
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        $("#TasksForm").show();
+        $("#tasksPage").show();
         $("#insert_form").empty();
         $("#foundationMembers").hide();
         $("#tablediv").hide();
         $("#update_form_div").hide();
         $("#insert_form_div").hide();
-        $("#emails").hide();
+        $("#emailsPage").hide();
+        $("#settingsPage").hide();
 
         return false;
 
+    });
+
+    $(document).on('click','#settingsBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#settingsPage").show();
+        $("#tasksPage").hide();
+        $("#insert_form").empty();
+        $("#foundationMembers").hide();
+        $("#tablediv").hide();
+        $("#update_form_div").hide();
+        $("#insert_form_div").hide();
+        $("#emailsPage").hide();
+
+        return false;
+
+    });
+
+    $(document).on('click','#multiMsg',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#emailsPage").show();
+        $("#settingsPage").hide();
+        $("#tasksPage").hide();
+        $("#insert_form").empty();
+        $("#foundationMembers").hide();
+        $("#tablediv").hide();
+        $("#update_form_div").hide();
+        $("#insert_form_div").hide();
+
+        return false;
+    });
+
+    $(document).on('click','#SubTypeFormBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#AddUserSubTypeForm").show();
+        $("#AddUserMainTypeForm").hide();
+
+        return false;
+    });
+
+    $(document).on('click','#MainTypeFormBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#AddUserSubTypeForm").hide();
+        $("#AddUserMainTypeForm").show();
+
+
+        return false;
+    });
+
+    $(document).on('click','#ShowAddTypeSettingsBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#AddTypeSettings").show();
+
+        return false;
+    });
+
+    $(document).on('click','#ShowUpdateTypeSettingsBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#AddTypeSettings").hide();
+
+        return false;
     });
 
     $(document).on('click','.updatebtn',function(e){
@@ -135,7 +218,7 @@ $(document).ready(function(){
         parentID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
 
         $.ajax({ url: '../Model/usertypes.php',
-        data: {function2call: 'Get_usertype_children', usertypeID: parentID},
+        data: {function2call: 'list', usertypeID: parentID},
         type: 'POST',
         dataType: "JSON",
         success: function(data) {
@@ -258,6 +341,37 @@ $(document).ready(function(){
 
     });
 
+    $(document).on('click','#addSubTypeBtn',function(e){ // insert
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var form_arr = $('#insertUserSubTypeForm').serialize();
+        form_arr += '&';
+        console.log(form_arr);
+
+        $.ajax({
+            url: "../Model/users.php",
+            type: "POST",
+            data: {function2call: 'insert_subType', arr: form_arr},
+            success: function(data) {
+                console.log(data);
+                $("#sucess_div").css("display", "block");
+                for(var key in headers){
+                    $('td[name='+key+']').val("");
+                }
+            },
+            error: function(data){
+                console.log(data);
+                $("#error_div").css("display", "block");
+                //$("#errormsg").html(data.responseText);
+            }
+        });
+
+        return false;
+
+    });
+
 });
 
 function insertUser(){
@@ -280,7 +394,7 @@ function insertUser(){
 
                     headers = data;
                     for (var key in headers) {
-                        form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' /></td>";
+                        form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' /></td></tr>";
                     }
 
                     form += "</tr> <tr> <td>  </td> <td> <input id='addMemberBtn' type='submit' value='Add Member' class='btn btn-primary' name='saveChangesBtn'/> " +

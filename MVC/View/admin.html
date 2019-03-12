@@ -40,6 +40,7 @@
 <body id="page-top">
 
   <!-- Page Wrapper -->
+
   <div id="wrapper">
 
     <!-- Sidebar -->
@@ -120,7 +121,7 @@
         <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">... :</h6> -->
-            <a class="collapse-item" href="Settings.html"> Settings </a>
+            <a class="collapse-item" href="#" id="settingsBtn"> Settings </a>
           </div>
         </div>
       </li>
@@ -247,17 +248,6 @@
                     $290.29 has been deposited into your account!
                   </div>
                 </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
             </li>
@@ -292,26 +282,6 @@
                   <div>
                     <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
                     <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-                    <div class="status-indicator bg-warning"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
                   </div>
                 </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
@@ -386,7 +356,9 @@
               </div>
               <div id="theTable"></div>
             </div>
+
             <div id="update_form_div"></div>
+
             <div id="insert_form_div">
               <div class='row'>
                 <div class="dropdown mb-4 col-sm-2">
@@ -407,6 +379,7 @@
                   </div>
                 </div>
               </div>
+
               <div id="insert_form"></div>
 
             </div>
@@ -419,7 +392,7 @@
         </div>
 
         <!-- Tasks Control -->
-        <div id="TasksForm" class="span9 shadow">
+        <div id="tasksPage" class="span9 shadow">
           <div class="content">
 
             <div class="module message">
@@ -506,14 +479,6 @@
                       <td class="cell-status hidden-phone hidden-tablet"></td>
                       <td class="cell-time align-right">15 July 2014</td>
                     </tr>
-                    <tr class="task resolved">
-                      <td class="cell-icon"><i class="icon-checker high"></i></td>
-                      <td class="cell-title">
-                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                      </td>
-                      <td class="cell-status hidden-phone hidden-tablet"></td>
-                      <td class="cell-time align-right">15 July 2014</td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -523,64 +488,192 @@
           </div>
         </div><!--/.span9-->
 
-      </div>
+        <div id="emailsPage" class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"> Emails </h6>
+          </div>
+          <div class="card-body">
 
-      <div id="emails" class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary"> Emails </h6>
-        </div>
-        <div class="card-body">
+            <div class='hide_to_send_email'>
+              <div class="dropdown mb-4">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Choose
+                </button>
 
-          <div class='hide_to_send_email'>
-            <div class="dropdown mb-4">
-              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Choose
-              </button>
-
-              <div id="dropdown-email-table" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <div id="dropdown-email-table" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                </div>
               </div>
-            </div>
-            <div id="table_email_list">
+              <div id="table_email_list">
 
-              <h6 class="m-0 font-weight-bold text-primary" style="display: inline;">Select Users You Would Like to Send email to</h6>
-              <a href="#" class="btn btn-primary btn-icon-split" id='tosendform' style="float: right;margin-right: 20px;">
+                <h6 class="m-0 font-weight-bold text-primary" style="display: inline;">Select Users You Would Like to Send email to</h6>
+                <a href="#" class="btn btn-primary btn-icon-split" id='tosendform' style="float: right;margin-right: 20px;">
+                  <span class="icon text-white-50">
+                    <i class="fas fa-arrow-right"></i>
+                  </span>
+                  <span class="text">write email</span>
+                </a>
+              </div>
+
+            </div>
+
+            <div id="emailForm">
+              <div id="sucess_div" class='alert alert-success' style="display: none"> Message was Send </div>
+              <a href="#" class="btn btn-primary btn-icon-split" id='back_to_email_list'>
                 <span class="icon text-white-50">
-                  <i class="fas fa-arrow-right"></i>
+                  <i class="fas fa-arrow-left"></i>
                 </span>
-                <span class="text">write email</span>
+                <span class="text">Back</span>
               </a>
+              <form method="post" id="reused_form">
+                <label for="sendto">Send to:</label>
+                <input id="sendto" type="text" name="Name" required maxlength="50">
+                <br>
+                <label for="fromwhom">From: </label>
+                <input id="fromwhom" type="email" name="Email" required maxlength="50">
+                <br>
+                <label for="message">Message:</label>
+                <textarea id="message" name="Message" rows="10" maxlength="6000" required></textarea>
+                <br>
+                <!-- <button class="button-primary" type="submit" >Send</button> -->
+                <a href="#" class="btn btn-facebook btn-block" id="SendEmailBtn"> Send</a>
+              </form>
+
             </div>
-
-          </div>
-
-          <div id="emailForm">
-            <div id="sucess_div" class='alert alert-success' style="display: none"> Message was Send </div>
-            <a href="#" class="btn btn-primary btn-icon-split" id='back_to_email_list'>
-              <span class="icon text-white-50">
-                <i class="fas fa-arrow-left"></i>
-              </span>
-              <span class="text">Back</span>
-            </a>
-            <form method="post" id="reused_form">
-              <label for="sendto">Send to:</label>
-              <input id="sendto" type="text" name="Name" required maxlength="50">
-              <br>
-              <label for="fromwhom">From: </label>
-              <input id="fromwhom" type="email" name="Email" required maxlength="50">
-              <br>
-              <label for="message">Message:</label>
-              <textarea id="message" name="Message" rows="10" maxlength="6000" required></textarea>
-              <br>
-              <!-- <button class="button-primary" type="submit" >Send</button> -->
-              <a href="#" class="btn btn-facebook btn-block" id="SendEmailBtn"> Send</a>
-            </form>
-
           </div>
         </div>
 
+        <div class="container-fluid" id="settingsPage">
+            <div class="row">
+
+                <!-- Area Chart -->
+                <div class="col-xl-6 col-lg-6">
+                  <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      <h6 class="m-0 font-weight-bold text-primary">Members Categories Control</h6>
+                      <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                          <div class="dropdown-header">Dropdown Header:</div>
+                          <a class="dropdown-item" href="#" id="ShowAddTypeSettingsBtn">Add</a>
+                          <a class="dropdown-item" href="#" id="ShowUpdateTypeSettingsBtn">Update</a>
+                          <a class="dropdown-item" href="#">Delete</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                      <div id="AddTypeSettings">
+                        <input type='Button' class='btn btn-primary' id="MainTypeFormBtn" name='MainTypeFormBtn' value="Main Type"/>
+                        <br />
+                        <br />
+                        <input type='Button' class='btn btn-primary' id="SubTypeFormBtn" name='SubTypeFormBtn' value="Sub Type"/>
+
+                        <div id="AddUserMainTypeForm" style="display: none">
+                          <form method="post">
+                            <div class="table-responsive">
+                              <table class='table table-hover table-bordered'>
+                                <tbody>
+                                  <tr>
+                                    <td> Type Name: </td>
+                                    <td>
+                                      <input type="text" name="TypeName" class='form=control' />
+                                    </td>
+                                  </tr>
+                                    <td> Option Name: </td>
+                                    <td>
+                                      <input type="text" name="ParentType" class='form=control' />
+                                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Type
+                                      </button>
+                                      <div id="dropdown-OptionType" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                        <a class='dropdown1 dropdown-item'>Text</a>
+                                        <a class='dropdown1 dropdown-item'>Email</a>
+                                        <a class='dropdown1 dropdown-item'>Password</a>
+                                        <a class='dropdown1 dropdown-item'>Integer</a>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </form>
+                        </div>
+
+                        <div id="AddUserSubTypeForm" style="display: none">
+                          <form id="insertUserSubTypeForm" method="post">
+                            <div class="table-responsive">
+                              <table class='table table-hover table-bordered'>
+                                <tbody>
+                                  <tr>
+                                    <td> Type Name: </td>
+                                    <td>
+                                      <input type="text" name="TypeName" class='form=control' />
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td> Parent Type: </td>
+                                    <td>
+                                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Type
+                                      </button>
+                                      <div id="dropdown-MainUserType" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td></td>
+                                    <td>
+                                      <input id='addSubTypeBtn' type='submit' value='Add Type' class='btn btn-primary' name='addSubTypeBtn'/>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </form>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Pie Chart -->
+                <div class="col-xl-6 col-lg-6">
+                  <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      <h6 class="m-0 font-weight-bold text-primary">Address Control</h6>
+                      <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Dropdown Header:</div>
+                            <a class="dropdown-item" href="#">Add</a>
+                            <a class="dropdown-item" href="#">Update</a>
+                            <a class="dropdown-item" href="#">Delete</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                      <div class="chart-pie pt-4 pb-2"><div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                        <canvas id="myPieChart" style="display: block; width: 380px; height: 245px;" width="380" height="245" class="chartjs-render-monitor"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
 
       </div>
-
       <!-- End of Main Content -->
 
       <!-- Footer -->

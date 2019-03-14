@@ -1,110 +1,151 @@
 <?php
 
-class Database {
+class DbConnection {
 
-    private $servername;
-	private $username;
-	private $password;
-	private $dbn;
-    public $con;
-    
-    function __construct(){
-		$this->servername="localhost";
-		$this->username="root";
-		$this->password="";
-		$this->dbn="software-project";
-		$this->con=$this->connect();
-    }
-    
+    public $servername = "localhost";
+		public $username = "root";
+		public $password = "";
+		public $db = "software-project";
+    public static $con;
+    public $dbConnection;
+    public static $instance;
+
+    private function __construct(){
+        $this->dbConnection = $this->connect();
+		}
+
+		public static function getInstance(){// create only one object for DbConnection
+			if(!isset(self::$instance)){
+				self::$instance = new DbConnection();
+			}
+			return self::$instance;
+		}
+
     public function connect(){
-        $this->con = mysqli_connect($this->servername,$this->username,$this->password,$this->dbn);
+        self::$con = mysqli_connect($this->servername, $this->username, $this->password);
 
-        if (mysqli_connect_errno())
-                die("Failed to connect: ". mysqli_connect_error());
-        else
-                //	echo"Connected successfully";
-                return $this->con;
+        if (self::$con){
+            mysqli_select_db(self::$con, $this->db);
+            return self::$con;
+        }
+        else{
+            die("Failed to connect: ". mysqli_connect_error());
+        }
+    }
+
+    public static function query($query) {
+
+			$result = mysqli_query(self::$con, $query);
+
+			if ($result === false) {
+				die("Failed to query: ". mysqli_connect_error());
+			}
+
+			if (mysqli_num_rows($result) == 0) {
+				return array();
+			}
+
+			$rows_vals = array();
+			$i = 0;
+			while ($row = mysqli_fetch_assoc($result)) {
+
+				$rows_vals[$i] = $row;
+				$i++;
+			}
+
+			mysqli_free_result($result);
+
+			return $rows_vals;
+		}
+
+		public static function where($conditions){
+			$where = "";
+			$loop = 0;
+			foreach ($conditions as $key => $val) {
+
+					if($loop != 0){
+							$where .= " AND ";
+					}else{
+							$where .= "WHERE ";
+					}
+
+					$where .= ($key . "=" . $val);
+					$loop++;
+
+			}
+
+			return $where;
+		}
+
+    public static function select($table, $conditions){
+			$fields = "*";
+      $where = '';
+
+			if (!empty($conditions)) {
+				$where = self::where($conditions);
+			}
+
+			$query = "SELECT $fields FROM $table $where";
+
+			return self::query($query);
+    }
+
+    public static function insert($table, $data){
+
+			$fields = array_keys($data);
+			$values = array_values($data);
+
+			$i=0;
+			while($i < sizeof($values)){
+				if(!is_numeric($values[$i])){
+					$values[$i] = "'$values[$i]'";
+				}
+				$i++;
+			}
+
+			$query = "INSERT INTO $table(`".join("`,`",$fields)."`) VALUES(".join(",", $values).")";
+			return self::execute($query);
+		}
+
+    public static function lastId(){
+			return mysqli_insert_id(self::$con);
+    }
+
+    public static function delete($table, $conditions){
+      $where = self::where($conditions);
+
+			$query = "UPDATE $table SET isdeleted=1 " . $where;
+			echo $query;
+			return self::execute($query);
+		}
+
+    public static function update($table, $data, $conditions){
+			$where = "";
+			if (!empty($conditions)) {
+				$where = self::where($conditions);
+			}
+
+			$update = array();
+			foreach ($data as $field => $value) {
+				$update[] = "`$field` = '". mysqli_real_escape_string(self::$con, $value) ."'";
+			}
+
+			$query = "UPDATE $table SET ".join(" , ", $update)." $where";
+
+			return self::execute($query);
+		}
+
+		public function getAffectedRows(){
+			return mysqli_affected_rows(self::$con);
     }
 
     public function disconnect(){
-        return mysqli_close($$con);
-    }
+      return mysqli_close(self::$con);
+		}
 
-    public function insert($table, $cols, $data) {
-        
-        $columns = "";
-        $values = "";
-        $loop = 0;
-        for($i = 0; $i < $cols/* size/length */; $i++){
+		public static function execute($query){
+			return mysqli_query(self::$con, $query);
+		}
 
-            if($loop != 0 ){
-                $columns += ", ";
-                $values += ", ";
-            }
-
-            $columns += $cols[$i];
-            $values +=  mysqli_escape_string($data[$i]);
-
-
-        }
-        
-        $query = "INSERT $table (". $columns .") VALUES ($userID, $rowOU[0], '$form_vals[$i]')";
-		return execute($query);
-    }
-
-    public function update($table, $col, $data, $whereArr) {
-        
-        $value = mysqli_escape_string($data);
-        $where = where_statement($whereArr);
-
-        $query = "UPDATE $table SET $col='$value'" . $where;
-		return execute($query);
-    }
-    
-    function select($table, $whereArr){
-
-        // key = whereCol ,, val = whereVal
-
-        $where = where_statement($whereArr);
-
-        $query =" SELECT * FROM $table " . $where;
-        return execute($query);
-    }
-
-    function delete($table, $whereArr){
-
-        $where = where_statement($whereArr);
-
-        $query = "UPDATE $table SET isdeleted=1" . $where;
-        return execute($query);
-    }
- 
-    function where_statement($whereArr){
-        $where = "";
-        $loop = 0;
-        foreach ($whereArr as $key => $val) {
-            
-            if($loop != 0){
-                $where . " AND ";
-            }else{
-                $where . "WHERE ";
-            }
-            
-            $where += ($key . "=" . $val);
-            $loop++;
-                
-        }
-
-        return $where;
-    }
-
-    public function getAffectedRows(){
-		return mysqli_affected_rows($this->con);
-    }
-    
-    public function execute($query){	
-		return mysqli_query($this->con, $query);
-	}
 }
-
 ?>

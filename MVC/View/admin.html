@@ -120,7 +120,7 @@
         <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">... :</h6> -->
-            <a class="collapse-item" href="Settings.html"> Settings </a>
+            <a class="collapse-item" href="" id="settingsBtn"> Settings </a>
           </div>
         </div>
       </li>
@@ -355,6 +355,9 @@
 
         <!-- Main Content -->
 
+        <div id="errormsg">
+        </div>
+
         <div id="foundationMembers" class="card shadow mb-4">
           <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary"> Foundation Members</h6>
@@ -419,7 +422,7 @@
         </div>
 
         <!-- Tasks Control -->
-        <div id="TasksForm" class="span9 shadow">
+        <div id="tasksPage" class="span9 shadow">
           <div class="content">
 
             <div class="module message">
@@ -498,22 +501,6 @@
                       <td class="cell-status hidden-phone hidden-tablet"></td>
                       <td class="cell-time align-right">15 July 2014</td>
                     </tr>
-                    <tr class="task resolved">
-                      <td class="cell-icon"><i class="icon-checker high"></i></td>
-                      <td class="cell-title">
-                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                      </td>
-                      <td class="cell-status hidden-phone hidden-tablet"></td>
-                      <td class="cell-time align-right">15 July 2014</td>
-                    </tr>
-                    <tr class="task resolved">
-                      <td class="cell-icon"><i class="icon-checker high"></i></td>
-                      <td class="cell-title">
-                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                      </td>
-                      <td class="cell-status hidden-phone hidden-tablet"></td>
-                      <td class="cell-time align-right">15 July 2014</td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -521,11 +508,12 @@
               </div>
             </div>
           </div>
-        </div><!--/.span9-->
+        </div>
+        <!--/.span9-->
 
       </div>
 
-      <div id="emails" class="card shadow mb-4">
+      <div id="emailsPage" class="card shadow mb-4">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary"> Emails </h6>
         </div>
@@ -574,12 +562,157 @@
               <!-- <button class="button-primary" type="submit" >Send</button> -->
               <a href="#" class="btn btn-facebook btn-block" id="SendEmailBtn"> Send</a>
             </form>
-
           </div>
         </div>
-
-
       </div>
+
+      <div id="settingsPage" class="container-fluid">
+        <div class="row">
+
+          <!-- Area Chart -->
+          <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+              <!-- Card Header - Dropdown -->
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Members Categories Control</h6>
+                <div class="dropdown no-arrow">
+                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">Dropdown Header:</div>
+                    <a class="dropdown-item" href="#" id="ShowAddTypeSettingsBtn">Add</a>
+                    <a class="dropdown-item" href="#" id="ShowListTypeSettingsBtn">List</a>
+                    <a class="dropdown-item" href="#">Delete</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+              </div>
+              <!-- Card Body -->
+              <div id="AddTypeSettings" class="card-body">
+                <div>
+                  <input type='Button' class='btn btn-primary' id="MainTypeFormBtn" name='MainTypeFormBtn' value="Main Type" />
+                  <br />
+                  <br />
+                  <input type='Button' class='btn btn-primary' id="SubTypeFormBtn" name='SubTypeFormBtn' value="Sub Type" />
+
+                  <div id="sucessType_div" class='alert alert-success' style="display: none"> Record was updated. </div>
+                  <div id="errorType_div" class='alert alert-danger' style="display: none"> Something Wrong Happend. </div>
+
+                  <div id="AddUserMainTypeForm" style="display: none">
+                    <form id="insertUserMainTypeForm" method="post">
+                      <div class="table-responsive">
+                        <table class='table table-hover table-bordered'>
+                          <tbody>
+                            <tr>
+                              <td> Type Name: </td>
+                              <td>
+                                <input type="text" name="TypeName" class='form=control' />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td> Option Name: </td>
+                              <td>
+                                <input type="text" name="ParentType" class='form=control' />
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Type
+                                </button>
+                                <div id="dropdown-OptionType" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                  <a class='dropdown1 dropdown-item'>Text</a>
+                                  <a class='dropdown1 dropdown-item'>Email</a>
+                                  <a class='dropdown1 dropdown-item'>Password</a>
+                                  <a class='dropdown1 dropdown-item'>Integer</a>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </form>
+                  </div> <!-- end of main type form -->
+
+                  <div id="AddUserSubTypeForm" style="display: none">
+                    <form id="insertUserSubTypeForm" method="post">
+                      <div class="table-responsive">
+                        <table class='table table-hover table-bordered'>
+                          <tbody>
+                            <tr>
+                              <td> Type Name: </td>
+                              <td>
+                                <input type="text" name="TypeName" class='form=control' />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td> Parent Type: </td>
+                              <td>
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Type
+                                </button>
+                                <div id="dropdown-MainUserType" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td>
+                                <input id='addSubTypeBtn' type='submit' value='Add Type' class='btn btn-primary' name='addSubTypeBtn' />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </form>
+                  </div> <!-- end of sub type form -->
+                </div>
+              </div>
+
+              <div id="allTypesTable">
+
+              </div>
+
+            </div>
+          </div> <!-- end of col -->
+
+          <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+              <!-- Card Header - Dropdown -->
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Address Control</h6>
+                <div class="dropdown no-arrow">
+                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">Dropdown Header:</div>
+                    <a class="dropdown-item" href="#">Add</a>
+                    <a class="dropdown-item" href="#">Update</a>
+                    <a class="dropdown-item" href="#">Delete</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+              </div>
+              <!-- Card Body -->
+              <div class="card-body">
+                <div class="chart-pie pt-4 pb-2">
+                  <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;" class="chartjs-size-monitor">
+                    <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                      <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                    </div>
+                    <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                      <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                    </div>
+                  </div>
+                  <canvas id="myPieChart" style="display: block; width: 380px; height: 245px;" width="380" height="245" class="chartjs-render-monitor"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- end of row -->
+      </div><!-- end of settings -->
+
 
       <!-- End of Main Content -->
 

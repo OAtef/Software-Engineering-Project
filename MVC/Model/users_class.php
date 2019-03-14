@@ -1,6 +1,6 @@
 <?php
 
-include_once('../../config.api/db.php');
+require_once ('../config.api/db.php');
 class Users
 {
   public $id;
@@ -18,7 +18,7 @@ class Users
       
       $row = DbConnection::select("tb_users", $data); // returns single row data
       
-      $this->usertypeID = $row["usertypeID"];
+      $this->usertypeID = $row[0]["usertypeID"];
 			$this->id = $id;
 		}
   
@@ -33,6 +33,8 @@ class Users
     DbConnection::insert("tb_users", $data);
     $this->id = DbConnection::lastId();
     $this->userTypeID = $userTypeID;
+
+    return $this->id;
   }
 
   public function delete_user($userID){
@@ -43,8 +45,7 @@ class Users
     $data["id"] = $userID;
     
     DbConnection::delete("tb_users", $data);
-    $this->id = null;
-    $this->userTypeID = null;
+
   }
 
   public function select_user($userTypeID){
@@ -59,9 +60,13 @@ class Users
 
     $ids = array();
     $i=0;
+
     while($i < sizeof($rows)){
-      $ids[$i] = $rows["id"];
+
+      $ids[] = $rows[$i]["id"];
+      $i++;
     }
+    
     return $ids;
   }
 

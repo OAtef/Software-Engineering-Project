@@ -3,18 +3,19 @@ var users = new Array();
 var userID;
 var usertypeID;
 var parentID;
+var loaded;
 
 var utid_insert; // for checking and not repeating html
 var utid_update;
 
 $(document).ready(function(){
 
-    $("#emailsPage").hide();
-    $("#foundationMembers").hide();
-    $("#tasksPage").hide();
-    $('.t2').hide();
-    $('.i2').hide();
-    // $("#settingsPage").hide();
+  $("#emailsPage").hide();
+  $("#foundationMembers").hide();
+  $("#tasksPage").hide();
+  $('.t2').hide();
+  $('.i2').hide();
+  $("#settingsPage").hide();
 
     $('.table-message tbody tr').click(
       function()
@@ -23,8 +24,8 @@ $(document).ready(function(){
       }
     );
 
-    $.ajax({ url: '../Controller/userTypesControl.php',
-    data: {function2call: 'list', usertypeID: 0},
+    $.ajax({ url: '../Model/user_intermediate.php',
+    data: {function2call: 'list_userTypes', parentID: 0},
     type: 'POST',
     dataType: "JSON",
     success: function(data) {
@@ -32,22 +33,18 @@ $(document).ready(function(){
        var arr = new Array();
 
        arr = data;
-       var i = 0;
-       while(i < arr.length){
 
-            var str1 = arr[i];
-            var str2 = arr[++i];
-           $("<a class='dropdown1 dropdown-item' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-table1");
-           $("<a class='dropdown1 dropdown-item' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-insert");
-           $("<a class='dropdown1 dropdown-item' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-MainUserType");
-
-           i += 1;
+       for (var key in arr) {
+        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + arr[key] + "</a>").appendTo("#dropdown-usertype-table1");
+        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + arr[key] + "</a>").appendTo("#dropdown-usertype-insert");
+        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + arr[key] + "</a>").appendTo("#dropdown-MainUserType");
        }
 
     },
     error: function(data){
        console.log(data);
-    }
+       $("#errormsg").html(data.responseText);
+   }
     });
 
     // show and hide clicks
@@ -68,7 +65,6 @@ $(document).ready(function(){
         $("#settingsPage").hide();
 
         return false;
-
     });
 
     $(document).on('click','#addMemBtn',function(e){
@@ -86,7 +82,6 @@ $(document).ready(function(){
         $("#settingsPage").hide();
 
         return false;
-
     });
 
     $(document).on('click','#Tasksbtn',function(e){
@@ -104,7 +99,6 @@ $(document).ready(function(){
         $("#settingsPage").hide();
 
         return false;
-
     });
 
     $(document).on('click','#settingsBtn',function(e){
@@ -122,7 +116,6 @@ $(document).ready(function(){
         $("#emailsPage").hide();
 
         return false;
-
     });
 
     $(document).on('click','#multiMsg',function(e){
@@ -171,19 +164,27 @@ $(document).ready(function(){
         e.stopImmediatePropagation();
 
         $("#AddTypeSettings").show();
+        $("#allTypesTable").hide();
 
         return false;
     });
 
-    $(document).on('click','#ShowUpdateTypeSettingsBtn',function(e){
+    $(document).on('click','#ShowListTypeSettingsBtn',function(e){
 
         e.preventDefault();
         e.stopImmediatePropagation();
 
+        if (loaded != 1) {
+          listAllTypesTable();
+        }
+
+
         $("#AddTypeSettings").hide();
+        $("#allTypesTable").show();
 
         return false;
     });
+
 
     $(document).on('click','.updatebtn',function(e){
 
@@ -194,7 +195,6 @@ $(document).ready(function(){
 
         updateUser(id);
         return false;
-
     });
 
     $(document).on('click','.deletebtn',function(e){
@@ -206,7 +206,6 @@ $(document).ready(function(){
 
         deleteUser(id);
         return false;
-
     });
 
     $(document).on('click','.dropdown1',function(e){
@@ -217,8 +216,8 @@ $(document).ready(function(){
         var id = $(this).attr('id');
         parentID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
 
-        $.ajax({ url: '../Model/usertypes.php',
-        data: {function2call: 'list', usertypeID: parentID},
+        $.ajax({ url: '../Model/user_intermediate.php',
+        data: {function2call: 'list_userTypes', parentID: parentID},
         type: 'POST',
         dataType: "JSON",
         success: function(data) {
@@ -228,16 +227,9 @@ $(document).ready(function(){
                 $('#dropdown-usertype-table2').empty();
                 $("#dropdown-usertype-insert2").empty();
 
-                var i = 0;
-                while(i < data.length){
-
-                     var str1 = data[i];
-                     var str2 = data[++i];
-                    $("<a class='dropdown2 dropdown-item userTable' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-table2");
-                    $("<a class='dropdown2 dropdown-item insertUser' id='link-" + str1 + "'>" + str2 + "</a>").appendTo("#dropdown-usertype-insert2");
-
-
-                    i += 1;
+                for (var key in data) {
+                    $("<a class='dropdown2 dropdown-item userTable' id='link-" + key + "'>" + data[key] + "</a>").appendTo("#dropdown-usertype-table2");
+                    $("<a class='dropdown2 dropdown-item insertUser' id='link-" + key + "'>" + data[key] + "</a>").appendTo("#dropdown-usertype-insert2");
                 }
 
                 $('.t2').show();
@@ -250,10 +242,7 @@ $(document).ready(function(){
            console.log(data);
        }
         });
-
-
         return false;
-
     });
 
     $(document).on('click','.dropdown2',function(e){
@@ -266,6 +255,7 @@ $(document).ready(function(){
 
         if($(this).hasClass('userTable')){
             $('#theTable').empty();
+            $("#tableScript").remove();
             usertypetable();
         }
         else if($(this).hasClass('insertUser')){
@@ -276,9 +266,7 @@ $(document).ready(function(){
                 $('#insert_form').show();
             }
         }
-
         return false;
-
     });
 
     // functions
@@ -292,9 +280,9 @@ $(document).ready(function(){
         form_arr += '&';
 
         $.ajax({
-            url: "../Model/users.php",
+            url: "../Model/user_intermediate.php",
             type: "POST",
-            data: {function2call: 'update_user', parentID: parentID, userID: userID, arr: form_arr},
+            data: {function2call: 'update_user', usertypeID: usertypeID, userID: userID, arr: form_arr},
             success: function(data) {
                 console.log(data);
                 $("#sucess_div").css("display", "block");
@@ -305,9 +293,7 @@ $(document).ready(function(){
                 //$("#errormsg").html(data.responseText);
             }
         });
-
         return false;
-
     });
 
     $(document).on('click','#addMemberBtn',function(e){ // insert
@@ -320,15 +306,15 @@ $(document).ready(function(){
         console.log(form_arr);
 
         $.ajax({
-            url: "../Model/users.php",
+            url: "../Model/user_intermediate.php",
             type: "POST",
-            data: {function2call: 'insert_user', usertypeID: usertypeID, arr: form_arr, parentID: parentID},
+            data: {function2call: 'insert_user', usertypeID: usertypeID, arr: form_arr},
             success: function(data) {
                 console.log(data);
                 $("#sucess_div").css("display", "block");
-                for(var key in headers){
+                /* for(var key in headers){
                     $('td[name='+key+']').val("");
-                }
+                } */
             },
             error: function(data){
                 console.log(data);
@@ -336,9 +322,7 @@ $(document).ready(function(){
                 //$("#errormsg").html(data.responseText);
             }
         });
-
         return false;
-
     });
 
     $(document).on('click','#addSubTypeBtn',function(e){ // insert
@@ -351,25 +335,23 @@ $(document).ready(function(){
         console.log(form_arr);
 
         $.ajax({
-            url: "../Model/users.php",
+            url: "../Model/user_intermediate.php",
             type: "POST",
-            data: {function2call: 'insert_subType', arr: form_arr},
+            data: {function2call: 'insert_subUserType', parentID: parentID, arr: form_arr},
             success: function(data) {
                 console.log(data);
-                $("#sucess_div").css("display", "block");
-                for(var key in headers){
+                $("#sucessType_div").css("display", "block");
+                /* for(var key in headers){
                     $('td[name='+key+']').val("");
-                }
+                } */
             },
             error: function(data){
                 console.log(data);
-                $("#error_div").css("display", "block");
+                $("#errorType_div").css("display", "block");
                 //$("#errormsg").html(data.responseText);
             }
         });
-
         return false;
-
     });
 
 });
@@ -384,7 +366,7 @@ function insertUser(){
             " <div class='table-responsive'> <table class='table table-hover table-bordered'> <tbody> ";
 
         $.ajax({
-            url: '../Model/options.php',
+            url: '../Model/user_intermediate.php',
             data: {function2call: 'label_header', parentID: parentID},
             type: 'POST',
             dataType: "JSON",
@@ -394,7 +376,7 @@ function insertUser(){
 
                     headers = data;
                     for (var key in headers) {
-                        form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' /></td></tr>";
+                        form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' /></td>";
                     }
 
                     form += "</tr> <tr> <td>  </td> <td> <input id='addMemberBtn' type='submit' value='Add Member' class='btn btn-primary' name='saveChangesBtn'/> " +
@@ -422,11 +404,12 @@ function usertypetable(){
         var table = ' <div class="table-responsive"> <br> <table class="table table-bordered userstable" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';
 
         $.ajax({
-            url: '../Model/options.php',
+            url: '../Model/user_intermediate.php',
             data: {function2call: 'label_header', parentID: parentID},
             type: 'POST',
             dataType: "JSON",
             success: function(data) {
+                console.log(data);
 
                 if(data != null){
 
@@ -448,17 +431,19 @@ function usertypetable(){
                     table += "</tr> </tfoot>";
 
                     $.ajax({
-                        url: '../Model/users.php',
-                        data: {function2call: 'list_users', usertypeID: usertypeID, parentID: parentID},
+                        url: '../Model/user_intermediate.php',
+                        data: {function2call: 'list_users', usertypeID: usertypeID},
                         type: 'POST',
                         dataType: "JSON",
                         success: function(data) {
+                            console.log(data);
 
                             if(data != null){
 
                                 users = data;
 
                                 var obj_size = data.length;
+                                console.log(obj_size);
                                 var arr_size = data[0].user_values.length;
 
                                 var a =0;
@@ -489,13 +474,13 @@ function usertypetable(){
                         },
                         error: function(data){
                             console.log(data);
-                            //$("#errormsg").html(data.responseText);
+                            $("#errormsg").html(data.responseText);
                         }
 
                     });
 
-
                     var script = document.createElement("script"); //Make a script DOM node
+                    script.id = "tableScript";
                     script.src = '../../js/demo/datatables-demo.js'; //Set it's src to the provided URL
                     document.body.appendChild(script);
                 } else{
@@ -505,7 +490,64 @@ function usertypetable(){
             },
             error: function(data){
                 console.log(data);
-                //$("#errormsg").html(data.responseText);
+                $("#errormsg").html(data.responseText);
+            }
+        });
+}
+
+function listAllTypesTable(){
+
+        var div = document.getElementById("allTypesTable");
+        var table = ' <div class="table-responsive"> <br> <table class="table table-bordered userstable" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';
+
+        table += "<th> UserType Name</th>"
+        table += "<th> ParentID Name</th>"
+        table += "<th> Control </th>"
+
+        table += "</tr> </thead> <tfoot> <tr>"
+        table += "<th> UserType Name</th>"
+        table += "<th> ParentID Name</th>"
+        table += "<th> Control </th>"
+        table += "</tr> </tfoot>";
+
+        $.ajax({
+            url: '../Model/user_intermediate.php',
+            data: {function2call: 'list_userTypes', parentID: "all"},
+            type: 'POST',
+            dataType: "JSON",
+            success: function(data) {
+
+              if (data != null) {
+
+                table += "<tbody>";
+
+                for (var x in data) {
+
+                  table += "<tr>";
+
+                  var list = data[x];
+
+                  var userTypename = list[0];
+                  var typeParentID = list[1];
+
+                  table += "<td>" + userTypename + "</td>";
+                  table += "<td>" + typeParentID + "</td>";
+
+                  table += "<td> <a id='update-" + x + "' href='#' class='btn btn-primary btn-circle m-r-1em updatebtn'><i class='fa fa-edit'></i></a> " +
+                  "<a id='del-" + x + "' href='#' class='btn btn-danger btn-circle deletebtn'><i class='fas fa-trash'></i></a> </td> </tr>";
+
+                }
+                table += '</body>';
+              }
+              div.innerHTML+= table;
+              loaded = 1;
+
+              console.log(data);
+
+            },
+            error: function(data){
+                console.log(data);
+                $("#errormsg").html(data.responseText);
             }
         });
 }
@@ -551,8 +593,8 @@ function deleteUser(id){
     userID = users[user_obj_index].user_values[0];
 
     $.ajax({
-        url: '../Model/users.php',
-        data: {function2call: 'delete_user', usertypeID: usertypeID, userID: userID},
+        url: '../Model/user_intermediate.php',
+        data: {function2call: 'delete_user', userID: userID},
         type: 'POST',
         success: function(data) {
             $("#sucess_div").css("display", "block");

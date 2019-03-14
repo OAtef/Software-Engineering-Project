@@ -5,7 +5,7 @@ class DbConnection {
     public $servername = "localhost";
 		public $username = "root";
 		public $password = "";
-		public $db = "software";
+		public $db = "software-project";
     public static $con;
     public $dbConnection;
     public static $instance;
@@ -14,7 +14,7 @@ class DbConnection {
         $this->dbConnection = $this->connect();
 		}
 
-		public static function getInstance(){// create only one object for databse
+		public static function getInstance(){// create only one object for DbConnection
 			if(!isset(self::$instance)){
 				self::$instance = new DbConnection();
 			}
@@ -46,93 +46,106 @@ class DbConnection {
 			}
 
 			$rows_vals = array();
+			$i = 0;
 			while ($row = mysqli_fetch_assoc($result)) {
-				$rows_vals[] = $row;
+
+				$rows_vals[$i] = $row;
+				$i++;
 			}
 
 			mysqli_free_result($result);
 
 			return $rows_vals;
-    }
+		}
 
-    public static function where($conditions) {
+		public static function where($conditions){
 			$where = "";
-			if (!empty($conditions) && is_array($conditions)) {
-				$where = array();
-				foreach ($conditions as $field => $value) {
-									$where[] = " $field = ";
-				}
-				if (!empty($where)) {
-					$where = " WHERE " . join(" AND ", $where);
-				}
-			} else if (!empty($conditions)) {
-				$where = " WHERE " . $conditions;
+			$loop = 0;
+			foreach ($conditions as $key => $val) {
+
+					if($loop != 0){
+							$where .= " AND ";
+					}else{
+							$where .= "WHERE ";
+					}
+
+					$where .= ($key . "=" . $val);
+					$loop++;
+
 			}
+
 			return $where;
 		}
 
-    public static function select($table, $whereArr) {
+    public static function select($table, $conditions){
 			$fields = "*";
       $where = '';
 
-			if (!empty($whereArr)) {
-				$where = self::where($whereArr);
+			if (!empty($conditions)) {
+				$where = self::where($conditions);
 			}
 
 			$query = "SELECT $fields FROM $table $where";
+
 			return self::query($query);
     }
 
-    public static function insert($table, $data) {
+    public static function insert($table, $data){
 
-			foreach ($values as $k => $val) {
-				if (is_null($val)) {
-					$values[$k] = 'NULL';
-				} else {
-					$values[$k] = "'$val'";
+			$fields = array_keys($data);
+			$values = array_values($data);
+
+			$i=0;
+			while($i < sizeof($values)){
+				if(!is_numeric($values[$i])){
+					$values[$i] = "'$values[$i]'";
 				}
+				$i++;
 			}
 
 			$query = "INSERT INTO $table(`".join("`,`",$fields)."`) VALUES(".join(",", $values).")";
-
-			return mysqli_query($this->con, $query);
+			return self::execute($query);
 		}
 
     public static function lastId(){
-			return mysqli_insert_id($this->con);
+			return mysqli_insert_id(self::$con);
     }
 
-    public static function delete($table, $whereArr){
-      $where = where($whereArr);
+    public static function delete($table, $conditions){
+      $where = self::where($conditions);
 
-      $query = "UPDATE $table SET isdeleted=1" . $where;
-      return query($query);
-    }
+			$query = "UPDATE $table SET isdeleted=1 " . $where;
+			echo $query;
+			return self::execute($query);
+		}
 
-    public static function update($table, $data, $opts = array()) {
+    public static function update($table, $data, $conditions){
 			$where = "";
-			if (!empty($opts['where'])) {
-				$where = $this->where($opts['where']);
+			if (!empty($conditions)) {
+				$where = self::where($conditions);
 			}
 
 			$update = array();
 			foreach ($data as $field => $value) {
-				$update[] = "`$field` = '". mysqli_real_escape_string($this->con, $value) ."'";
+				$update[] = "`$field` = '". mysqli_real_escape_string(self::$con, $value) ."'";
 			}
 
 			$query = "UPDATE $table SET ".join(" , ", $update)." $where";
 
-			return $this->execute($query);
+			return self::execute($query);
 		}
 
 		public function getAffectedRows(){
-			return mysqli_affected_rows($this->con);
+			return mysqli_affected_rows(self::$con);
     }
 
     public function disconnect(){
-      return mysqli_close($con);
-    }
+      return mysqli_close(self::$con);
+		}
+
+		public static function execute($query){
+			return mysqli_query(self::$con, $query);
+		}
 
 }
-
 ?>

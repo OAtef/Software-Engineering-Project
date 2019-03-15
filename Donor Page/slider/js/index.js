@@ -75,7 +75,7 @@ $(".previous").click(function(){
 		//this comes from the custom easing plugin
 		easing: 'easeInOutBack'
 	});
-    previous_fs.css("position", "relative");
+    previous_fs.css("position");
 });
 
 $(".submit").click(function(){

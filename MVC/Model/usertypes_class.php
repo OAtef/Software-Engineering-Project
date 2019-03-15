@@ -60,7 +60,9 @@ class UserTypes
 
           $multiresult = array();
 
-          $multiresult[0] = $rows[$i]["usertype_name"];
+          $UserTypeName = $rows[$i]["usertype_name"];
+
+          $multiresult[0] = $UserTypeName;
 
           if ($rows[$i]["parentID"] == 0) {
 
@@ -86,6 +88,7 @@ class UserTypes
       else if(is_numeric($parentID)){
 
         $data["parentID"] = $parentID;
+        $data["isdeleted"] = 0;
 
         $rows = DbConnection::select("tb_usertype", $data);
 
@@ -122,9 +125,10 @@ class UserTypes
     $db = DbConnection::getInstance();
 
     $data = array();
-    $data["id"] = $id;
+    $condition = array();
+    $condition["id"] = $id;
     $data["usertype_name"] = $name;
-    $db->update("tb_usertype", $data);
+    $db->update("tb_usertype", $data, $condition);
     $this->id = $id;
     $this->usertype_name = $name;
   }

@@ -1,7 +1,9 @@
 var headers = new Array();
 var users = new Array();
 var types = new Array();
+var mainTypes = new Array();
 var userID;
+var typeID;
 var usertypeID;
 var parentID;
 
@@ -24,14 +26,14 @@ $(document).ready(function(){
     dataType: "JSON",
     success: function(data) {
 
-       var arr = new Array();
+       // var arr = new Array();
 
-       arr = data;
+       mainTypes = data;
 
-       for (var key in arr) {
-        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + arr[key] + "</a>").appendTo("#dropdown-usertype-table1");
-        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + arr[key] + "</a>").appendTo("#dropdown-usertype-insert");
-        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + arr[key] + "</a>").appendTo("#dropdown-MainUserType");
+       for (var key in mainTypes) {
+        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>").appendTo("#dropdown-usertype-table1");
+        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>").appendTo("#dropdown-usertype-insert");
+        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>").appendTo("#dropdown-MainUserType");
        }
 
     },
@@ -208,6 +210,7 @@ $(document).ready(function(){
 
         $("#AddTypeSettings").show();
         $("#allTypesTable").hide();
+        $("#update_typeForm").hide();
 
         return false;
     });
@@ -221,9 +224,9 @@ $(document).ready(function(){
           listAllTypesTable();
         }
 
-
         $("#AddTypeSettings").hide();
         $("#allTypesTable").show();
+        $("#update_typeForm").hide();
 
         return false;
     });
@@ -282,13 +285,15 @@ $(document).ready(function(){
 
     $(document).on('click','.updateTypebtn',function(e){
 
-      // e.preventDefault();
-      // e.stopImmediatePropagation();
-      //
-      // var id = $(this).attr('id');
-      //
-      // updateType(id);
-      // return false;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      $("#allTypesTable").hide();
+
+      var id = $(this).attr('id');
+
+      updateType(id);
+      return false;
     });
 
     $(document).on('click','.deleteTypebtn',function(e){
@@ -323,6 +328,33 @@ $(document).ready(function(){
             error: function(data){
                 console.log(data);
                 $("#error_div").css("display", "block");
+                //$("#errormsg").html(data.responseText);
+            }
+        });
+        return false;
+    });
+
+    $(document).on('click','#saveTypeChangesBtn',function(e){ // update
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var name = $('#typeName').val();
+
+        $.ajax({
+            url: "../Model/user_intermediate.php",
+            type: "POST",
+            data: {function2call: 'update_userType', typeID: typeID, arr: name},
+            success: function(data) {
+                console.log(data);
+                $("#allTypesTable").hide();
+                $("#allTypesTable").empty();
+                listAllTypesTable();
+                $("#sucessTypeUpdate_div").css("display", "block");
+            },
+            error: function(data){
+                console.log(data);
+                $("#errorTypeUpdate_div").css("display", "block");
                 //$("#errormsg").html(data.responseText);
             }
         });
@@ -572,7 +604,7 @@ function listAllTypesTable(){
     table += "</tr> </thead> <tfoot> <tr>"
     table += "<th> UserType Name</th>"
     table += "<th> ParentID Name</th>"
-	table += "<th> Control </th>"
+	  table += "<th> Control </th>"
     table += "</tr> </tfoot>";
 
     $.ajax({
@@ -581,6 +613,8 @@ function listAllTypesTable(){
         type: 'POST',
         dataType: "JSON",
         success: function(data) {
+
+          types = data;
 
           if (data != null) {
 
@@ -618,36 +652,47 @@ function listAllTypesTable(){
 
 function updateType(id){
 
-    var typeID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
-    userID = users[user_obj_index].user_values[0];
+    typeID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
 
-    if(userID != utid_update){
+    var typeName = types[typeID][0];
+    var typeParent = types[typeID][1];
 
-        utid_update = usertypeID;
-        $("#update_form_div").empty();
-        $("#tablediv").hide();
-        $("#update_form_div").show();
+    // if(userID != utid_update){
 
-        var formdiv = document.getElementById("update_form_div");
+        // utid_update = typeID;
+        $("#update_typeForm").empty();
+        $("#allTypesTable").hide();
+        $("#update_typeForm").show();
 
-        var form = " <form id='updateForm' method='post'> " +
-            " <div class='table-responsive'> <table class='table table-hover table-bordered'> <tbody> ";
+        var formdiv = document.getElementById("update_typeForm");
 
-        var i = 1;
-        for (var key in headers) {
-            form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' value='" + users[user_obj_index].user_values[i] + "' /></td>";
-            i++;
+        var form = "<div id='sucessTypeUpdate_div' class='alert alert-success' style='display: none'> Record was updated. </div>";
+        form += "<div id='errorTypeUpdate_div' class='alert alert-danger' style='display: none'> Something Wrong Happend. </div>";
+
+        form += " <form id='updateTypeForm' method='post'> " +
+                   " <div class='table-responsive'> <table class='table table-hover table-bordered'> <tbody> ";
+
+        form += "<tr> <td>Type Name</td> <td><input type='text' id = 'typeName' name='typeName' class='form=control' value='" + typeName + "' /></td>";
+        form += "<tr> <td>Parent Type</td> <td>'" + typeParent + "'</td>";
+        form += "<tr> <td>Select New Parent</td> <td><button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
+        form += "Type </button>";
+        form += "<div id='dropdown-MainUserType' class='dropdown-menu animated--fade-in' aria-labelledby='dropdownMenuButton' x-placement='top-start' style='position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;'>";
+        for (var key in mainTypes) {
+          form += "<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>";
         }
+        form += "</div></td>";
 
-        form += "</tr> <tr> <td>  </td> <td> <input id='saveChangesBtn' type='submit' value='Save Changes' class='btn btn-primary' name='saveChangesBtn'/> " +
+
+
+        form += "</tr> <tr> <td>  </td> <td> <input id='saveTypeChangesBtn' type='submit' value='Save Changes' class='btn btn-primary' name='saveTypeChangesBtn'/> " +
             "</td> </tr> </tbody> </table> </div> </form>";
 
             // <a href="index.php" style="position: absolute; margin-left: 2px;" class="btn btn-danger">Back to read products</a>
 
         formdiv.innerHTML+= form;
-    }else{
-        $("#update_form_div").show();
-    }
+    // }else{
+    //     $("#update_form_div").show();
+    // }
 }
 
 function deleteType(id){

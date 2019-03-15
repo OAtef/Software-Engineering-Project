@@ -54,6 +54,12 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
         $ut->insert($parentID, $values);
         break;
 
+      case 'update_userType' :
+        $values = $_POST['arr'];
+        $ID = $_POST['typeID'];
+        $ut->update($ID, $values);
+        break;
+
       case 'delete_Type' :
         $TypeID = $_POST['typeID'];
         $ut->delete($TypeID);
@@ -67,7 +73,6 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
         $x = $oo->headers_rows;
         echo json_encode($x);
         break;
-
 
   }
 }

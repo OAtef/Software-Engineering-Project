@@ -1,28 +1,22 @@
 var headers = new Array();
 var users = new Array();
+var types = new Array();
 var userID;
 var usertypeID;
 var parentID;
-var loaded;
 
 var utid_insert; // for checking and not repeating html
 var utid_update;
+var loaded;
 
 $(document).ready(function(){
 
-  $("#emailsPage").hide();
-  $("#foundationMembers").hide();
-  $("#tasksPage").hide();
-  $('.t2').hide();
-  $('.i2').hide();
-  $("#settingsPage").hide();
-
-    $('.table-message tbody tr').click(
-      function()
-      {
-        $(this).toggleClass('resolved');
-      }
-    );
+    $("#emailsPage").hide();
+    $("#foundationMembers").hide();
+    // $("#tasksPage").hide();
+    $('.t2').hide();
+    $('.i2').hide();
+    $("#settingsPage").hide();
 
     $.ajax({ url: '../Model/user_intermediate.php',
     data: {function2call: 'list_userTypes', parentID: 0},
@@ -54,17 +48,18 @@ $(document).ready(function(){
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        $("#tasksPage").hide();
+        //$("#TasksForm").hide();
         $("#theTable").empty();
         $("#sucess_div").hide();
         $("#tablediv").show();
         $("#update_form_div").hide();
         $("#insert_form_div").hide();
         $("#foundationMembers").show();
-        $("#emailsPage").hide();
+        $("#emails").hide();
         $("#settingsPage").hide();
 
         return false;
+
     });
 
     $(document).on('click','#addMemBtn',function(e){
@@ -72,119 +67,18 @@ $(document).ready(function(){
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        $("#tasksPage").hide();
+        //$("#TasksForm").hide();
         $("#insert_form").empty();
         $("#foundationMembers").show();
         $("#tablediv").hide();
         $("#update_form_div").hide();
         $("#insert_form_div").show();
-        $("#emailsPage").hide();
+        $("#emails").hide();
         $("#settingsPage").hide();
 
         return false;
+
     });
-
-    $(document).on('click','#Tasksbtn',function(e){
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        $("#tasksPage").show();
-        $("#insert_form").empty();
-        $("#foundationMembers").hide();
-        $("#tablediv").hide();
-        $("#update_form_div").hide();
-        $("#insert_form_div").hide();
-        $("#emailsPage").hide();
-        $("#settingsPage").hide();
-
-        return false;
-    });
-
-    $(document).on('click','#settingsBtn',function(e){
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        $("#settingsPage").show();
-        $("#tasksPage").hide();
-        $("#insert_form").empty();
-        $("#foundationMembers").hide();
-        $("#tablediv").hide();
-        $("#update_form_div").hide();
-        $("#insert_form_div").hide();
-        $("#emailsPage").hide();
-
-        return false;
-    });
-
-    $(document).on('click','#multiMsg',function(e){
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        $("#emailsPage").show();
-        $("#settingsPage").hide();
-        $("#tasksPage").hide();
-        $("#insert_form").empty();
-        $("#foundationMembers").hide();
-        $("#tablediv").hide();
-        $("#update_form_div").hide();
-        $("#insert_form_div").hide();
-
-        return false;
-    });
-
-    $(document).on('click','#SubTypeFormBtn',function(e){
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        $("#AddUserSubTypeForm").show();
-        $("#AddUserMainTypeForm").hide();
-
-        return false;
-    });
-
-    $(document).on('click','#MainTypeFormBtn',function(e){
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        $("#AddUserSubTypeForm").hide();
-        $("#AddUserMainTypeForm").show();
-
-
-        return false;
-    });
-
-    $(document).on('click','#ShowAddTypeSettingsBtn',function(e){
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        $("#AddTypeSettings").show();
-        $("#allTypesTable").hide();
-
-        return false;
-    });
-
-    $(document).on('click','#ShowListTypeSettingsBtn',function(e){
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        if (loaded != 1) {
-          listAllTypesTable();
-        }
-
-
-        $("#AddTypeSettings").hide();
-        $("#allTypesTable").show();
-
-        return false;
-    });
-
 
     $(document).on('click','.updatebtn',function(e){
 
@@ -195,6 +89,7 @@ $(document).ready(function(){
 
         updateUser(id);
         return false;
+
     });
 
     $(document).on('click','.deletebtn',function(e){
@@ -206,6 +101,7 @@ $(document).ready(function(){
 
         deleteUser(id);
         return false;
+
     });
 
     $(document).on('click','.dropdown1',function(e){
@@ -254,9 +150,11 @@ $(document).ready(function(){
         usertypeID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
 
         if($(this).hasClass('userTable')){
-            $('#theTable').empty();
             $("#tableScript").remove();
+            $('#theTable').empty();
             usertypetable();
+
+            //$("#dataTable").DataTable();
         }
         else if($(this).hasClass('insertUser')){
             if(usertypeID != utid_insert){
@@ -269,7 +167,142 @@ $(document).ready(function(){
         return false;
     });
 
-    // functions
+  //   $(document).on('click','#Tasksbtn',function(e){
+  //
+  //     e.preventDefault();
+  //     e.stopImmediatePropagation();
+  //
+  //     $("#tasksPage").show();
+  //     $("#insert_form").empty();
+  //     $("#foundationMembers").hide();
+  //     $("#tablediv").hide();
+  //     $("#update_form_div").hide();
+  //     $("#insert_form_div").hide();
+  //     $("#emailsPage").hide();
+  //     $("#settingsPage").hide();
+  //
+  //     return false;
+  // });
+
+
+	$(document).on('click','#settingsBtn',function(e){
+		e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#settingsPage").show();
+        //$("#tasksPage").hide();
+        $("#insert_form").empty();
+        $("#foundationMembers").hide();
+        $("#tablediv").hide();
+        $("#update_form_div").hide();
+        $("#insert_form_div").hide();
+        $("#emailsPage").hide();
+
+        return false;
+    });
+
+    $(document).on('click','#ShowAddTypeSettingsBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#AddTypeSettings").show();
+        $("#allTypesTable").hide();
+
+        return false;
+    });
+
+    $(document).on('click','#ShowListTypeSettingsBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        if (loaded != 1) {
+          listAllTypesTable();
+        }
+
+
+        $("#AddTypeSettings").hide();
+        $("#allTypesTable").show();
+
+        return false;
+    });
+
+	$(document).on('click','#SubTypeFormBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#AddUserSubTypeForm").show();
+        $("#AddUserMainTypeForm").hide();
+
+        return false;
+    });
+
+    $(document).on('click','#addSubTypeBtn',function(e){ // insert
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var form_arr = $('#insertUserSubTypeForm').serialize();
+    form_arr += '&';
+    console.log(form_arr);
+
+    $.ajax({
+        url: "../Model/user_intermediate.php",
+        type: "POST",
+        data: {function2call: 'insert_subUserType', parentID: parentID, arr: form_arr},
+        success: function(data) {
+            console.log(data);
+            $("#sucessType_div").css("display", "block");
+            /* for(var key in headers){
+                $('td[name='+key+']').val("");
+            } */
+        },
+        error: function(data){
+            console.log(data);
+            $("#errorType_div").css("display", "block");
+            //$("#errormsg").html(data.responseText);
+        }
+    });
+    return false;
+  });
+
+    $(document).on('click','#MainTypeFormBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#AddUserSubTypeForm").hide();
+        $("#AddUserMainTypeForm").show();
+
+
+        return false;
+    });
+
+    $(document).on('click','.updateTypebtn',function(e){
+
+      // e.preventDefault();
+      // e.stopImmediatePropagation();
+      //
+      // var id = $(this).attr('id');
+      //
+      // updateType(id);
+      // return false;
+    });
+
+    $(document).on('click','.deleteTypebtn',function(e){
+
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      var id = $(this).attr('id');
+
+      deleteType(id);
+      return false;
+    });
+
+	// functions
 
     $(document).on('click','#saveChangesBtn',function(e){ // update
 
@@ -325,35 +358,6 @@ $(document).ready(function(){
         return false;
     });
 
-    $(document).on('click','#addSubTypeBtn',function(e){ // insert
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        var form_arr = $('#insertUserSubTypeForm').serialize();
-        form_arr += '&';
-        console.log(form_arr);
-
-        $.ajax({
-            url: "../Model/user_intermediate.php",
-            type: "POST",
-            data: {function2call: 'insert_subUserType', parentID: parentID, arr: form_arr},
-            success: function(data) {
-                console.log(data);
-                $("#sucessType_div").css("display", "block");
-                /* for(var key in headers){
-                    $('td[name='+key+']').val("");
-                } */
-            },
-            error: function(data){
-                console.log(data);
-                $("#errorType_div").css("display", "block");
-                //$("#errormsg").html(data.responseText);
-            }
-        });
-        return false;
-    });
-
 });
 
 function insertUser(){
@@ -366,7 +370,7 @@ function insertUser(){
             " <div class='table-responsive'> <table class='table table-hover table-bordered'> <tbody> ";
 
         $.ajax({
-            url: '../Model/user_intermediate.php',
+            url: '../Model/user_Intermediate.php',
             data: {function2call: 'label_header', parentID: parentID},
             type: 'POST',
             dataType: "JSON",
@@ -404,7 +408,7 @@ function usertypetable(){
         var table = ' <div class="table-responsive"> <br> <table class="table table-bordered userstable" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';
 
         $.ajax({
-            url: '../Model/user_intermediate.php',
+            url: '../Model/user_Intermediate.php',
             data: {function2call: 'label_header', parentID: parentID},
             type: 'POST',
             dataType: "JSON",
@@ -483,66 +487,10 @@ function usertypetable(){
                     script.id = "tableScript";
                     script.src = '../../js/demo/datatables-demo.js'; //Set it's src to the provided URL
                     document.body.appendChild(script);
+
                 } else{
                     // notify no data input managed for such a usertype
                 }
-
-            },
-            error: function(data){
-                console.log(data);
-                $("#errormsg").html(data.responseText);
-            }
-        });
-}
-
-function listAllTypesTable(){
-
-        var div = document.getElementById("allTypesTable");
-        var table = ' <div class="table-responsive"> <br> <table class="table table-bordered userstable" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';
-
-        table += "<th> UserType Name</th>"
-        table += "<th> ParentID Name</th>"
-        table += "<th> Control </th>"
-
-        table += "</tr> </thead> <tfoot> <tr>"
-        table += "<th> UserType Name</th>"
-        table += "<th> ParentID Name</th>"
-        table += "<th> Control </th>"
-        table += "</tr> </tfoot>";
-
-        $.ajax({
-            url: '../Model/user_intermediate.php',
-            data: {function2call: 'list_userTypes', parentID: "all"},
-            type: 'POST',
-            dataType: "JSON",
-            success: function(data) {
-
-              if (data != null) {
-
-                table += "<tbody>";
-
-                for (var x in data) {
-
-                  table += "<tr>";
-
-                  var list = data[x];
-
-                  var userTypename = list[0];
-                  var typeParentID = list[1];
-
-                  table += "<td>" + userTypename + "</td>";
-                  table += "<td>" + typeParentID + "</td>";
-
-                  table += "<td> <a id='update-" + x + "' href='#' class='btn btn-primary btn-circle m-r-1em updatebtn'><i class='fa fa-edit'></i></a> " +
-                  "<a id='del-" + x + "' href='#' class='btn btn-danger btn-circle deletebtn'><i class='fas fa-trash'></i></a> </td> </tr>";
-
-                }
-                table += '</body>';
-              }
-              div.innerHTML+= table;
-              loaded = 1;
-
-              console.log(data);
 
             },
             error: function(data){
@@ -607,6 +555,119 @@ function deleteUser(id){
         error: function(data){
             console.log(data);
             $("#error_div").css("display", "block");
+            //$("#errormsg").html(data.responseText);
+        }
+    });
+}
+
+function listAllTypesTable(){
+
+    var div = document.getElementById("allTypesTable");
+    var table = ' <div class="table-responsive"> <br> <table class="table table-bordered userstable" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';
+
+    table += "<th> UserType Name</th>"
+    table += "<th> ParentID Name</th>"
+    table += "<th> Control </th>"
+
+    table += "</tr> </thead> <tfoot> <tr>"
+    table += "<th> UserType Name</th>"
+    table += "<th> ParentID Name</th>"
+	table += "<th> Control </th>"
+    table += "</tr> </tfoot>";
+
+    $.ajax({
+        url: '../Model/user_intermediate.php',
+        data: {function2call: 'list_userTypes', parentID: "all"},
+        type: 'POST',
+        dataType: "JSON",
+        success: function(data) {
+
+          if (data != null) {
+
+            table += "<tbody>";
+
+            for (var x in data) {
+
+            table += "<tr>";
+
+            var list = data[x];
+
+            var userTypename = list[0];
+            var typeParentID = list[1];
+
+            table += "<td>" + userTypename + "</td>";
+            table += "<td>" + typeParentID + "</td>";
+
+            table += "<td> <a id='update-" + x + "' href='#' class='btn btn-primary btn-circle m-r-1em updateTypebtn'><i class='fa fa-edit'></i></a> " +
+                     "<a id='del-" + x + "' href='#' class='btn btn-danger btn-circle deleteTypebtn'><i class='fas fa-trash'></i></a> </td> </tr>";
+
+            }
+            table += '</body>';
+          }
+          div.innerHTML+= table;
+          loaded = 1;
+
+          console.log(data);
+        },
+        error: function(data){
+            console.log(data);
+            $("#errormsg").html(data.responseText);
+        }
+    });
+}
+
+function updateType(id){
+
+    var typeID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+    userID = users[user_obj_index].user_values[0];
+
+    if(userID != utid_update){
+
+        utid_update = usertypeID;
+        $("#update_form_div").empty();
+        $("#tablediv").hide();
+        $("#update_form_div").show();
+
+        var formdiv = document.getElementById("update_form_div");
+
+        var form = " <form id='updateForm' method='post'> " +
+            " <div class='table-responsive'> <table class='table table-hover table-bordered'> <tbody> ";
+
+        var i = 1;
+        for (var key in headers) {
+            form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' value='" + users[user_obj_index].user_values[i] + "' /></td>";
+            i++;
+        }
+
+        form += "</tr> <tr> <td>  </td> <td> <input id='saveChangesBtn' type='submit' value='Save Changes' class='btn btn-primary' name='saveChangesBtn'/> " +
+            "</td> </tr> </tbody> </table> </div> </form>";
+
+            // <a href="index.php" style="position: absolute; margin-left: 2px;" class="btn btn-danger">Back to read products</a>
+
+        formdiv.innerHTML+= form;
+    }else{
+        $("#update_form_div").show();
+    }
+}
+
+function deleteType(id){
+    var typeID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+    $.ajax({
+        url: '../Model/user_intermediate.php',
+        data: {function2call: 'delete_Type', typeID: typeID},
+        type: 'POST',
+        success: function(data) {
+            $("#sucessType_div").css("display", "block");
+            $("#allTypesTable").hide();
+            $("#allTypesTable").empty();
+            listAllTypesTable();
+            $("#allTypesTable").show();
+            // notifiy done sucessfully
+        },
+        error: function(data){
+            console.log(data);
+            $("#errorType_div").css("display", "block");
             //$("#errormsg").html(data.responseText);
         }
     });

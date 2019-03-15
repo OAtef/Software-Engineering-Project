@@ -1,6 +1,6 @@
 <?php
 
-include_once('../config.api/db.php');
+include_once('../config.api/dbConnection.php');
 
 class Options
 {
@@ -20,9 +20,9 @@ class Options
       $data = array();
 
       $data["id"] = $id;
-
-      $row = DbConnection::select("tb_options", $data);
-
+  
+      $row = DbConnection::select("tb_options", $data); 
+  
       $this->id = $id;
       $this->option_name = $row[0]["option_name"];
       $this->option_type = $row[0]["option_type"];
@@ -33,7 +33,7 @@ class Options
   public function select_allOptions($parentID){
 
     $data = array();
-
+    
     if($parentID != NULL){
 
       $db = DbConnection::getInstance();
@@ -41,9 +41,9 @@ class Options
       if(!is_numeric($parentID) && $parentID == "all"){
 
         $data["isdeleted"] = 0;
-
-        $row = DbConnection::select("tb_options", $data);
-
+    
+        $row = DbConnection::select("tb_options", $data); 
+  
         $i = 0;
         while($i < sizeof($rows)){
           $this->headers_rows[$row[$i]["option_name"]] = $row[$i]["option_type"];
@@ -57,7 +57,7 @@ class Options
         $data["usertypeID"] = $parentID;
         $data["isdeleted"] = 0;
 
-        $optionIDs = DbConnection::select("rtb_option_usertype", $data);
+        $optionIDs = DbConnection::select("rtb_option_usertype", $data); 
         //echo sizeof($optionIDs);
 
         $i=0;
@@ -66,7 +66,7 @@ class Options
           $data1 = array();
           $data1["id"] =  $optionIDs[$i]["optionID"];
 
-          $row = DbConnection::select("tb_options", $data1);
+          $row = DbConnection::select("tb_options", $data1); 
 
           $this->headers_rows[$row[0]["option_name"]] = $row[0]["option_type"];
 
@@ -119,3 +119,5 @@ class Options
 }
 
 ?>
+
+

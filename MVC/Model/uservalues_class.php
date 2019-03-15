@@ -1,13 +1,13 @@
 <?php
 
-require_once ('../config.api/db.php');
+require_once ('../config.api/dbConnection.php');
 require_once ('usertypes_class.php');
 require_once ('users_class.php');
 
 class User_Values
 {
   public $user_values = array();
-
+  
   function __construct($val_arr){
 
     if($val_arr != NULL){
@@ -32,21 +32,21 @@ class User_Values
       $data['userID'] = $userIDs[$i];
 
       $ut = new UserTypes($usertypeID);
-
+      
       $user_values_array = array();
-      array_push($user_values_array, $userIDs[$i]);
+      array_push($user_values_array, $userIDs[$i]);    
 
       $j = 0;
       while($j < sizeof($ut->rOUT_ids)){
-
+      
         $data['optionUserID'] = $ut->rOUT_ids[$j];
         $rows = DbConnection::select("tb_option_user_values", $data);
-
+    
         array_push($user_values_array, $rows[0]['value']);
         $j++;
-
+    
       }
-
+      
       $myobj = new User_Values($user_values_array);
       $object_array[$i] = $myobj;
       $i++;
@@ -61,7 +61,7 @@ class User_Values
 
     $data = array();
     $data["userID"] = $userID;
-
+    
     DbConnection::delete("tb_option_user_values", $data);
 
   }
@@ -130,8 +130,12 @@ class User_Values
       $data["value"] = $values[$i];
       $i++;
       DbConnection::update("tb_option_user_values", $data, $condition);
+
+      
     }
+
   }
+
 }
 
 ?>

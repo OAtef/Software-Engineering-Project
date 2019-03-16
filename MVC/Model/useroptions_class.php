@@ -20,6 +20,7 @@ class Options
       $data = array();
 
       $data["id"] = $id;
+      $data['isdeleted'] = 0;
   
       $row = DbConnection::select("tb_options", $data); 
   
@@ -65,6 +66,7 @@ class Options
 
           $data1 = array();
           $data1["id"] =  $optionIDs[$i]["optionID"];
+          $data1['isdeleted'] = 0;
 
           $row = DbConnection::select("tb_options", $data1); 
 

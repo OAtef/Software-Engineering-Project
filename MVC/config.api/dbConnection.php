@@ -68,6 +68,12 @@ class DbConnection {
 					}else{
 							$where .= "WHERE ";
 					}
+
+					if(!is_numeric($val)){
+
+						$val = "'$val'";
+
+					}
 					
 					$where .= ($key . "=" . $val);
 					$loop++;
@@ -117,7 +123,7 @@ class DbConnection {
       $where = self::where($conditions);
 
 			$query = "UPDATE $table SET isdeleted=1 " . $where;
-			echo $query;
+			//echo $query;
 			return self::execute($query);
 		}
 

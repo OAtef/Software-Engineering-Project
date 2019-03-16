@@ -40,6 +40,7 @@ class User_Values
       while($j < sizeof($ut->rOUT_ids)){
       
         $data['optionUserID'] = $ut->rOUT_ids[$j];
+        $data['isdeleted'] = 0;
         $rows = DbConnection::select("tb_option_user_values", $data);
     
         array_push($user_values_array, $rows[0]['value']);
@@ -134,6 +135,42 @@ class User_Values
       
     }
 
+  }
+
+  public function check_values($password, $email){
+
+    $db = DbConnection::getInstance();
+	  
+    $dataEmail = array();
+    $dataEmail["value"] = $email;
+    $dataEmail["isdeleted"] = 0;	  	  
+    $rowEmail = DbConnection::select("tb_option_user_values", $dataEmail);
+
+    if($rowEmail != null){
+
+      $dataPassword = array();
+      $dataPassword["value"] = $password;
+      $dataPassword["isdeleted"] = 0;
+      $userid = $dataPassword["userID"] = $rowEmail[0]["userID"];
+       
+      $rowPassword = DbConnection::select("tb_option_user_values", $dataPassword);
+
+      if($rowPassword != null){
+
+        session_start();
+        $_SESSION['uid'] = $userid;
+
+        return true;
+
+      }
+      else{
+        return false;
+      }
+
+    }
+    else{
+      return false;
+    }
   }
 
 }

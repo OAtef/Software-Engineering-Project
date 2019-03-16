@@ -18,6 +18,7 @@ class UserTypes
     if ($userTypeId != "") {
 
       $data["id"] = $userTypeId; // usertypeID
+      $data["isdeleted"] = 0;
       $row = DbConnection::select("tb_usertype", $data);
       $this->id = $userTypeId;
       $this->usertype_name = $row[0]["usertype_name"];
@@ -164,6 +165,24 @@ class UserTypes
     }
 
     return $contents;
+  }
+
+  public function get_root($usertypeID){
+    
+    $db = DbConnection::getInstance();
+    $data = array();
+
+    $data["id"] = $usertypeID;
+    $data["isdeleted"] = 0;
+    $row = DbConnection::select("tb_usertype", $data);
+
+    if($row[0]["parentID"] != 0){
+
+      $this->get_root($row[0]["parentID"]);
+
+    }else{
+      $this->id = $row[0]["id"];
+    }
   }
 }
 

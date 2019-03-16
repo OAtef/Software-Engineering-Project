@@ -4,7 +4,7 @@ require_once ('usertypes_class.php');
 require_once ('users_class.php');
 require_once ('uservalues_class.php');
 require_once ('useroptions_class.php');
-
+require_once ('links_class.php');
 
 if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
 
@@ -71,6 +71,40 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
         $oo = new Options(NULL);
         $oo->select_allOptions($parentID);
         $x = $oo->headers_rows;
+        echo json_encode($x);
+        break;
+
+      case 'insert_html' :
+        $page_name = $_POST['page_name'];
+        $html = $_POST['HTML'];
+        $links = new Links(NULL);
+        $links->insert_page($page_name, $html);
+        break;
+
+      case 'html_pages' :
+        $links = new Links(NULL);
+        $x = $links->get_pages();
+        echo json_encode($x);
+        break;
+
+      case 'delete_html' :
+        $id = $_POST['num'];
+        $links = new Links(NULL);
+        $links->delete_page($id);
+        break;
+
+      case 'login' :
+        $email = $_POST['email'];
+        $pass =  $_POST['pass'];
+        //echo $pass;
+        $x = $uv->check_values($pass, $email);
+        echo json_encode($x);
+        break;
+
+      case 'get_html':
+        session_start();
+        $links = new Links($_SESSION['uid']);
+        $x = $links->HTML;
         echo json_encode($x);
         break;
 

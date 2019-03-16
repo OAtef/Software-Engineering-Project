@@ -329,15 +329,15 @@ If you want to learn more about our journey
 <script>
 
 	function onclick () {
-			
+
 			$('sub').on('click', function(e){
 		 e.preventDefault();
-	
+
 		 var name = $('input#title').val(),
 				 email = $('input#author').val(),
 				 comments = $('textarea#editor1').val(),
 				 formData = 'name=' + name + '&email=' + email + '&comments=' + comments;
-	
+
 			$.ajax({
 				type: 'post',
 				url: 'inserttodb.php',
@@ -347,5 +347,5 @@ If you want to learn more about our journey
 				}
 			});
 	});
-	
+
 	</script>

@@ -1,8 +1,6 @@
-<
-	<?php include_once('dbconnection.php');?>
-	!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
-
+<?php include_once("CK/inserttodb.php");?>
 
 <script src="https://cdn.ckeditor.com/4.11.3/standard/ckeditor.js"></script>
 <head>
@@ -303,7 +301,16 @@
 		<input type="text" name="title" id="title" placeholder="Enter Article Title">
 		<input type="text" name="author" id="author" placeholder="Enter Author Name">
 		<textarea name="editor1" id="editor1" rows="10" cols="80">
-						This is my textarea to be replaced with CKEditor.
+        NICE TO MEET YOU
+Let us introduce ourselves.
+
+We, the Life from Water team, are volunteers from all over the world working together to achieve one common goal: empowering people.
+
+How? By providing them with something most of us take as granted: Water!
+
+Our story started in 2011 in a small Egyptian village and today we are active on 4 continents.
+
+If you want to learn more about our journey
 				</textarea>
 		<script>
 				// Replace the <textarea id="editor1"> with a CKEditor

@@ -15,9 +15,11 @@ $author = mysqli_real_escape_string($link, $_REQUEST['author']);
 //insertion of table 
 $sql ="INSERT INTO articles(`id`, `title`, `description`, `author`) VALUES (null,'$title','$descp','$author')";
 if(mysqli_query($link, $sql)){
-    echo "Records added successfully.";
+    $string = "Records added successfully."; 
+   echo "<script> alert($string) </script>";
 } else{
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    $string2 = "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    echo "<script> alert($string2) </script>";
 }
 mysqli_close($link);
 ?>

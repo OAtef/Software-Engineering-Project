@@ -1,6 +1,6 @@
 <?php
 
-require_once ('../config.api/db.php');
+require_once ('../config.api/dbConnection.php');
 
 class UserTypes
 {
@@ -34,9 +34,7 @@ class UserTypes
         $this->rOUT_ids[$i] = $rows_rout[$i]["id"];
         $i++;
       }
-
 		}
-
   }
 
   public static function list_usertypes($parentID){
@@ -51,15 +49,21 @@ class UserTypes
 
       if(!is_numeric($parentID) && $parentID == "all"){
 
-        $rows = DbConnection::select("tb_usertype", NULL);
+        $data["isdeleted"] = 0;
+
+        $rows = DbConnection::select("tb_usertype", $data);
 
         $i = 0;
         $j = 0;
+
         while($i < sizeof($rows)){
 
           $multiresult = array();
 
-          $multiresult[0] = $rows[$i]["usertype_name"];
+          $UserTypeName = $rows[$i]["usertype_name"];
+
+          $multiresult[0] = $UserTypeName;
+
           if ($rows[$i]["parentID"] == 0) {
 
             $mainTypeID[$j] = $rows[$i]["id"];
@@ -79,17 +83,18 @@ class UserTypes
           $result[$rows[$i]["id"]] = $multiresult;
           $i++;
         }
-
         return $result;
       }
       else if(is_numeric($parentID)){
 
         $data["parentID"] = $parentID;
+        $data["isdeleted"] = 0;
 
         $rows = DbConnection::select("tb_usertype", $data);
 
         $i = 0;
         while($i < sizeof($rows)){
+
           $result[$rows[$i]["id"]] = $rows[$i]["usertype_name"];
           $i++;
         }
@@ -120,13 +125,12 @@ class UserTypes
     $db = DbConnection::getInstance();
 
     $data = array();
-    $data["id"] = $id;
+    $condition = array();
+    $condition["id"] = $id;
     $data["usertype_name"] = $name;
-    $db->update("tb_usertype", $data);
+    $db->update("tb_usertype", $data, $condition);
     $this->id = $id;
     $this->usertype_name = $name;
-
-
   }
 
   public function delete($id){
@@ -137,7 +141,6 @@ class UserTypes
     $data["id"] = $id;
 
     $db->delete("tb_usertype", $data);
-
   }
 
   private static function get_values($str, $startDelimiter, $endDelimiter) {
@@ -162,7 +165,6 @@ class UserTypes
 
     return $contents;
   }
-
 }
 
 

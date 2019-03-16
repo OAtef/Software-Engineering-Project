@@ -14,26 +14,18 @@
   <!-- Ajax Link -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-  <!-- Custom fonts for this template-->
+  <!-- Custom fonts for this template -->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-  <!--  -->
-  <!-- <link type="text/css" href="../../css/extra/bootstrap.min.css" rel="stylesheet"> -->
-  <link type="text/css" href="../../css/extra/bootstrap-responsive.min.css" rel="stylesheet">
-  <link type="text/css" href="../../css/extra/theme.css" rel="stylesheet">
-  <link type="text/css" href="../../css/extra/font-awesome.css" rel="stylesheet">
-  <!--  -->
-
-  <!-- Custom styles for this template-->
+  <!-- Custom styles for this template -->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
-
-  <!-- Extra css Files -->
-  <link href="../../css/extra/sendEmailForm.css" rel="stylesheet">
-
 
   <!-- Custom styles for this page -->
   <link href="../../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+  <!-- Extra css Files -->
+  <link href="../../css/extra/sendEmailForm.css" rel="stylesheet">
 
 </head>
 
@@ -100,19 +92,6 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fa fa-envelope-open"></i>
-          <span>Project Managment</span>
-        </a>
-        <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Tasks Interface :</h6>
-            <a class="collapse-item" href="#" id='Tasksbtn'> Assign Tasks </a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
           <span>Settings</span>
@@ -120,7 +99,7 @@
         <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!-- <h6 class="collapse-header">... :</h6> -->
-            <a class="collapse-item" href="" id="settingsBtn"> Settings </a>
+            <a class="collapse-item" href="#" id='settingsBtn'> Settings </a>
           </div>
         </div>
       </li>
@@ -363,7 +342,6 @@
             <h6 class="m-0 font-weight-bold text-primary"> Foundation Members</h6>
           </div>
           <div class="card-body">
-
             <div id="sucess_div" class='alert alert-success' style="display: none"> Record was updated. </div>
             <div id="error_div" class='alert alert-danger' style="display: none"> Something Wrong Happend. </div>
 
@@ -411,114 +389,18 @@
                 </div>
               </div>
               <div id="insert_form"></div>
-
             </div>
-
 
             <div class="dropdown mb-4">
-
             </div>
           </div>
         </div>
-
-        <!-- Tasks Control -->
-        <div id="tasksPage" class="span9 shadow">
-          <div class="content">
-
-            <div class="module message">
-              <div class="module-head">
-                <h3>Task Management Tool</h3>
-              </div>
-              <div class="module-option clearfix">
-                <div class="pull-left">
-                  Filter : &nbsp;
-                  <div class="btn-group">
-                    <button class="btn">All</button>
-                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                      <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li>All</li>
-                      <li>In Progress</li>
-                      <li>Done</li>
-                      <li class="divider"></li>
-                      <li>New task</li>
-                      <li>Overdue Task</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-primary">Create Task</a>
-                </div>
-              </div>
-              <div class="module-body table">
-
-                <table class="table table-message">
-                  <tbody>
-                    <tr class="heading">
-                      <td class="cell-icon"></td>
-                      <td class="cell-title">Task</td>
-                      <td class="cell-status hidden-phone hidden-tablet">Status</td>
-                      <td class="cell-time align-right">Due Date</td>
-                    </tr>
-                    <tr class="task">
-                      <td class="cell-icon"><i class="icon-checker high"></i></td>
-                      <td class="cell-title">
-                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                      </td>
-                      <td class="cell-status hidden-phone hidden-tablet"><b class="due">Missed</b></td>
-                      <td class="cell-time align-right">Just Now</td>
-                    </tr>
-                    <tr class="task">
-                      <td class="cell-icon"><i class="icon-checker"></i></td>
-                      <td class="cell-title">
-                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                      </td>
-                      <td class="cell-status hidden-phone hidden-tablet"><b class="due">Missed</b></td>
-                      <td class="cell-time align-right">Just Now</td>
-                    </tr>
-                    <tr class="task">
-                      <td class="cell-icon"><i class="icon-checker"></i></td>
-                      <td class="cell-title">
-                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                      </td>
-                      <td class="cell-status hidden-phone hidden-tablet"><b class="due">Missed</b></td>
-                      <td class="cell-time align-right">Yesterday</td>
-                    </tr>
-                    <tr class="task resolved">
-                      <td class="cell-icon"><i class="icon-checker high"></i></td>
-                      <td class="cell-title">
-                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                      </td>
-                      <td class="cell-status hidden-phone hidden-tablet"></td>
-                      <td class="cell-time align-right">15 July 2014</td>
-                    </tr>
-                    <tr class="task resolved">
-                      <td class="cell-icon"><i class="icon-checker high"></i></td>
-                      <td class="cell-title">
-                        <div>Lorem ipsum dolor sit et, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                      </td>
-                      <td class="cell-status hidden-phone hidden-tablet"></td>
-                      <td class="cell-time align-right">15 July 2014</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="module-foot">
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--/.span9-->
-
-      </div>
 
       <div id="emailsPage" class="card shadow mb-4">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary"> Emails </h6>
         </div>
         <div class="card-body">
-
           <div class='hide_to_send_email'>
             <div class="dropdown mb-4">
               <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -538,9 +420,7 @@
                 <span class="text">write email</span>
               </a>
             </div>
-
           </div>
-
           <div id="emailForm">
             <div id="sucess_div" class='alert alert-success' style="display: none"> Message was Send </div>
             <a href="#" class="btn btn-primary btn-icon-split" id='back_to_email_list'>
@@ -562,6 +442,7 @@
               <!-- <button class="button-primary" type="submit" >Send</button> -->
               <a href="#" class="btn btn-facebook btn-block" id="SendEmailBtn"> Send</a>
             </form>
+
           </div>
         </div>
       </div>
@@ -668,6 +549,14 @@
               </div>
 
               <div id="allTypesTable">
+                <div id="sucessTypeTable_div" class='alert alert-success' style="display: none"> Record was updated. </div>
+                <div id="errorTypeTable_div" class='alert alert-danger' style="display: none"> Something Wrong Happend. </div>
+
+
+              </div>
+
+              <div id="update_typeForm">
+
 
               </div>
 
@@ -714,7 +603,7 @@
       </div><!-- end of settings -->
 
 
-      <!-- End of Main Content -->
+	  <!-- End of Main Content -->
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
@@ -756,11 +645,9 @@
     </div>
   </div>
 
-  <!-- Extra -->
-  <script id="table-files"></script>
-
   <!-- Ajax -->
   <script src="../Controller/user.js"></script>
+  <script src="../Controller/emails.js"></script>
 
   <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/jquery/jquery.min.js"></script>
@@ -775,33 +662,6 @@
   <!-- Page level plugins -->
   <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="../../js/demo/datatables-demo.js"></script>
-
-  <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 -->
-
-  <!-- Dont remove below comments -->
-
-  <!-- <script src="../scripts/jquery-1.9.1.min.js" type="text/javascript"></script> -->
-  <!-- <script src="../scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script> -->
-  <!-- <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script> -->
-  <!-- <script src="../scripts/flot/jquery.flot.js" type="text/javascript"></script> -->
-  <!-- <script src="../scripts/datatables/jquery.dataTables.js" type="text/javascript"></script> -->
-  <!-- <script type="text/javascript">
-  $(document).ready(function() {
-      $('.table-message tbody tr').click(
-        function()
-        {
-          $(this).toggleClass('resolved');
-        }
-      );
-    } );
-  </script> -->
-
-  <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 -->
-
-  <!-- Dont remove above comments -->
 
 </body>
 

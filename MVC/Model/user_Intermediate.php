@@ -1,6 +1,5 @@
 <?php
 
-require_once ('../config.api/db.php');
 require_once ('usertypes_class.php');
 require_once ('users_class.php');
 require_once ('uservalues_class.php');
@@ -13,6 +12,8 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
   $uv = new User_Values(NULL);
   $user = new Users(NULL);
   $ut = new UserTypes(NULL);
+  $TypeOptions = new Options(NULL);
+
 
   switch($function2call) {
       case 'list_users' :
@@ -53,13 +54,25 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
         $ut->insert($parentID, $values);
         break;
 
-        case 'label_header' :
-          $parentID = $_POST['parentID'];
-          $oo = new Options(NULL);
-          $oo->select_allOptions($parentID);
-          $x = $oo->headers_rows;
-          echo json_encode($x);
-          break;
+      case 'update_userType' :
+        $values = $_POST['arr'];
+        $ID = $_POST['typeID'];
+        $ut->update($ID, $values);
+        break;
+
+      case 'delete_Type' :
+        $TypeID = $_POST['typeID'];
+        $ut->delete($TypeID);
+        $TypeOptions->delete($TypeID);
+        break;
+
+      case 'label_header' :
+        $parentID = $_POST['parentID'];
+        $oo = new Options(NULL);
+        $oo->select_allOptions($parentID);
+        $x = $oo->headers_rows;
+        echo json_encode($x);
+        break;
 
   }
 }

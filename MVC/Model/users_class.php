@@ -1,6 +1,6 @@
 <?php
 
-require_once ('../config.api/db.php');
+require_once ('../config.api/dbConnection.php');
 class Users
 {
   public $id;

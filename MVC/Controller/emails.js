@@ -3,13 +3,18 @@ $(document).on('click','#multiMsg',function(e){
     e.preventDefault();
     e.stopImmediatePropagation();
 
-    $("#foundationMembers").hide();
-    $("#emails").show();
-    $(".hide_to_send_email").show();
-    $("#emailForm").hide();
-    $("#table_email_list").hide();
+        e.preventDefault();
+        e.stopImmediatePropagation();
 
-    $.ajax({ 
+        $("#emailsPage").show();
+        $("#settingsPage").hide();
+        $("#insert_form").empty();
+        $("#foundationMembers").hide();
+        $("#tablediv").hide();
+        $("#update_form_div").hide();
+        $("#insert_form_div").hide();
+
+/*     $.ajax({ 
           url: '../Model/emails.php',
          data: {function2call: 'allUsersList'},
           type: 'POST',
@@ -20,7 +25,7 @@ $(document).on('click','#multiMsg',function(e){
             error: function(data){
             console.log(data);
         }
-    });
+    }); */
 
         return false;      
 });

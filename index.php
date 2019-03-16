@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
-<?php include_once("CK/inserttodb.php");?>
+<?php include_once("on_progress/CK/inserttodb.php");?>
 
 <script src="https://cdn.ckeditor.com/4.11.3/standard/ckeditor.js"></script>
 <head>
@@ -340,7 +340,7 @@ If you want to learn more about our journey
 	
 			$.ajax({
 				type: 'post',
-				url: 'inserttodb.php',
+				url: 'on_progress/CK/inserttodb.php',
 				data: formData,
 				success: function(results) {
 					$('ul#response').html(results);

@@ -1,15 +1,18 @@
 var headers = new Array();
 var users = new Array();
 var types = new Array();
+var options = new Array();
 var mainTypes = new Array();
 var userID;
 var typeID;
+var optionID;
 var usertypeID;
 var parentID;
 
 var utid_insert; // for checking and not repeating html
 var utid_update;
-var loaded;
+var typesLoaded;
+var optionsLoaded;
 
 $(document).ready(function(){
 
@@ -220,24 +223,13 @@ $(document).ready(function(){
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        if (loaded != 1) {
+        if (typesLoaded != 1) {
           listAllTypesTable();
         }
 
         $("#AddTypeSettings").hide();
         $("#allTypesTable").show();
         $("#update_typeForm").hide();
-
-        return false;
-    });
-
-	$(document).on('click','#SubTypeFormBtn',function(e){
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        $("#AddUserSubTypeForm").show();
-        $("#AddUserMainTypeForm").hide();
 
         return false;
     });
@@ -271,18 +263,6 @@ $(document).ready(function(){
     return false;
   });
 
-    $(document).on('click','#MainTypeFormBtn',function(e){
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
-        $("#AddUserSubTypeForm").hide();
-        $("#AddUserMainTypeForm").show();
-
-
-        return false;
-    });
-
     $(document).on('click','.updateTypebtn',function(e){
 
       e.preventDefault();
@@ -306,6 +286,94 @@ $(document).ready(function(){
       deleteType(id);
       return false;
     });
+
+    $(document).on('click','#showAddOptionBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#AddOptionSettings").show();
+        $("#allOptionsTable").hide();
+        $("#update_OptionForm").hide();
+
+        return false;
+    });
+
+    $(document).on('click','#showListOptionBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        if (optionsLoaded != 1) {
+          listAllOptionsTable();
+        }
+
+        $("#AddOptionSettings").hide();
+        $("#allOptionsTable").show();
+        $("#update_OptionForm").hide();
+
+        return false;
+    });
+
+    $(document).on('click','.updateOptionbtn',function(e){
+
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      $("#allOptionsTable").hide();
+
+      var id = $(this).attr('id');
+
+      updateOption(id);
+      return false;
+    });
+
+    $(document).on('click','.deleteOptionbtn',function(e){
+
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      var id = $(this).attr('id');
+
+      deleteOption(id);
+      return false;
+    });
+
+    $(document).on('click','#dropdown-OptionType a',function(e){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      document.getElementById("OptionTypeName").value = $(this).text();
+      document.getElementById("UpdateOptionTypeName").value = $(this).text();
+    });
+
+    $(document).on('click','#addOptionBtn',function(e){ // insert
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var optionName = document.getElementById("OptionName").value;
+    var optionType = document.getElementById("OptionTypeName").value;
+
+    $.ajax({
+        url: "../Model/user_intermediate.php",
+        type: "POST",
+        data: {function2call: 'insert_Option', OptionName: optionName, OptionType: optionType},
+        success: function(data) {
+            console.log(data);
+            $("#sucessOption_div").css("display", "block");
+            /* for(var key in headers){
+                $('td[name='+key+']').val("");
+            } */
+        },
+        error: function(data){
+            console.log(data);
+            $("#errorOption_div").css("display", "block");
+            //$("#errormsg").html(data.responseText);
+        }
+    });
+    return false;
+  });
 
 	// functions
 
@@ -355,6 +423,34 @@ $(document).ready(function(){
             error: function(data){
                 console.log(data);
                 $("#errorTypeUpdate_div").css("display", "block");
+                //$("#errormsg").html(data.responseText);
+            }
+        });
+        return false;
+    });
+
+    $(document).on('click','#saveOptionChangesBtn',function(e){ // update
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var name = $('#UpdateOptionName').val();
+        var type = $('#UpdateOptionTypeName').val();
+
+        $.ajax({
+            url: "../Model/user_intermediate.php",
+            type: "POST",
+            data: {function2call: 'update_option', optionID: optionID, name: name, type: type},
+            success: function(data) {
+                console.log(data);
+                $("#allOptionsTable").hide();
+                $("#allOptionsTable").empty();
+                listAllOptionsTable();
+                $("#sucessOptionUpdate_div").css("display", "block");
+            },
+            error: function(data){
+                console.log(data);
+                $("#errorOptionUpdate_div").css("display", "block");
                 //$("#errormsg").html(data.responseText);
             }
         });
@@ -639,7 +735,7 @@ function listAllTypesTable(){
             table += '</body>';
           }
           div.innerHTML+= table;
-          loaded = 1;
+          typesLoaded = 1;
 
           console.log(data);
         },
@@ -713,6 +809,129 @@ function deleteType(id){
         error: function(data){
             console.log(data);
             $("#errorType_div").css("display", "block");
+            //$("#errormsg").html(data.responseText);
+        }
+    });
+}
+
+function listAllOptionsTable(){
+
+    var div = document.getElementById("allOptionsTable");
+    var table = ' <div class="table-responsive"> <br> <table class="table table-bordered userstable" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';
+
+    table += "<th> Option Name</th>"
+    table += "<th> Option Type</th>"
+    table += "<th> Control </th>"
+
+    table += "</tr> </thead> <tfoot> <tr>"
+    table += "<th> Option Name</th>"
+    table += "<th> Option Type</th>"
+	  table += "<th> Control </th>"
+    table += "</tr> </tfoot>";
+
+    $.ajax({
+        url: '../Model/user_intermediate.php',
+        data: {function2call: 'list_Options', ListType: "listAll"},
+        type: 'POST',
+        dataType: "JSON",
+        success: function(data) {
+
+          options = data;
+
+          if (data != null) {
+
+            table += "<tbody>";
+
+            for (var x in data) {
+
+            table += "<tr>";
+
+            var list = data[x];
+
+            var optionName = list[0];
+            var optionType = list[1];
+
+            table += "<td>" + optionName + "</td>";
+            table += "<td>" + optionType + "</td>";
+
+            table += "<td> <a id='update-" + x + "' href='#' class='btn btn-primary btn-circle m-r-1em updateOptionbtn'><i class='fa fa-edit'></i></a> " +
+                     "<a id='del-" + x + "' href='#' class='btn btn-danger btn-circle deleteOptionbtn'><i class='fas fa-trash'></i></a> </td> </tr>";
+
+            }
+            table += '</body>';
+          }
+          div.innerHTML+= table;
+          optionsLoaded = 1;
+
+          console.log(data);
+        },
+        error: function(data){
+            console.log(data);
+            $("#errormsg").html(data.responseText);
+        }
+    });
+}
+
+function updateOption(id){
+
+    optionID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+    var optionName = options[optionID][0];
+    var optionType = options[optionID][1];
+
+    // if(userID != utid_update){
+
+        // utid_update = typeID;
+        $("#update_OptionForm").empty();
+        $("#allOptionsTable").hide();
+        $("#update_OptionForm").show();
+
+        var formdiv = document.getElementById("update_OptionForm");
+
+        var form = "<div id='sucessOptionUpdate_div' class='alert alert-success' style='display: none'> Record was updated. </div>";
+        form += "<div id='errorOptionUpdate_div' class='alert alert-danger' style='display: none'> Something Wrong Happend. </div>";
+
+        form += " <form id='updateTypeForm' method='post'> " +
+                   " <div class='table-responsive'> <table class='table table-hover table-bordered'> <tbody> ";
+
+        form += "<tr> <td>Type Name</td> <td><input type='text' id='UpdateOptionName' name='UpdateOptionName' class='form=control' value='" + optionName + "' /></td></tr>";
+        form += "<tr> <td>Option Type</td> <td><input type='text' id='UpdateOptionTypeName' name='UpdateOptionTypeName' class='form=control' readonly='readonly' value='" + optionType + "' />";
+        form += "<button class='btn btn-primary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Type </button>";
+        form += "<div id='dropdown-OptionType' class='dropdown-menu animated--fade-in' aria-labelledby='dropdownMenuButton' x-placement='top-start' style='position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;'>";
+        form += "<a class='dropdown-item'>Text</a><a class='dropdown-item'>Email</a><a class='dropdown-item'>Password</a><a class='dropdown-item'>Integer</a>";
+        form += "</div></td>";
+
+
+
+        form += "</tr> <tr> <td>  </td> <td> <input id='saveOptionChangesBtn' type='submit' value='Save Changes' class='btn btn-primary' name='saveOptionChangesBtn'/> " +
+            "</td> </tr> </tbody> </table> </div> </form>";
+
+            // <a href="index.php" style="position: absolute; margin-left: 2px;" class="btn btn-danger">Back to read products</a>
+
+        formdiv.innerHTML+= form;
+    // }else{
+    //     $("#update_form_div").show();
+    // }
+}
+
+function deleteOption(id){
+    optionID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+    $.ajax({
+        url: '../Model/user_intermediate.php',
+        data: {function2call: 'delete_Option', optionID: optionID},
+        type: 'POST',
+        success: function(data) {
+            $("#sucessOption_div").css("display", "block");
+            $("#allOptionsTable").hide();
+            $("#allOptionsTable").empty();
+            listAllOptionsTable();
+            $("#allOptionsTable").show();
+            // notifiy done sucessfully
+        },
+        error: function(data){
+            console.log(data);
+            $("#errorOption_div").css("display", "block");
             //$("#errormsg").html(data.responseText);
         }
     });

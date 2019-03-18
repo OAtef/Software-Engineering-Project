@@ -9,6 +9,8 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
+
+
   <title>Reporting</title>
 
   <!-- Custom fonts for this template-->
@@ -22,6 +24,7 @@
 </head>
 
 <body id="page-top">
+
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -504,6 +507,7 @@
 
                 <div style="text-align: right; margin-right: 60px" ><button id="isChart" onclick="changeButton()" class="btn btn-primary "
                     type="button" value="ChartBar">ChartBar</button> </div>
+                    <div ><button value="jkashjfoanofanafsojn" id="xyz" onclick="toPython()" type="button">ay habal doos hene</button></div>
                 <hr>
               </div>
 
@@ -664,7 +668,9 @@
           </div>
         </div>
       </div>
+
     </div>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="../../vendor/jquery/jquery.min.js"></script>
@@ -685,10 +691,74 @@
 
 </body>
 
+
 </html>
+
 <script>
+
+
+// $(document).ready(function(){
+// $(document).on('click','#xyz',function(e){ // insert
+//
+// e.preventDefault();
+// e.stopImmediatePropagation();
+//
+// $.ajax({
+// url: 'php.php',
+// type: 'POST',
+// success: function(response) {
+//
+// var xhttp = new XMLHttpRequest();
+// xhttp.onreadystatechange = function() {
+//     if (this.readyState == 4 && this.status == 200) {
+//        alert(this.responseText) ;
+//
+//    }
+// };
+// xhttp.open("POST", "localhost:9090/api/donation/", true);
+// xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+// xhttp.send(response);
+//
+// },
+// error: function(data){
+//   alert(data);
+// }
+// });
+//
+// });
+// });
+
+function toPython()
+{
+
+alert("data");
+    $.ajax({
+   url: 'php.php',
+   type: 'POST',
+   success: function(response) {
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.status == 200) {
+           console.log(this.responseText) ;
+
+       }
+    };
+    xhttp.open("POST", "localhost:9090/api/donation/", true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(response);
+
+  },
+  error: function(data){
+      alert(data);
+  }
+  });
+}
+
+
   function changeButton() // no ';' here
   {
+
     var elem = document.getElementById("isChart");
     if (elem.innerText == "ChartBar") {
       elem.innerText = "Normal View";
@@ -699,7 +769,7 @@
     }
   }
 
-  function toNormalReport() { 
+  function toNormalReport() {
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -709,7 +779,7 @@
         var ctx = document.getElementById("myAreaChart");
         var myLineChart = new Chart(ctx, {
           type: 'line',
-          data: {
+          data:{
             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             datasets: [{
               label: "Earnings",
@@ -897,4 +967,6 @@
     xhttp.open("GET", "chartBarView.html", true);
     xhttp.send();
   }
+
+
 </script>

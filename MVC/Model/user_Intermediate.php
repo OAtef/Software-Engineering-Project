@@ -14,7 +14,6 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
   $ut = new UserTypes(NULL);
   $TypeOptions = new Options(NULL);
 
-
   switch($function2call) {
       case 'list_users' :
         $usertypeID = $_POST['usertypeID'];
@@ -63,7 +62,31 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
       case 'delete_Type' :
         $TypeID = $_POST['typeID'];
         $ut->delete($TypeID);
-        $TypeOptions->delete($TypeID);
+        // $TypeOptions->delete($TypeID);
+        break;
+
+      case 'insert_Option' :
+        $OptionName = $_POST['OptionName'];
+        $OptionType = $_POST['OptionType'];
+        $TypeOptions->insert_option($OptionName, $OptionType);
+        break;
+
+      case 'list_Options' :
+        $Type = $_POST['ListType'];
+        $x = $TypeOptions->select_allOptions($Type);
+        echo json_encode($x);
+        break;
+
+      case 'delete_Option' :
+        $optionID = $_POST['optionID'];
+        $TypeOptions->delete_option($optionID);
+        break;
+
+      case 'update_option' :
+        $optionID = $_POST['optionID'];
+        $name = $_POST['name'];
+        $type = $_POST['type'];
+        $TypeOptions->update_option($optionID, $name, $type);
         break;
 
       case 'label_header' :

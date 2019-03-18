@@ -10,18 +10,18 @@ class Users
 
     $db = DbConnection::getInstance();
     if ($id != "")
-		{	
+		{
 
       $data = array();
       $data["id"] = $id;
       $data["isdeleted"] = 0;
-      
-      $row = DbConnection::select("tb_users", $data); // returns single row data
-      
+
+      $row = DbConnection::select("tb_users", $data, null); // returns single row data
+
       $this->usertypeID = $row[0]["usertypeID"];
 			$this->id = $id;
 		}
-  
+
   }
 
   public function insert_user($userTypeID){
@@ -43,7 +43,7 @@ class Users
 
     $data = array();
     $data["id"] = $userID;
-    
+
     DbConnection::delete("tb_users", $data);
 
   }
@@ -55,8 +55,8 @@ class Users
     $data = array();
     $data["usertypeID"] = $userTypeID;
     $data["isdeleted"] = 0;
-    
-    $rows = DbConnection::select("tb_users", $data);
+
+    $rows = DbConnection::select("tb_users", $data, null);
 
     $ids = array();
     $i=0;
@@ -66,19 +66,19 @@ class Users
       $ids[] = $rows[$i]["id"];
       $i++;
     }
-    
+
     return $ids;
   }
 
   public function update_user($id, $userTypeID){
 
     $db = DbConnection::getInstance();
-    
+
     $data = array();
     $data["id"] = $id;
     DbConnection::update("tb_users", $data);
     $this->id = $id;
-    $this->userTypeID = $userTypeID; 
+    $this->userTypeID = $userTypeID;
   }
 
 }

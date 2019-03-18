@@ -48,7 +48,7 @@ class DbConnection {
 			$rows_vals = array();
 			$i = 0;
 			while ($row = mysqli_fetch_assoc($result)) {
-				
+
 				$rows_vals[$i] = $row;
 				$i++;
 			}
@@ -57,12 +57,12 @@ class DbConnection {
 
 			return $rows_vals;
 		}
-		
+
 		public static function where($conditions){
 			$where = "";
 			$loop = 0;
 			foreach ($conditions as $key => $val) {
-					
+
 					if($loop != 0){
 							$where .= " AND ";
 					}else{
@@ -74,32 +74,77 @@ class DbConnection {
 						$val = "'$val'";
 
 					}
-					
+
 					$where .= ($key . "=" . $val);
 					$loop++;
-							
+
 			}
 
 			return $where;
 		}
 
-    public static function select($table, $conditions){
-			$fields = "*";
-      $where = '';
+		public static function where_like($conditions){
+			$where = "";
+			$loop = 0;
+			foreach ($conditions as $key => $val) {
 
-			if (!empty($conditions)) {
-				$where = self::where($conditions);
+					if($loop != 0){
+							$where .= " AND ";
+					}else{
+							$where .= "WHERE ";
+					}
+
+					if(!is_numeric($val)){
+
+						$val = "'$val'";
+
+					}
+
+					$where .= ($key . "LIKE" . $val);
+					$loop++;
+
 			}
 
-			$query = "SELECT $fields FROM $table $where";
+			return $where;
+		}
 
-			//echo $query;
-			
-			return self::query($query);
-    }
+    public static function select($table, $conditions, $like){
+    			$fields = "*";
+    			$where = '';
+    			$like='';
+
+    			if (!empty($conditions)) {
+    				$where = self::where($conditions);
+    			}
+
+    			if (!empty($like)) {
+    				$like = self::where_like($like);
+    			}
+
+    			$query = "SELECT $fields FROM $table $where $like";
+
+    			//echo $query;
+
+    			return self::query($query);
+    		}
+
+    // public static function select($table, $conditions){
+		// 	$fields = "*";
+    //   $where = '';
+    //
+		// 	if (!empty($conditions)) {
+		// 		$where = self::where($conditions);
+		// 	}
+    //
+		// 	$query = "SELECT $fields FROM $table $where";
+    //
+		// 	//echo $query;
+    //
+		// 	return self::query($query);
+    // }
 
     public static function insert($table, $data){
-		
+
 			$fields = array_keys($data);
 			$values = array_values($data);
 
@@ -110,8 +155,8 @@ class DbConnection {
 				}
 				$i++;
 			}
-			
-			$query = "INSERT INTO $table(`".join("`,`",$fields)."`) VALUES(".join(",", $values).")";		
+
+			$query = "INSERT INTO $table(`".join("`,`",$fields)."`) VALUES(".join(",", $values).")";
 			return self::execute($query);
 		}
 
@@ -150,8 +195,8 @@ class DbConnection {
     public function disconnect(){
       return mysqli_close(self::$con);
 		}
-		
-		public static function execute($query){	
+
+		public static function execute($query){
 			return mysqli_query(self::$con, $query);
 		}
 

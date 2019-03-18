@@ -14,22 +14,22 @@ class Links
     $db = DbConnection::getInstance();
     if($userid != null){
         $user = new Users($userid);
-        
+
         $ut = new UserTypes(null);
         $ut->get_root($user->usertypeID);
         $rootID = $ut->id;
-        
+
         $data = array();
         $data["usertypeID"] = $rootID;
         $data["isdeleted"] = 0;
 
-        $row = DbConnection::select("rtb_user_links", $data);
+        $row = DbConnection::select("rtb_user_links", $data, null);
 
         $data1 = array();
         $data1["id"] = $row[0]["linkID"];
         $data1["isdeleted"] = 0;
 
-        $row1 = DbConnection::select("tb_links", $data1);
+        $row1 = DbConnection::select("tb_links", $data1, null);
 
         if($row1 == null){ // get this to js
             // redirect
@@ -72,7 +72,7 @@ class Links
 
     $data = array();
     $data["isdeleted"] = 0;
-    $row = DbConnection::select("tb_links", $data);
+    $row = DbConnection::select("tb_links", $data, null);
 
     $arr = array();
 
@@ -85,7 +85,7 @@ class Links
     return $arr;
 
   }
-  
+
   function modify_page(){
 
 

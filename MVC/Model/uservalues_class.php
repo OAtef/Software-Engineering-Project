@@ -7,7 +7,7 @@ require_once ('users_class.php');
 class User_Values
 {
   public $user_values = array();
-  
+
   function __construct($val_arr){
 
     if($val_arr != NULL){
@@ -32,22 +32,21 @@ class User_Values
       $data['userID'] = $userIDs[$i];
 
       $ut = new UserTypes($usertypeID);
-      
+
       $user_values_array = array();
-      array_push($user_values_array, $userIDs[$i]);    
+      array_push($user_values_array, $userIDs[$i]);
 
       $j = 0;
       while($j < sizeof($ut->rOUT_ids)){
-      
+
         $data['optionUserID'] = $ut->rOUT_ids[$j];
-        $data['isdeleted'] = 0;
-        $rows = DbConnection::select("tb_option_user_values", $data);
-    
+        $rows = DbConnection::select("tb_option_user_values", $data, null);
+
         array_push($user_values_array, $rows[0]['value']);
         $j++;
-    
+
       }
-      
+
       $myobj = new User_Values($user_values_array);
       $object_array[$i] = $myobj;
       $i++;
@@ -62,7 +61,7 @@ class User_Values
 
     $data = array();
     $data["userID"] = $userID;
-    
+
     DbConnection::delete("tb_option_user_values", $data);
 
   }
@@ -132,45 +131,9 @@ class User_Values
       $i++;
       DbConnection::update("tb_option_user_values", $data, $condition);
 
-      
-    }
-
-  }
-
-  public function check_values($password, $email){
-
-    $db = DbConnection::getInstance();
-	  
-    $dataEmail = array();
-    $dataEmail["value"] = $email;
-    $dataEmail["isdeleted"] = 0;	  	  
-    $rowEmail = DbConnection::select("tb_option_user_values", $dataEmail);
-
-    if($rowEmail != null){
-
-      $dataPassword = array();
-      $dataPassword["value"] = $password;
-      $dataPassword["isdeleted"] = 0;
-      $userid = $dataPassword["userID"] = $rowEmail[0]["userID"];
-       
-      $rowPassword = DbConnection::select("tb_option_user_values", $dataPassword);
-
-      if($rowPassword != null){
-
-        session_start();
-        $_SESSION['uid'] = $userid;
-
-        return true;
-
-      }
-      else{
-        return false;
-      }
 
     }
-    else{
-      return false;
-    }
+
   }
 
 }

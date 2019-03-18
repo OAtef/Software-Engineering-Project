@@ -18,8 +18,7 @@ class UserTypes
     if ($userTypeId != "") {
 
       $data["id"] = $userTypeId; // usertypeID
-      $data["isdeleted"] = 0;
-      $row = DbConnection::select("tb_usertype", $data);
+      $row = DbConnection::select("tb_usertype", $data, null);
       $this->id = $userTypeId;
       $this->usertype_name = $row[0]["usertype_name"];
       $this->parentID =  $row[0]["parentID"];
@@ -28,7 +27,7 @@ class UserTypes
       $data1["userTypeID"] = $this->parentID;
       $data1["isdeleted"] = 0;
 
-      $rows_rout = DbConnection::select("rtb_option_usertype", $data1);
+      $rows_rout = DbConnection::select("rtb_option_usertype", $data1, null);
 
       $i=0;
       while($i < sizeof($rows_rout)){
@@ -52,7 +51,7 @@ class UserTypes
 
         $data["isdeleted"] = 0;
 
-        $rows = DbConnection::select("tb_usertype", $data);
+        $rows = DbConnection::select("tb_usertype", $data, null);
 
         $i = 0;
         $j = 0;
@@ -91,7 +90,7 @@ class UserTypes
         $data["parentID"] = $parentID;
         $data["isdeleted"] = 0;
 
-        $rows = DbConnection::select("tb_usertype", $data);
+        $rows = DbConnection::select("tb_usertype", $data, null);
 
         $i = 0;
         while($i < sizeof($rows)){
@@ -165,24 +164,6 @@ class UserTypes
     }
 
     return $contents;
-  }
-
-  public function get_root($usertypeID){
-    
-    $db = DbConnection::getInstance();
-    $data = array();
-
-    $data["id"] = $usertypeID;
-    $data["isdeleted"] = 0;
-    $row = DbConnection::select("tb_usertype", $data);
-
-    if($row[0]["parentID"] != 0){
-
-      $this->get_root($row[0]["parentID"]);
-
-    }else{
-      $this->id = $row[0]["id"];
-    }
   }
 }
 

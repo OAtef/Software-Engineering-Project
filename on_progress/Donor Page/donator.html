@@ -44,7 +44,7 @@
       <li class="profile-link">
         <a href="https://my.charitywater.org/account/dashboard">
           <img width="25" height="25" alt="Avatar" src="https://maji-production-store.imgix.net/f3bf5e29ae84d48cc8a0de9bde43673adbdd381b444b42e4276a8f55f726?ixlib=rails-2.1.4&fit=crop&dpr=2.0&h=25&w=25&auto=format&fm=pjpg" />
-          <span class="user-name">My Profile</span>
+          <span class="user-name">My Profile </span>
         </a>
       </li>
       <li>
@@ -249,9 +249,11 @@
 
               Donation Reason
               <br>
-              <select>
-                <option id="dr" value="Gift">Gift</option>
-              </select>
+           
+                <div id="dr">
+                
+              </div>
+            
               Payment Method
 
               <select>
@@ -663,7 +665,10 @@
 
 </html>
 
+
+
 <script>
+
   $(document).on('click', '#donate', function(e) {
     $(".donate-now, .donation-history").fadeOut(function() {
       $("#donate-form").delay(400).fadeIn();
@@ -687,13 +692,53 @@
       data: {
         id1: drID1,
         id2: drID2,
-        amount1: drID2Value 
+        amount1: drID2Value,
+        function2call: 'insert_donation'
       },
       type: 'POST',
       dataType: "JSON",
       success: function(data) {
         alert("done");
-        console.log(data);
+        alert(data);
+
+      },
+      error: function(data) {
+        alert("fail");
+        alert(data);
+      }
+    });
+
+  });
+
+
+
+$(document).on('click', '#donate', function(e) {
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var mainReasons = new Array();
+   
+    $.ajax({
+      url: '../Model/doDonation.php',
+      data: {
+        function2call: 'select_reasons'
+      },
+      type: 'POST',
+      dataType: "JSON",
+      success: function(data) {
+        alert("done");
+        mainReasons = data;
+         
+         var i = 0;
+         var len = mainReasons.length;
+         var text = "";
+         for (; i < len; i++) { 
+                text += "<option>"+mainReasons[i]+"</option>";
+               }
+
+        document.getElementById("dr").innerHTML ="<select>"+ text+"</select>";
+   
 
       },
       error: function(data) {
@@ -703,4 +748,6 @@
     });
 
   });
+
+
 </script>

@@ -10,19 +10,22 @@ var usertypeID;
 var parentID;
 
 var utid_insert; // for checking and not repeating html
-var utid_update;
 var typesLoaded;
 var optionsLoaded;
 
 $(document).ready(function(){
 
     $("#emailsPage").hide();
+    $("#emailForm").hide();
     $("#foundationMembers").hide();
+    $("#dashboard").show();
+
     // $("#tasksPage").hide();
     $('.t2').hide();
     $('.i2').hide();
-    $("#settingsPage").hide();
-
+    $("#settingsPage").hide();   
+    $("#logg").hide(); 
+    
     $.ajax({ url: '../Model/user_intermediate.php',
     data: {function2call: 'list_userTypes', parentID: 0},
     type: 'POST',
@@ -37,6 +40,7 @@ $(document).ready(function(){
         $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>").appendTo("#dropdown-usertype-table1");
         $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>").appendTo("#dropdown-usertype-insert");
         $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>").appendTo("#dropdown-MainUserType");
+        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>").appendTo("#dropdown-email-table");
        }
 
     },
@@ -46,7 +50,111 @@ $(document).ready(function(){
    }
     });
 
-    // show and hide clicks
+    // show and hide clicks 
+
+    $(document).on('click','#logbtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        //$("#TasksForm").hide();
+        $("#theTable").empty();
+        $("#sucess_div").hide();
+        $("#tablediv").hide();
+        $("#update_form_div").hide();
+        $("#insert_form_div").hide();
+        $("#foundationMembers").hide();
+        $("#emails").hide();
+        $("#settingsPage").hide();
+        $("#logg").show();   
+        $("#insertProject").hide();
+        $("#emailForm").hide();
+        $("#dashboard").hide();
+
+        return false;
+
+    });
+
+    $(document).on('click','#dashboardbtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#theTable").empty();
+        $("#sucess_div").hide();
+        $("#tablediv").hide();
+        $("#update_form_div").hide();
+        $("#insert_form_div").hide();
+        $("#foundationMembers").hide();
+        $("#emails").hide();
+        $("#settingsPage").hide();
+        $("#logg").hide();   
+        $("#insertProject").hide();
+        $("#emailForm").hide();
+        $("#dashboard").show();
+
+        return false;
+
+    });
+
+    $(document).on('click','#multiMsg',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        //$("#TasksForm").hide();
+        $("#theTable").empty();
+        $("#sucess_div").hide();
+        $("#tablediv").hide();
+        $("#update_form_div").hide();
+        $("#insert_form_div").hide();
+        $("#foundationMembers").hide();
+        $("#emails").show();
+        $("#settingsPage").hide();
+        $("#logg").hide();   
+        $("#insertProject").hide();
+        $("#emailForm").hide();
+        $("#dashboard").hide();
+
+        return false;
+
+    });
+
+    $(document).on('click','#tosendform',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        //$("#TasksForm").hide();
+        $("#theTable").empty();
+        $("#sucess_div").hide();
+        $("#tablediv").hide();
+        $("#update_form_div").hide();
+        $("#insert_form_div").hide();
+        $("#foundationMembers").hide();
+        $("#emails").hide();
+        $("#settingsPage").hide();
+        $("#logg").hide();   
+        $("#insertProject").hide();
+        $("#emailForm").show();
+        $("#dashboard").hide();
+
+
+        return false;
+
+    });
+
+    $(document).on('click','#back_to_email_list',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $("#emails").show();
+        $("#emailForm").hide();
+
+        return false;
+
+    });   
 
     $(document).on('click','#list_edit_btn',function(e){
 
@@ -62,6 +170,14 @@ $(document).ready(function(){
         $("#foundationMembers").show();
         $("#emails").hide();
         $("#settingsPage").hide();
+        $("#logg").hide();   
+        $("#insertProject").hide();
+        $("#emailForm").hide();
+        $("#dashboard").hide();
+
+
+
+
 
         return false;
 
@@ -80,6 +196,11 @@ $(document).ready(function(){
         $("#insert_form_div").show();
         $("#emails").hide();
         $("#settingsPage").hide();
+        $("#logg").hide();  
+        $("#insertProject").hide();
+        $("#emailForm").hide();
+        $("#dashboard").hide();
+
 
         return false;
 
@@ -162,46 +283,28 @@ $(document).ready(function(){
             //$("#dataTable").DataTable();
         }
         else if($(this).hasClass('insertUser')){
-            if(usertypeID != utid_insert){
-                $('#insert_form').empty();
-                insertUser();
-            }else{
-                $('#insert_form').show();
-            }
+            $('#insertForm').empty();
+            insertUser();
         }
         return false;
     });
-
-  //   $(document).on('click','#Tasksbtn',function(e){
-  //
-  //     e.preventDefault();
-  //     e.stopImmediatePropagation();
-  //
-  //     $("#tasksPage").show();
-  //     $("#insert_form").empty();
-  //     $("#foundationMembers").hide();
-  //     $("#tablediv").hide();
-  //     $("#update_form_div").hide();
-  //     $("#insert_form_div").hide();
-  //     $("#emailsPage").hide();
-  //     $("#settingsPage").hide();
-  //
-  //     return false;
-  // });
-
 
 	$(document).on('click','#settingsBtn',function(e){
 		e.preventDefault();
         e.stopImmediatePropagation();
 
         $("#settingsPage").show();
-        //$("#tasksPage").hide();
         $("#insert_form").empty();
         $("#foundationMembers").hide();
         $("#tablediv").hide();
         $("#update_form_div").hide();
         $("#insert_form_div").hide();
         $("#emailsPage").hide();
+        $("#logg").hide();   
+        $("#insertProject").hide();
+        $("#dashboard").hide();
+
+
 
         return false;
     });
@@ -234,161 +337,151 @@ $(document).ready(function(){
         return false;
     });
 
-    $(document).on('click','#addSubTypeBtn',function(e){ // insert
-
-    e.preventDefault();
-    e.stopImmediatePropagation();
-
-    var form_arr = $('#insertUserSubTypeForm').serialize();
-    form_arr += '&';
-    console.log(form_arr);
-
-    $.ajax({
-        url: "../Model/user_intermediate.php",
-        type: "POST",
-        data: {function2call: 'insert_subUserType', parentID: parentID, arr: form_arr},
-        success: function(data) {
-            console.log(data);
-            $("#sucessType_div").css("display", "block");
-            /* for(var key in headers){
-                $('td[name='+key+']').val("");
-            } */
-        },
-        error: function(data){
-            console.log(data);
-            $("#errorType_div").css("display", "block");
-            //$("#errormsg").html(data.responseText);
-        }
-    });
-    return false;
-  });
-
     $(document).on('click','.updateTypebtn',function(e){
 
-      e.preventDefault();
-      e.stopImmediatePropagation();
-
-      $("#allTypesTable").hide();
-
-      var id = $(this).attr('id');
-
-      updateType(id);
-      return false;
-    });
-
-    $(document).on('click','.deleteTypebtn',function(e){
-
-      e.preventDefault();
-      e.stopImmediatePropagation();
-
-      var id = $(this).attr('id');
-
-      deleteType(id);
-      return false;
-    });
-
-    $(document).on('click','#showAddOptionBtn',function(e){
-
         e.preventDefault();
         e.stopImmediatePropagation();
-
-        $("#AddOptionSettings").show();
+  
+        $("#allTypesTable").hide();
+  
+        var id = $(this).attr('id');
+  
+        updateType(id);
+        return false;
+      });
+  
+      $(document).on('click','.deleteTypebtn',function(e){
+  
+        e.preventDefault();
+        e.stopImmediatePropagation();
+  
+        var id = $(this).attr('id');
+  
+        deleteType(id);
+        return false;
+      });
+  
+      $(document).on('click','#showAddOptionBtn',function(e){
+  
+          e.preventDefault();
+          e.stopImmediatePropagation();
+  
+          $("#AddOptionSettings").show();
+          $("#allOptionsTable").hide();
+          $("#update_OptionForm").hide();
+  
+          return false;
+      });
+  
+      $(document).on('click','#showListOptionBtn',function(e){
+  
+          e.preventDefault();
+          e.stopImmediatePropagation();
+  
+          if (optionsLoaded != 1) {
+            listAllOptionsTable();
+          }
+  
+          $("#AddOptionSettings").hide();
+          $("#allOptionsTable").show();
+          $("#update_OptionForm").hide();
+  
+          return false;
+      });
+  
+      $(document).on('click','.updateOptionbtn',function(e){
+  
+        e.preventDefault();
+        e.stopImmediatePropagation();
+  
         $("#allOptionsTable").hide();
-        $("#update_OptionForm").hide();
-
+  
+        var id = $(this).attr('id');
+  
+        updateOption(id);
         return false;
-    });
-
-    $(document).on('click','#showListOptionBtn',function(e){
-
+      });
+  
+      $(document).on('click','.deleteOptionbtn',function(e){
+  
         e.preventDefault();
         e.stopImmediatePropagation();
-
-        if (optionsLoaded != 1) {
-          listAllOptionsTable();
-        }
-
-        $("#AddOptionSettings").hide();
-        $("#allOptionsTable").show();
-        $("#update_OptionForm").hide();
-
+  
+        var id = $(this).attr('id');
+  
+        deleteOption(id);
         return false;
-    });
-
-    $(document).on('click','.updateOptionbtn',function(e){
-
-      e.preventDefault();
-      e.stopImmediatePropagation();
-
-      $("#allOptionsTable").hide();
-
-      var id = $(this).attr('id');
-
-      updateOption(id);
-      return false;
-    });
-
-    $(document).on('click','.deleteOptionbtn',function(e){
-
-      e.preventDefault();
-      e.stopImmediatePropagation();
-
-      var id = $(this).attr('id');
-
-      deleteOption(id);
-      return false;
-    });
+      });
 
     $(document).on('click','#dropdown-OptionType a',function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+  
+        document.getElementById("OptionTypeName").value = $(this).text();
+        document.getElementById("UpdateOptionTypeName").value = $(this).text();
+      });
+  
+      $(document).on('click','#addOptionBtn',function(e){ // insert
+  
       e.preventDefault();
       e.stopImmediatePropagation();
+  
+      var optionName = document.getElementById("OptionName").value;
+      var optionType = document.getElementById("OptionTypeName").value;
+  
+      $.ajax({
+          url: "../Model/user_intermediate.php",
+          type: "POST",
+          data: {function2call: 'insert_Option', OptionName: optionName, OptionType: optionType},
+          success: function(data) {
+              console.log(data);
+              $("#sucessOption_div").css("display", "block");
+              /* for(var key in headers){
+                  $('td[name='+key+']').val("");
+              } */
+          },
+          error: function(data){
+              console.log(data);
+              $("#errorOption_div").css("display", "block");
+              //$("#errormsg").html(data.responseText);
+          }
+      });
+      return false;
+      });
 
-      document.getElementById("OptionTypeName").value = $(this).text();
-      document.getElementById("UpdateOptionTypeName").value = $(this).text();
-    });
-
-    $(document).on('click','#addOptionBtn',function(e){ // insert
-
-    e.preventDefault();
-    e.stopImmediatePropagation();
-
-    var optionName = document.getElementById("OptionName").value;
-    var optionType = document.getElementById("OptionTypeName").value;
-
-    $.ajax({
-        url: "../Model/user_intermediate.php",
-        type: "POST",
-        data: {function2call: 'insert_Option', OptionName: optionName, OptionType: optionType},
-        success: function(data) {
-            console.log(data);
-            $("#sucessOption_div").css("display", "block");
-            /* for(var key in headers){
-                $('td[name='+key+']').val("");
-            } */
-        },
-        error: function(data){
-            console.log(data);
-            $("#errorOption_div").css("display", "block");
-            //$("#errormsg").html(data.responseText);
-        }
-    });
-    return false;
-  });
-
-	// functions
+      // functions
 
     $(document).on('click','#saveChangesBtn',function(e){ // update
 
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        var form_arr = $('form').serialize();
-        form_arr += '&';
+        
+        var len = Object.keys(headers).length;
+
+        var x = 1;
+        var z = 0;
+        while(z < len){
+
+            var id = "up-"+x;
+            var value = document.getElementById(id).value;
+            form_arr.push(value);
+            z++;
+            x++;
+        }
+
+        if(document.getElementById("userEmail").value != "" && document.getElementById("userPass").value != ""){
+
+            form_arr.push(document.getElementById("userEmail").value);
+            form_arr.push(document.getElementById("userPass").value);
+        }
+
+        console.log(form_arr);
 
         $.ajax({
             url: "../Model/user_intermediate.php",
             type: "POST",
-            data: {function2call: 'update_user', usertypeID: usertypeID, userID: userID, arr: form_arr},
+            data: {function2call: 'update_user', usertypeID: usertypeID, userID: userID, arr: form_arr, len: len},
             success: function(data) {
                 console.log(data);
                 $("#sucess_div").css("display", "block");
@@ -462,14 +555,33 @@ $(document).ready(function(){
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        var form_arr = $('#insertForm').serialize();
-        form_arr += '&';
+        var form_arr = new Array();
+
+        var len = Object.keys(headers).length;
+
+        var x = 1;
+        var z = 0;
+        while(z < len){
+
+            var id = "in-"+x;
+            var value = document.getElementById(id).value;
+            form_arr.push(value);
+            z++;
+            x++;
+        }
+
+        if(document.getElementById("userEmail").value != "" && document.getElementById("userPass").value != ""){
+
+            form_arr.push(document.getElementById("userEmail").value);
+            form_arr.push(document.getElementById("userPass").value);
+        }
+
         console.log(form_arr);
 
         $.ajax({
             url: "../Model/user_intermediate.php",
             type: "POST",
-            data: {function2call: 'insert_user', usertypeID: usertypeID, arr: form_arr},
+            data: {function2call: 'insert_user', usertypeID: usertypeID, arr: form_arr, len: len},
             success: function(data) {
                 console.log(data);
                 $("#sucess_div").css("display", "block");
@@ -507,12 +619,16 @@ function insertUser(){
                 if(data.length != 0){
 
                     headers = data;
+                    var x = 1;
                     for (var key in headers) {
-                        form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' /></td>";
+                        form += "<tr> <td>"+ key + "</td> <td><input id='in-" + (x++) + "'type='" + headers[key] + "' name='" + key + "' class='form=control' /></td>";
                     }
 
-                    form += "</tr> <tr> <td>  </td> <td> <input id='addMemberBtn' type='submit' value='Add Member' class='btn btn-primary' name='saveChangesBtn'/> " +
-                        "</td> </tr> </tbody> </table> </div> </form>";
+                    form += "</tr> <tr> <td rowspan='3' style='width: 20%;'>  <p class='title_title'> Enter Information if User will Access the system </p> </td>"  +
+                    " <tr> <td > <label for='email'>Email</label><input type='email' name='email' id='userEmail' maxlength='100'> </td>" +
+                    "</tr> <tr> <td> <label for='pass'>Password</label><input type='password' name='pass' id='userPass' maxlength='100'> </td> </tr>" +
+                    " </tr> </tr> <tr> <td colspan='2'> <input id='addMemberBtn' type='submit' value='Add Member' class='btn btn-primary' name='saveChangesBtn'/> " +
+                    "</td> </tr> </tbody> </table> </div> </form>";
 
                     formdiv.innerHTML+= form;
                 }else{
@@ -541,7 +657,7 @@ function usertypetable(){
             type: 'POST',
             dataType: "JSON",
             success: function(data) {
-                console.log(data);
+                //console.log(data);
 
                 if(data != null){
 
@@ -551,6 +667,7 @@ function usertypetable(){
                         table += "<th>" + (key) + "</th>";
                     }
 
+                    table += "<th> Email </th>";
                     table += "<th> Control </th>";
 
                     table += "</tr> </thead> <tfoot> <tr>";
@@ -558,6 +675,7 @@ function usertypetable(){
                         table += "<th>" + (key) + "</th>";
                     }
 
+                    table += "<th> Email </th>";
                     table += "<th> Control </th>";
 
                     table += "</tr> </tfoot>";
@@ -575,7 +693,7 @@ function usertypetable(){
                                 users = data;
 
                                 var obj_size = data.length;
-                                console.log(obj_size);
+                                //console.log(obj_size);
                                 var arr_size = data[0].user_values.length;
 
                                 var a =0;
@@ -584,10 +702,10 @@ function usertypetable(){
                                 while(a < obj_size){
                                     table += "<tr>";
 
-                                    console.log(data[a]);
+                                    //console.log(data[a]);
                                     var b=1;
                                     while (b < arr_size){
-                                        console.log(data[a].user_values[b]);
+                                        //console.log(data[a].user_values[b]);
                                         table += "<td>" + (data[a].user_values[b]) + "</td>";
                                         b += 1;
                                     }
@@ -647,9 +765,16 @@ function updateUser(id){
 
         var i = 1;
         for (var key in headers) {
-            form += "<tr> <td>"+ key + "</td> <td><input type='" + headers[key] + "' name='" + key + "' class='form=control' value='" + users[user_obj_index].user_values[i] + "' /></td>";
+            form += "<tr> <td>"+ key + "</td> <td><input id='up-" + (x++) + "type='" + headers[key] + "' name='" + key + "' class='form=control' value='" + users[user_obj_index].user_values[i] + "' /></td>";
             i++;
         }
+
+        if(users[user_obj_index].user_values[i] != null){
+
+            form += "<tr> <td> Email: </td> <td><input type='email' name='email' class='form=control' value='" + users[user_obj_index].user_values[i] + "' /></td>";
+            form += "<tr> <td> Passowrd: </td> <td><input type='pass' name='pass' class='form=control' value='' /></td>";
+        }
+
 
         form += "</tr> <tr> <td>  </td> <td> <input id='saveChangesBtn' type='submit' value='Save Changes' class='btn btn-primary' name='saveChangesBtn'/> " +
             "</td> </tr> </tbody> </table> </div> </form>";

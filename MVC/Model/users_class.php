@@ -10,18 +10,18 @@ class Users
 
     $db = DbConnection::getInstance();
     if ($id != "")
-		{
+		{	
 
       $data = array();
       $data["id"] = $id;
       $data["isdeleted"] = 0;
-
+      
       $row = DbConnection::select("tb_users", $data, null); // returns single row data
-
+      
       $this->usertypeID = $row[0]["usertypeID"];
 			$this->id = $id;
 		}
-
+  
   }
 
   public function insert_user($userTypeID){
@@ -30,7 +30,7 @@ class Users
 
     $data = array();
     $data["usertypeID"] = $userTypeID;
-    DbConnection::insert("tb_users", $data);
+    DbConnection::insert("tb_users", $data, null);
     $this->id = DbConnection::lastId();
     $this->userTypeID = $userTypeID;
 
@@ -43,8 +43,8 @@ class Users
 
     $data = array();
     $data["id"] = $userID;
-
-    DbConnection::delete("tb_users", $data);
+    
+    DbConnection::delete("tb_users", $data, null);
 
   }
 
@@ -55,7 +55,7 @@ class Users
     $data = array();
     $data["usertypeID"] = $userTypeID;
     $data["isdeleted"] = 0;
-
+    
     $rows = DbConnection::select("tb_users", $data, null);
 
     $ids = array();
@@ -66,19 +66,21 @@ class Users
       $ids[] = $rows[$i]["id"];
       $i++;
     }
-
+    
     return $ids;
   }
 
-  public function update_user($id, $userTypeID){
+  public function update_user($usertypeID, $userID){
 
     $db = DbConnection::getInstance();
 
+    $conditions = array();
+    $conditions["id"] = $userID;
+
     $data = array();
-    $data["id"] = $id;
-    DbConnection::update("tb_users", $data);
-    $this->id = $id;
-    $this->userTypeID = $userTypeID;
+    $data["usertypeID"] = $id;
+    DbConnection::update("tb_users", $data, $conditions);
+
   }
 
 }

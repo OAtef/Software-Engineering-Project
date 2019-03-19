@@ -3,11 +3,13 @@
 require_once ('../config.api/dbConnection.php');
 require_once ('usertypes_class.php');
 require_once ('users_class.php');
+require_once ('login_class.php');
 
 class User_Values
 {
+  
   public $user_values = array();
-
+  
   function __construct($val_arr){
 
     if($val_arr != NULL){
@@ -32,21 +34,24 @@ class User_Values
       $data['userID'] = $userIDs[$i];
 
       $ut = new UserTypes($usertypeID);
-
+      
       $user_values_array = array();
-      array_push($user_values_array, $userIDs[$i]);
+      array_push($user_values_array, $userIDs[$i]);    
 
       $j = 0;
       while($j < sizeof($ut->rOUT_ids)){
-
+      
         $data['optionUserID'] = $ut->rOUT_ids[$j];
+        $data['isdeleted'] = 0;
         $rows = DbConnection::select("tb_option_user_values", $data, null);
-
+    
         array_push($user_values_array, $rows[0]['value']);
         $j++;
-
+    
       }
 
+      $log = new Login($userIDs[$i]);
+      array_push($user_values_array, $log->email);      
       $myobj = new User_Values($user_values_array);
       $object_array[$i] = $myobj;
       $i++;
@@ -61,7 +66,7 @@ class User_Values
 
     $data = array();
     $data["userID"] = $userID;
-
+    
     DbConnection::delete("tb_option_user_values", $data);
 
   }
@@ -74,42 +79,20 @@ class User_Values
     $userID = $user->insert_user($usertypeID);
     $ut = new UserTypes($usertypeID);
 
-    $values = User_Values::get_values($vals, "=", "&");
-
     $i = 0;
     while($i < sizeof($ut->rOUT_ids)){
 
       $data = array();
       $data["userID"] = $userID;
       $data["optionUserID"] = $ut->rOUT_ids[$i];
-      $data["value"] = $values[$i];
+      $data["value"] = $vals[$i];
 
       $i++;
       DbConnection::insert("tb_option_user_values", $data);
     }
 
-  }
+    return $userID;
 
-  private static function get_values($str, $startDelimiter, $endDelimiter) {
-    $contents = array();
-    $startDelimiterLength = strlen($startDelimiter);
-    $endDelimiterLength = strlen($endDelimiter);
-    $startFrom = $contentStart = $contentEnd = 0;
-
-    while (false !== ($contentStart = strpos($str, $startDelimiter, $startFrom))) {
-      $contentStart += $startDelimiterLength;
-      $contentEnd = strpos($str, $endDelimiter, $contentStart);
-
-      if (false === $contentEnd) {
-        break;
-      }
-
-      $v = substr($str, $contentStart, $contentEnd - $contentStart);
-      $contents[] = str_replace('%40', '@', $v);
-      $startFrom = $contentEnd + $endDelimiterLength;
-    }
-
-    return $contents;
   }
 
   public static function update_values($usertypeID, $userID, $vals){
@@ -118,7 +101,6 @@ class User_Values
 
     $ut = new UserTypes($usertypeID);
 
-    $values = User_Values::get_values($vals, "=", "&");
 
     $i = 0;
     while($i < sizeof($ut->rOUT_ids)){
@@ -127,11 +109,11 @@ class User_Values
       $data = array();
       $condition["userID"] = $userID;
       $condition["optionUserID"] = $ut->rOUT_ids[$i];
-      $data["value"] = $values[$i];
+      $data["value"] = $vals[$i];
       $i++;
       DbConnection::update("tb_option_user_values", $data, $condition);
 
-
+      
     }
 
   }

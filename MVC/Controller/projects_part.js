@@ -14,7 +14,7 @@ $(document).ready(function(){
     $("#pro-insert4").hide();
     $("#pro-insert5").hide();
     $("#org_chooseTable").hide();
-    
+
     $(document).on('click','#projectimgBtn',function(e){
 
         $('input[type="file"]').bind({
@@ -22,14 +22,14 @@ $(document).ready(function(){
             {
                 var input = this,
                 files = input.files;
-  
+
                 if (files.length > 0) {
                     var regExp = new RegExp('image.(jpeg|jpg|gif|png)', 'i');
                     for (var i = 0; i < files.length; i++)
                     {
                         var file = file = files[i];
                         var matcher = regExp.test(file.type);
-  
+
                         if (!matcher)
                         {
                             alert('invalid file');
@@ -39,16 +39,16 @@ $(document).ready(function(){
 
                 } /* else {
                     alert('please add 1 file');
-                }  */  
+                }  */
             }
         });
 
-        $.ajax({ 
+        $.ajax({
             url: '../Model/user_intermediate.php',
             data: {function2call: 'get_chooseTable'},
             type: 'POST',
             dataType: "JSON",
-            success: function(data) { 
+            success: function(data) {
                 console.log(data);
 
                 $("#leader_chooseTable").empty();
@@ -61,7 +61,7 @@ $(document).ready(function(){
 
                 var table_leader = '<div class="table-responsive"> <br> <table class="table table-bordered leader" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';
                 var table_member = '<div class="table-responsive"> <br> <table class="table table-bordered member" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';
-                
+
                 var table = "";
                 var headers = data[0];
                 var vals = data[1];
@@ -114,19 +114,19 @@ $(document).ready(function(){
                 $("#errormsg").html(data.responseText);
             }
         });
-    }); 
+    });
 
     $(document).on('click','#insert_project_Btn',function(e){
 
         var div_leaders = document.getElementById("leaders");
         var div_members = document.getElementById("members");
 
-        $.ajax({ 
+        $.ajax({
             url: '../Model/user_intermediate.php',
             data: {function2call: 'get_chooseTable'},
             type: 'POST',
             dataType: "JSON",
-            success: function(data) { 
+            success: function(data) {
                 console.log(data);
 
                 var headers = data[0];
@@ -134,7 +134,7 @@ $(document).ready(function(){
 
                 var table_leader = ' <div class="table-responsive"> <br> <table class="table table-bordered leader" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';
                 var table_member = ' <div class="table-responsive"> <br> <table class="table table-bordered member" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';
-                
+
                 var table = "";
 
                 table += "<th> Checked </th>";
@@ -187,18 +187,18 @@ $(document).ready(function(){
             }
         });
 
-        $.ajax({ 
+        $.ajax({
             url: '../Model/user_intermediate.php',
             data: {function2call: 'get_project_categories'},
             type: 'POST',
             dataType: "JSON",
-            success: function(data) { 
+            success: function(data) {
                 console.log(data);
 
                 for (var key in data) {
                     $("<option id'cat-" + key + "'>" + data[key] + "</option>").appendTo("#select_categories");
                 }
-        
+
             },
             error: function(data){
             console.log(data);
@@ -209,16 +209,18 @@ $(document).ready(function(){
         e.preventDefault();
         e.stopImmediatePropagation();
 
-        $("#foundationMembers").hide();
+        $("#sucess_div").hide();
         $("#tablediv").hide();
         $("#update_form_div").hide();
         $("#insert_form_div").hide();
-        $("#emails").hide();
+        $("#foundationMembers").hide();
+        $("#emailsPage").hide();
         $("#settingsPage").hide();
+        $("#logg").hide();
         $("#insertProject").show();
         $("#emailForm").hide();
-        $("#logg").hide();  
-        $("#dashboard").hide(); 
+        $("#dashboard").hide();
+
 
         return false;
 
@@ -285,7 +287,7 @@ $(document).ready(function(){
     });
 
     $('input[name="yes_no_img"]').trigger('click');  // trigger the event
-    
+
     $(document).on('click','#finishbtn',function(e){
 
         e.preventDefault();
@@ -331,11 +333,11 @@ $(document).ready(function(){
             }).get()
         );
 
-        
 
 
 
-        
+
+
 
 
         return false;

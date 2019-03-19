@@ -8,7 +8,7 @@ require_once ('links_class.php');
 require_once ('forms_class.php');
 require_once ('login_class.php');
 require_once ('project_category_class.php');
-
+require_once ('user_Links.php');
 
 if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
 
@@ -17,6 +17,7 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
   $user = new Users(NULL);
   $ut = new UserTypes(NULL);
   $TypeOptions = new Options(NULL);
+  $usLinks = new UserLinks();
 
 
   switch($function2call) {
@@ -48,7 +49,7 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
 
           $log = new Login(null);
           $log->update_logins($email, $pass, $userID);
-        }  
+        }
         break;
 
       case 'insert_user' :
@@ -72,7 +73,7 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
 
           $log = new Login(null);
           $log->insert_logins($email, $pass, $userID);
-        }  
+        }
         break;
 
       case 'delete_user' :
@@ -131,6 +132,35 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
         $TypeOptions->update_option($optionID, $name, $type);
         break;
 
+      case 'list_Permissions' :
+        $lin = new Links(NULL);
+        $allLinks = $lin->get_pages();
+        echo json_encode($allLinks);
+        break;
+
+      case 'insert_PermissionValue' :
+        $typeID = $_POST['typeLink'];
+        $pageID = $_POST['pageLink'];
+        $usLinks->insert_Link($typeID, $pageID);
+        break;
+
+      case 'list_userLinks' :
+        $list = $usLinks->List_Links();
+        echo json_encode($list);
+        break;
+
+      case 'delete_Permission' :
+        $permissionID = $_POST['permID'];
+        $usLinks->delete_Link($permissionID);
+        break;
+
+      case 'edit_Permission' :
+        $permissionID = $_POST['permID'];
+        $newTypeID = $_POST['newTypeID'];
+        $newLinkID = $_POST['newLinkID'];
+        $usLinks->update_Link($permissionID, $newTypeID, $newLinkID);
+        break;
+
       case 'label_header' :
         $parentID = $_POST['parentID'];
         $oo = new Options(NULL);
@@ -161,7 +191,7 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
       case 'login' :
         $email = $_POST['email'];
         $pass =  $_POST['pass'];
-        
+
         $log = new Login(null);
         $x = $log->check_access($email, $pass);
         echo json_encode($x);
@@ -178,13 +208,13 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
         $links = new Links(null);
         $page_name = $_POST['page_name'];
         if (strpos($page_name, 'signup') !== false || strpos($page_name, 'registor') !== false) {
-          
+
           $links->get_usertype_relationT($page_name);
           $usert = new UserTypes($links->r_table_Vals[0]["usertypeID"]);
-          
+
           session_start();
           $_SESSION['utid'] = $usert->id;
-  
+
           $x = $links->HTML;
           echo json_encode($x);
         }
@@ -203,7 +233,7 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
 
       case 'get_chooseTable':
         session_start();
-        $usertypeID =  1 ;//$_SESSION['usertypeID']; // change later -- got it from login 
+        $usertypeID =  1 ;//$_SESSION['usertypeID']; // change later -- got it from login
 
         $oo = new Options(NULL);
         $oo->select_allOptions($usertypeID);
@@ -219,11 +249,11 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
           $vals = $uv->select_values($children_ids[$i]);
           $i++;
         }
-        
+
         $rage3 = array();
         $rage3[0] = $headers;
         $rage3[1] = $vals;
-        
+
         echo json_encode($rage3);
         break;
 

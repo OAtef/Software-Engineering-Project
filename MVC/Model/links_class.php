@@ -83,7 +83,6 @@ class Links
     }
 
     return $arr;
-
   }
 
   function modify_page(){

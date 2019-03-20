@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+
 <?php include_once("on_progress/CK/inserttodb.php");?>
 
 <script src="https://cdn.ckeditor.com/4.11.3/standard/ckeditor.js"></script>
@@ -294,23 +295,28 @@
 	</div>
 	</div>
 
-
+		
 <div>   <h2> Create Article </h2>
 	<form id="myForm" method="post">
 
 		<input type="text" name="title" id="title" placeholder="Enter Article Title">
 		<input type="text" name="author" id="author" placeholder="Enter Author Name">
 		<textarea name="editor1" id="editor1" rows="10" cols="80">
-        NICE TO MEET YOU
-Let us introduce ourselves.
+			<?php
 
-We, the Life from Water team, are volunteers from all over the world working together to achieve one common goal: empowering people.
+$link = mysqli_connect("localhost", "root", "", "software-project");
 
-How? By providing them with something most of us take as granted: Water!
-
-Our story started in 2011 in a small Egyptian village and today we are active on 4 continents.
-
-If you want to learn more about our journey
+if($link === false){
+	die("ERROR: Could not connect. " . mysqli_connect_error());
+}
+				$query = "SELECT * FROM articles where id=0";
+				$result = mysqli_query($link,$query);
+		while($row=mysqli_fetch_assoc($result))
+    {
+        echo '<label type="text" value='.$row['description'].'> </label>';
+		}
+		
+		mysqli_close($link);?>
 				</textarea>
 		<script>
 				// Replace the <textarea id="editor1"> with a CKEditor
@@ -320,7 +326,7 @@ If you want to learn more about our journey
 
 		<input type="submit" value="Create Article" id="sub" name="sub" onclick="onclick()">
 </form>
-</div>>
+</div>
 
 
 </body>

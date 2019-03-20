@@ -1,6 +1,6 @@
-<?php
+    <?php
 
-$link = mysqli_connect("localhost", "root", "", "blogs");
+$link = mysqli_connect("localhost", "root", "", "software-project");
 
 // Check connection
 if($link === false){
@@ -13,7 +13,12 @@ $descp = mysqli_real_escape_string($link, $_REQUEST['editor1']);
 $author = mysqli_real_escape_string($link, $_REQUEST['author']);
 
 //insertion of table
-$sql ="INSERT INTO articles(`id`, `title`, `description`, `author`) VALUES (null,'$title','$descp','$author')";
+
+$sql ="INSERT INTO articles(`title`, `description`, `author`) VALUES ('$title','$descp','$author') ";
+#$sql = "UPDATE articles SET `title`=$title,`description`=$descp,`author`=$author WHERE `id` = 0";
+// $sql = "UPDATE articles
+//    SET title = $title, description = $descp, author = $author
+//  WHERE id=1";
 if(mysqli_query($link, $sql)){
     $string = "Records added successfully.";
    echo "<script> alert($string) </script>";

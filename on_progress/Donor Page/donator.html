@@ -786,7 +786,6 @@ $(document).on('click', '#n1', function(e) {
 
       var u  = document.getElementById("paytype");
       var bt = u.options[u.selectedIndex].text;
-alert(bt);
       if(bt == "Bank Transfer"){
         document.getElementById("step2").innerHTML+="<input type='text' name='Bank Account' placeholder='Bank Account Number' />";
       }

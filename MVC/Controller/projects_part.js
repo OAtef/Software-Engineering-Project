@@ -11,6 +11,7 @@ $(document).ready(function(){
     var pro_members = new Array();
 
     $("#insertProject").hide();
+    $("#tableProject").hide();
 
     // btns
     $("#finishbtn").hide();
@@ -163,6 +164,7 @@ $(document).ready(function(){
         $("#logg").hide();  
         $("#dashboard").hide(); 
 
+
         return false;
 
     });
@@ -184,6 +186,9 @@ $(document).ready(function(){
         $("#logg").hide();  
         $("#dashboard").hide(); 
         $("#tableProject").show(); 
+        $("#tableProject").hide();
+        $("#ReqDonation").hide();
+
 
         return false;
 

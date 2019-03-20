@@ -18,6 +18,7 @@ var pageLink;
 var pageLinkID;
 
 var utid_insert; // for checking and not repeating html
+var utid_update;
 var typesLoaded;
 var optionsLoaded;
 var permissionsLoaded;
@@ -99,6 +100,9 @@ $(document).ready(function(){
         $("#insertProject").hide();
         $("#emailForm").hide();
         $("#dashboard").hide();
+        $("#ReqDonation").hide();
+        $("#tableProject").hide();
+
 
         return false;
 
@@ -121,6 +125,9 @@ $(document).ready(function(){
         $("#insertProject").hide();
         $("#emailForm").hide();
         $("#dashboard").show();
+        $("#ReqDonation").hide();
+        $("#tableProject").hide();
+
 
         return false;
 
@@ -144,7 +151,10 @@ $(document).ready(function(){
         $("#logg").hide();
         $("#insertProject").hide();
         $("#emailForm").hide();
+        $("#tableProject").hide();
         $("#dashboard").hide();
+        $("#ReqDonation").hide();
+
 
         return false;
 
@@ -168,6 +178,9 @@ $(document).ready(function(){
         $("#insertProject").hide();
         $("#emailForm").show();
         $("#dashboard").hide();
+        $("#tableProject").hide();
+        $("#ReqDonation").hide();
+
 
         return false;
 
@@ -203,6 +216,9 @@ $(document).ready(function(){
         $("#insertProject").hide();
         $("#emailForm").hide();
         $("#dashboard").hide();
+        $("#tableProject").hide();
+        $("#ReqDonation").hide();
+
 
         return false;
 
@@ -225,6 +241,8 @@ $(document).ready(function(){
         $("#insertProject").hide();
         $("#emailForm").hide();
         $("#dashboard").hide();
+        $("#tableProject").hide();
+        $("#ReqDonation").hide();
 
 
         return false;
@@ -255,7 +273,6 @@ $(document).ready(function(){
         $("#emailForm").hide();
         $("#dashboard").hide();
         $("#tableProject").hide();
-
 
 $.ajax({
       url: '../Model/user_intermediate.php',
@@ -288,18 +305,6 @@ $.ajax({
         
 
     });
-
-
-
-
-
-
-
-
-
-
-
-
 
     $(document).on('click','.updatebtn',function(e){
 
@@ -398,6 +403,8 @@ $.ajax({
         $("#logg").hide();
         $("#insertProject").hide();
         $("#dashboard").hide();
+        $("#tableProject").hide();
+
 
 
 
@@ -987,13 +994,17 @@ function updateUser(id){
 
         var i = 1;
         for (var key in headers) {
-            form += "<tr> <td>"+ key + "</td> <td><input id='up-" + (x++) + "type='" + headers[key] + "' name='" + key + "' class='form=control' value='" + users[user_obj_index].user_values[i] + "' /></td>";
+            form += "<tr> <td>"+ key + "</td> <td><input id='up-" + i + "type='" + headers[key] + "' name='" + key + "' class='form=control' value='" + users[user_obj_index].user_values[i] + "' /></td>";
             i++;
         }
 
         if(users[user_obj_index].user_values[i] != null){
 
             form += "<tr> <td> Email: </td> <td><input type='email' name='email' class='form=control' value='" + users[user_obj_index].user_values[i] + "' /></td>";
+            form += "<tr> <td> Passowrd: </td> <td><input type='pass' name='pass' class='form=control' value='' /></td>";
+        }
+        else{
+            form += "<tr> <td> Email: </td> <td><input type='email' name='email' class='form=control' value='' /></td>";
             form += "<tr> <td> Passowrd: </td> <td><input type='pass' name='pass' class='form=control' value='' /></td>";
         }
 

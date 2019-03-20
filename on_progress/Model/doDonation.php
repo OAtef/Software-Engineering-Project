@@ -22,6 +22,22 @@ $reasons = array();
     }
      return $reasons;
 }
+
+
+function select_PaymentTypes(){
+
+$types = DbConnection::select("tb_payment_type", null,null); 
+
+$methods = array();
+    $i=0;
+
+    while($i < sizeof($types)){
+
+      $methods[] = $types[$i]["method_name"];
+      $i++;
+    }
+     return $methods;
+}
 // $v = select_reasons();
 // echo json_encode($v);
 
@@ -35,11 +51,17 @@ $reasons = array();
                  echo json_encode($x);
                  break;
 
+              case 'select_types':
+
+                   $y = select_PaymentTypes();
+                   echo json_encode($y);
+                   break;
+
               case 'insert_donation':
                  $data = array();
-$data1 = array();
-$data1["option_name"] = $_POST['id1'];
-$data1["isdeleted"] = 0;
+                 $data1 = array();
+                 $data1["option_name"] = $_POST['id1'];
+                 $data1["isdeleted"] = 0;
 
 
 $row= DbConnection::select("tb_options_donations", $data1,null); 

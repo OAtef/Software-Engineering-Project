@@ -250,27 +250,27 @@
               Donation Reason
               <br>
            
-                <div id="dr">
+                <div id="dr"></div>
                 
-              </div>
-            
               Payment Method
 
-              <select>
-                <option id="pm" value="PaymentMethod">Cash</option>
-
-              </select>
+              <div id="dt"> </div>
 
 
-              <input type="button" name="next" class="next action-button" value="Next" />
+              <input type="button" name="next" class="next action-button" value="Next" id="n1"/>
             </fieldset>
             <fieldset>
               <h2 class="fs-title">Payment Information</h2>
               <h3 class="fs-subtitle">This is step 2</h3>
+
+              <div id="step2">
               <input type="text" name="mobileNumber" placeholder="Mobile Number" />
               <input type="text" name="email" placeholder="Email" />
               <input type="text" name="address" placeholder="Address" />
+              </div>
+
               <input type="button" name="previous" class="previous action-button" value="Previous" />
+            
               <input type="button" name="next" class="next action-button" value="Next" />
             </fieldset>
             <fieldset>
@@ -729,25 +729,68 @@ $(document).on('click', '#donate', function(e) {
       success: function(data) {
         alert("done");
         mainReasons = data;
-         
          var i = 0;
          var len = mainReasons.length;
          var text = "";
          for (; i < len; i++) { 
-                text += "<option>"+mainReasons[i]+"</option>";
+                text += "<option >"+mainReasons[i]+"</option>";
                }
 
-        document.getElementById("dr").innerHTML ="<select>"+ text+"</select>";
+        document.getElementById("dr").innerHTML ="<select >"+ text+"</select>";
    
 
       },
-      error: function(data) {
+      error: function(data,data2) {
         alert("fail");
         console.log(data);
+
+      }
+    });
+
+
+
+    $.ajax({
+      url: '../Model/doDonation.php',
+      data: {
+        function2call: 'select_types'
+      },
+      type: 'POST',
+      dataType: "JSON",
+      success: function(data) {
+        alert("done");
+        mainTypes = data;
+         var i = 0;
+         var len = mainTypes.length;
+         var text = "";
+         for (; i < len; i++) { 
+                text += "<option>"+mainTypes[i]+"</option>";
+               }
+
+        document.getElementById("dt").innerHTML ="<select id='paytype' >"+ text+"</select>";
+      
+     
+
+      
+      },
+      error: function(data,data2) {
+        alert("fail");
+        console.log(data);
+
       }
     });
 
   });
 
+
+$(document).on('click', '#n1', function(e) {
+
+      var u  = document.getElementById("paytype");
+      var bt = u.options[u.selectedIndex].text;
+alert(bt);
+      if(bt == "Bank Transfer"){
+        document.getElementById("step2").innerHTML+="<input type='text' name='Bank Account' placeholder='Bank Account Number' />";
+      }
+
+     });
 
 </script>

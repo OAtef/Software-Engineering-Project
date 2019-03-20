@@ -9,6 +9,7 @@ require_once ('forms_class.php');
 require_once ('login_class.php');
 require_once ('project_category_class.php');
 require_once ('user_Links.php');
+require_once ('project_class.php');
 
 if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
 
@@ -260,6 +261,80 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
       case 'get_project_categories':
         $pro_cat = new Project_Category(null);
         echo json_encode($pro_cat->select_categories());
+        break;
+
+        case 'insert_project':
+        $project_info = $_POST['project_info'];
+        $members = $_POST['members'];
+        //$project_imgs = $_POST['project_imgs'];
+
+        $project = new Project(null);
+        $projectID = $project->insert_Project_information($project_info);
+
+        if($members != null){
+          $project->insert_Project_members($members, $projectID);
+        }
+
+        /* if($project_imgs != null){
+          $project->insert_Project_images($project_imgs, $projectID);
+        } */
+        
+        break;
+
+      case 'list_projects':
+        $CategoryID = $_POST['CategoryID'];
+        $project = new Project(null);
+
+        $x = $project->list_project($CategoryID);
+        echo json_encode($x);
+        break;
+
+      case 'delete_project':
+        $projectID = $_POST['projectID'];
+        $project = new Project(null);
+        $project->delete_project($projectID);
+        break;
+
+      case 'list_project_members':
+        $projectID = $_POST['projectID'];
+        $project = new Project(null);
+        $x = $project->list_project_members($projectID);
+        echo json_encode($x);
+        break;
+
+      case 'update_project':
+        $projectID = $_POST['projectID'];
+        $pro_info = $_POST['pro_info'];
+        $hi_mem = $_POST['hi_mem'];
+        $bye_mem = $_POST['bye_mem'];
+        $hi_led = $_POST['hi_led'];
+        $bye_led = $_POST['bye_led'];
+
+        if($pro_info != null){
+          echo "hi1";
+          $project = new Project(null);
+          $project->update_project_information($pro_info, $projectID);
+        }
+        if($hi_mem != null){
+          //echo "hi2";
+          $project = new Project(null);
+          $project->insert_Project_member($hi_mem, $projectID, 2);
+        }
+        if($hi_led != null){
+          //echo "hi3";
+          $project = new Project(null);
+          $project->insert_Project_member($hi_led, $projectID, 1);
+        }
+        if($bye_led != null){
+          echo "hi4";
+          $project = new Project(null);
+          $project->delete_Project_member_specified($bye_led, $projectID, 1);
+        }
+        if($bye_mem != null){
+          echo "hi5";
+          
+          $project->delete_Project_member_specified($bye_mem, $projectID, 2);
+        }
         break;
 
 

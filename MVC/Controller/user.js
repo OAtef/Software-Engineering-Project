@@ -1,3 +1,4 @@
+
 var headers = new Array();
 var users = new Array();
 var types = new Array();
@@ -125,6 +126,7 @@ $(document).ready(function(){
 
     });
 
+
     $(document).on('click','#multiMsg',function(e){
 
         e.preventDefault();
@@ -228,6 +230,76 @@ $(document).ready(function(){
         return false;
 
     });
+
+
+
+//Requested Donation
+
+
+
+   $(document).on('click','#reqDonationBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        //$("#TasksForm").hide();
+        $("#insert_form").hide();
+        $("#foundationMembers").hide();
+        $("#tablediv").hide();
+        $("#update_form_div").hide();
+        $("#insert_form_div").hide();
+        $("#emailsPage").hide();
+        $("#settingsPage").hide();
+        $("#logg").hide();
+        $("#insertProject").hide();
+        $("#emailForm").hide();
+        $("#dashboard").hide();
+        $("#tableProject").hide();
+
+
+$.ajax({
+      url: '../Model/user_intermediate.php',
+      data: {
+        function2call: 'list_donations'
+      },
+      type: 'POST',
+      dataType: "JSON",
+      success: function(data) {
+        // alert("done");
+        donations = data;
+       
+
+    document.getElementById("ReqDonation").innerHTML="-----id-----optionDrID--------value------------donationID<br>";
+
+         var i = 0;
+         var len = donations.length;
+         var text = "";
+         for (; i < len; i++) { 
+      document.getElementById("ReqDonation").innerHTML +="-----"+donations[i]["id"]+"----------"+donations[i]["optionDrID"]+"-------------"+donations[i]["value"]+"---------------"+donations[i]["donationID"]+"<br>";
+     }
+
+      },
+      error: function(data,data2) {
+        alert("fail");
+        console.log(data);
+
+      }
+    });
+        
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
 
     $(document).on('click','.updatebtn',function(e){
 

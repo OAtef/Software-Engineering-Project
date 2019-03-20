@@ -1,5 +1,7 @@
 <?php
 
+include_once('../config.api/dbConnection.php');
+
 require_once ('usertypes_class.php');
 require_once ('users_class.php');
 require_once ('uservalues_class.php');
@@ -10,6 +12,7 @@ require_once ('login_class.php');
 require_once ('project_category_class.php');
 require_once ('user_Links.php');
 require_once ('project_class.php');
+
 
 if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
 
@@ -27,6 +30,16 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
         $x = $uv->select_values($usertypeID);
         echo json_encode($x);
         break;
+
+// RequstedDonations
+      case 'list_donations' :
+        $types = DbConnection::select("tb_option_donation_values", null,null);
+           echo json_encode($types);
+           break;
+
+
+
+
 
       case 'update_user' :
         $values = $_POST['arr'];

@@ -4,7 +4,7 @@ class database {
 
     public $servername = "localhost";
 		public $username = "root";
-		public $password = "mysql";
+		public $password = "";
 		public $db = "software-project";
     public static $con;
 		public $dbConnection;

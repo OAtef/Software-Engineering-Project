@@ -299,12 +299,11 @@
 <div>   <h2> Create Article </h2>
 	<form id="myForm" method="post">
 
-		<input type="text" name="title" id="title" placeholder="Enter Article Title">
-		<input type="text" name="author" id="author" placeholder="Enter Author Name">
+	
 		<textarea name="editor1" id="editor1" rows="10" cols="80">
 			<?php
 
-$link = mysqli_connect("localhost", "root", "", "software-project");
+$link = mysqli_connect("localhost", "root", "mysql", "software-project");
 
 if($link === false){
 	die("ERROR: Could not connect. " . mysqli_connect_error());

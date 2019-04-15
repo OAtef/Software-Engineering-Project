@@ -1,8 +1,9 @@
 <?php
 
-require_once ('../config.api/dbConnection.php');
+require_once 'database.php';
+require_once 'crud.php';
 
-class UserTypes
+class usertypes
 {
 
   public $id;
@@ -12,13 +13,13 @@ class UserTypes
 
   function __construct($userTypeId) {
 
-    $db = DbConnection::getInstance();
+    $db = database::getInstance();
     $data = array();
 
     if ($userTypeId != "") {
 
       $data["id"] = $userTypeId; // usertypeID
-      $row = DbConnection::select("tb_usertype", $data, null);
+      $row = database::select("tb_usertype", $data, null);
       $this->id = $userTypeId;
       $this->usertype_name = $row[0]["usertype_name"];
       $this->parentID =  $row[0]["parentID"];
@@ -27,7 +28,7 @@ class UserTypes
       $data1["userTypeID"] = $this->parentID;
       $data1["isdeleted"] = 0;
 
-      $rows_rout = DbConnection::select("rtb_option_usertype", $data1, null);
+      $rows_rout = database::select("rtb_option_usertype", $data1, null);
 
       $i=0;
       while($i < sizeof($rows_rout)){
@@ -39,7 +40,8 @@ class UserTypes
 
   public static function list_usertypes($parentID){
 
-    $db = DbConnection::getInstance();
+    $db = database::getInstance();
+    
     $result = array();
     $mainTypeID = array();
     $mainTypeName = array();
@@ -51,7 +53,7 @@ class UserTypes
 
         $data["isdeleted"] = 0;
 
-        $rows = DbConnection::select("tb_usertype", $data, null);
+        $rows = database::select("tb_usertype", $data, null);
 
         $i = 0;
         $j = 0;
@@ -90,7 +92,7 @@ class UserTypes
         $data["parentID"] = $parentID;
         $data["isdeleted"] = 0;
 
-        $rows = DbConnection::select("tb_usertype", $data, null);
+        $rows = database::select("tb_usertype", $data, null);
 
         $i = 0;
         while($i < sizeof($rows)){
@@ -105,7 +107,7 @@ class UserTypes
   }
 
   public static function insert($parentID, $names){
-    $db = DbConnection::getInstance();
+    $db = database::getInstance();
 
       $i = 0;
       $newarr = self::get_values($names, "=" , "&");
@@ -115,14 +117,14 @@ class UserTypes
         $data["usertype_name"] = $newarr[$i];
         $data["parentID"] = $parentID[$i];
 
-        DbConnection::insert("tb_usertype", $data);
+        database::insert("tb_usertype", $data);
         $i++;
       }
   }
 
   public function update($id, $name){
 
-    $db = DbConnection::getInstance();
+    $db = database::getInstance();
 
     $data = array();
     $condition = array();
@@ -135,7 +137,7 @@ class UserTypes
 
   public function delete($id){
 
-    $db = DbConnection::getInstance();
+    $db = database::getInstance();
 
     $data = array();
     $data["id"] = $id;
@@ -164,6 +166,37 @@ class UserTypes
     }
 
     return $contents;
+  }
+
+  public function get_root($usertypeID){
+    
+    $db = database::getInstance();
+    $data = array();
+
+    $data["id"] = $usertypeID;
+    $data["isdeleted"] = 0;
+    $row = database::select("tb_usertype", $data, null);
+
+    if($row[0]["parentID"] != 0){
+
+      $this->get_root($row[0]["parentID"]);
+
+    }else{
+      $this->id = $row[0]["id"];
+    }
+  }
+
+  public function get_usertype(array $data){
+
+    $db = database::getInstance();
+
+    $dataa = array();
+    $dataa["id"] = $data[0];
+
+    $rows = database::select("tb_users", $dataa, null);
+
+    return $rows["usertypeID"];
+
   }
 }
 

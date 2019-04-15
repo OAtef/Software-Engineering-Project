@@ -1,6 +1,6 @@
-    <?php
+<?php
 
-$link = mysqli_connect("localhost", "root", "", "software-project");
+$link = mysqli_connect("localhost", "root", "mysql", "software-project");
 
 // Check connection
 if($link === false){
@@ -8,14 +8,14 @@ if($link === false){
 }
 
 // Escape user inputs for security
-$title = mysqli_real_escape_string($link, $_REQUEST['title']);
+
 $descp = mysqli_real_escape_string($link, $_REQUEST['editor1']);
-$author = mysqli_real_escape_string($link, $_REQUEST['author']);
+
 
 //insertion of table
 
-$sql ="INSERT INTO articles(`title`, `description`, `author`) VALUES ('$title','$descp','$author') ";
-#$sql = "UPDATE articles SET `title`=$title,`description`=$descp,`author`=$author WHERE `id` = 0";
+//$sql ="INSERT INTO articles(`title`, `description`, `author`) VALUES ('$title','$descp','$author') ";
+    $sql = "UPDATE articles SET description ='$descp' WHERE id = 0";
 // $sql = "UPDATE articles
 //    SET title = $title, description = $descp, author = $author
 //  WHERE id=1";

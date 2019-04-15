@@ -1,6 +1,6 @@
 <?php
 
-require_once ('../config.api/dbConnection.php');
+require_once ('database.php');
 
 
 class UserLinks
@@ -11,22 +11,22 @@ class UserLinks
 
   function insert_Link($typeID, $linkID){
 
-    $db = DbConnection::getInstance();
+    $db = database::getInstance();
 
     $data = array();
     $data["usertypeID"] = $typeID;
     $data["linkID"] = $linkID;
 
-    DbConnection::insert("rtb_user_links", $data);
+    database::insert("rtb_user_links", $data);
   }
 
   function List_Links(){
 
-    $db = DbConnection::getInstance();
+    $db = database::getInstance();
 
     $data = array();
     $data["isdeleted"] = 0;
-    $row = DbConnection::select("rtb_user_links", $data, null);
+    $row = database::select("rtb_user_links", $data, null);
 
     $arr = array();
 
@@ -46,17 +46,17 @@ class UserLinks
 
   function delete_Link($id){
 
-    $db = DbConnection::getInstance();
+    $db = database::getInstance();
 
     $data = array();
     $data["id"] = $id;
 
-    DbConnection::delete("rtb_user_links", $data);
+    database::delete("rtb_user_links", $data);
   }
 
   public function update_Link($id, $newTypeID, $newLinkID){
 
-    $db = DbConnection::getInstance();
+    $db = database::getInstance();
 
     $data = array();
     $condition = array();

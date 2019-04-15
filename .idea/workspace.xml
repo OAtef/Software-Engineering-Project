@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1d9b95af-96f4-4d71-8827-8ddb2e5cd3ee" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Bakcup/dashboard.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bakcup/dbConnection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Controller/after_login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Controller/emails.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Controller/html_page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Controller/login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Controller/projects_part.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Controller/register.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Controller/user.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/address.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/forms_class.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/links_class.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/login_class.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/old_users_copy.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/project_category_class.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/project_class.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/user_Intermediate.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/user_Links.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/useroptions_class.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/users_class.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/usertypes_class.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/Model/uservalues_class.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/View/404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/View/admin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/View/after_login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/View/area.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/View/blank.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/View/chartBarView.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/View/dashboard.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/View/forgot-password.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/View/html_page.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/View/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/View/register.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/View/settings.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MVC/config.api/dbConnection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/CK/inserttodb.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/css/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/css/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/css/owl.carousel.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/donator.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/banner-img.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/add.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/author.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/c1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/c2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/c3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/c4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/c5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/c6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/cat-post/cat-post-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/cat-post/cat-post-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/cat-post/cat-post-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/causes/causes-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/causes/causes-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/causes/causes-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/feature-img1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/main-blog/m-blog-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/main-blog/m-blog-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/main-blog/m-blog-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/main-blog/m-blog-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/main-blog/m-blog-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/next.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/popular-post/post1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/popular-post/post2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/popular-post/post3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/popular-post/post4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/post-img1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/post-img2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/blog/prev.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/brands/b1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/brands/b2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/brands/b3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/brands/b4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/brands/b5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/causes/c1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/causes/c2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/causes/c3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/condition/c1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/donation-bg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/a.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/a2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/d.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/disabled-check.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/disabled-radio.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/f1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/f2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/f3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/f4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/f5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/f6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/f7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/f8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/g1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/g2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/g3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/g4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/g5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/g6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/g7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/g8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/primary-check.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/primary-radio.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/success-check.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/elements/success-radio.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/events/e1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/events/ed1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/fav.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/home-banner-img.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/map.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/pages/at1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/pages/t1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/pages/t2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/pages/t3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/pages/t4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/img/video-icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/js/jquery.counterup.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/js/jquery.magnific-popup.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/js/owl.carousel.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/js/superfish.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/js/vendor/jquery-2.2.4.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/slider/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/slider/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Donor Page/slider/js/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/Model/doDonation.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/TasksScripts/common.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/TasksScripts/datatables/jquery.dataTables.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/TasksScripts/flot/jquery.flot.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/TasksScripts/flot/jquery.flot.pie.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/TasksScripts/flot/jquery.flot.resize.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/TasksScripts/jquery-1.9.1.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/TasksScripts/jquery-ui-1.10.1.custom.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/admin-task part.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/aside/dashboard.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/aside/email_pass.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/aside/got address registor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/aside/log.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/aside/old_users_copy.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/aside/settings.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/aside/tablesEmails.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/config.api/dbConnection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/extra css files/bootstrap-responsive.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/extra css files/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/extra css files/font-awesome.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/extra css files/theme.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/statistics api/dashboard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/statistics api/php.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/on_progress/task js.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/things_for_tempelete/404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/things_for_tempelete/blank.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/things_for_tempelete/buttons.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/things_for_tempelete/cards.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/things_for_tempelete/charts.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/things_for_tempelete/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/things_for_tempelete/tables.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/things_for_tempelete/utilities-animation.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/things_for_tempelete/utilities-border.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/things_for_tempelete/utilities-color.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/things_for_tempelete/utilities-other.html" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/Controller/user.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3720">
+              <caret line="248" column="55" selection-start-line="248" selection-start-column="55" selection-end-line="248" selection-end-column="55" />
+              <folding>
+                <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+                <element signature="n#!!block;n#updateUser#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/View/profile.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/php/View/index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="787">
+              <caret line="55" column="89" selection-start-line="55" selection-start-column="89" selection-end-line="55" selection-end-column="89" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/Model/html.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="41" column="5" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+              <folding>
+                <element signature="n#_create#0;n#html#0;n#!!top" />
+                <element signature="n#_update#0;n#html#0;n#!!top" />
+                <element signature="n#_delete#0;n#html#0;n#!!top" />
+                <element signature="n#_read#0;n#html#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/Model/pages.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="383">
+              <caret line="44" column="33" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
+              <folding>
+                <element signature="n#_create#0;n#pages#0;n#!!top" />
+                <element signature="n#_update#0;n#pages#0;n#!!top" />
+                <element signature="n#_delete#0;n#pages#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/Model/login.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="45" selection-start-line="45" selection-end-line="46" selection-end-column="60" />
+              <folding>
+                <element signature="n#__construct#0;n#login#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/Model/usertypes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="489">
+              <caret line="70" column="28" lean-forward="true" selection-start-line="70" selection-end-line="71" />
+              <folding>
+                <element signature="n#__construct#0;n#usertypes#0;n#!!top" />
+                <element signature="n#insert#0;n#usertypes#0;n#!!top" />
+                <element signature="n#update#0;n#usertypes#0;n#!!top" />
+                <element signature="n#delete#0;n#usertypes#0;n#!!top" />
+                <element signature="n#get_values#0;n#usertypes#0;n#!!top" />
+                <element signature="n#get_root#0;n#usertypes#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/Model/database.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="147">
+              <caret line="112" column="60" selection-start-line="112" selection-start-column="60" selection-end-line="112" selection-end-column="60" />
+              <folding>
+                <element signature="n#getInstance#0;n#database#0;n#!!top" />
+                <element signature="n#__construct#0;n#database#0;n#!!top" />
+                <element signature="n#connect#0;n#database#0;n#!!top" />
+                <element signature="n#where#0;n#database#0;n#!!top" />
+                <element signature="n#where_like#0;n#database#0;n#!!top" />
+                <element signature="n#insert#0;n#database#0;n#!!top" />
+                <element signature="n#lastId#0;n#database#0;n#!!top" />
+                <element signature="n#delete#0;n#database#0;n#!!top" />
+                <element signature="n#update#0;n#database#0;n#!!top" />
+                <element signature="n#execute#0;n#database#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>label</find>
+      <find>oo</find>
+      <find>list_us</find>
+      <find>url</find>
+      <find>user_intermedia</find>
+      <find>list</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/php/Controller/label_headers.php" />
+        <option value="$PROJECT_DIR$/php/Model/users.php" />
+        <option value="$PROJECT_DIR$/php/Model/uservalues.php" />
+        <option value="$PROJECT_DIR$/php/Model/user_Links.php" />
+        <option value="$PROJECT_DIR$/php/Model/user_Intermediate.php" />
+        <option value="$PROJECT_DIR$/php/Controller/user.js" />
+        <option value="$PROJECT_DIR$/php/Model/login.php" />
+        <option value="$PROJECT_DIR$/php/Model/usertypes.php" />
+        <option value="$PROJECT_DIR$/php/Model/links.php" />
+        <option value="$PROJECT_DIR$/php/Model/html.php" />
+        <option value="$PROJECT_DIR$/php/Model/database.php" />
+        <option value="$PROJECT_DIR$/php/Model/pages.php" />
+        <option value="$PROJECT_DIR$/php/View/profile.php" />
+        <option value="$PROJECT_DIR$/php/View/index.php" />
+      </list>
+    </option>
+  </component>
+  <component name="PhpServers">
+    <servers />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="420" />
+    <option name="y" value="44" />
+    <option name="width" value="1077" />
+    <option name="height" value="807" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="software" type="b2602c69:ProjectViewProjectNode" />
+              <item name="software" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="software" type="b2602c69:ProjectViewProjectNode" />
+              <item name="software" type="462c0819:PsiDirectoryNode" />
+              <item name="php" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="software" type="b2602c69:ProjectViewProjectNode" />
+              <item name="software" type="462c0819:PsiDirectoryNode" />
+              <item name="php" type="462c0819:PsiDirectoryNode" />
+              <item name="Model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="software" type="b2602c69:ProjectViewProjectNode" />
+              <item name="software" type="462c0819:PsiDirectoryNode" />
+              <item name="php" type="462c0819:PsiDirectoryNode" />
+              <item name="View" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1d9b95af-96f4-4d71-8827-8ddb2e5cd3ee" name="Default Changelist" comment="" />
+      <created>1554889480323</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1554889480323</updated>
+      <workItem from="1554889481564" duration="95000" />
+      <workItem from="1554889907076" duration="9456000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="9551000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="420" y="44" width="1077" height="807" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23091787" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/php/View/404.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Controller/after_login.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Controller/label_headers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Model/users.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="76" column="19" lean-forward="true" selection-start-line="76" selection-start-column="19" selection-end-line="76" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Controller/update_user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="2" lean-forward="true" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Model/crud.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Model/uservalues.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="108" column="32" selection-start-line="108" selection-start-column="32" selection-end-line="108" selection-end-column="32" />
+          <folding>
+            <element signature="n#_read#0;n#user_values#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Model/user_Intermediate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2955">
+          <caret line="197" column="32" lean-forward="true" selection-start-line="197" selection-start-column="32" selection-end-line="197" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Model/user_Links.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-22">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Model/useroptions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="18" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Controller/user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3720">
+          <caret line="248" column="55" selection-start-line="248" selection-start-column="55" selection-end-line="248" selection-end-column="55" />
+          <folding>
+            <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#!!block;n#updateUser#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Model/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="45" selection-start-line="45" selection-end-line="46" selection-end-column="60" />
+          <folding>
+            <element signature="n#__construct#0;n#login#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Model/usertypes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="489">
+          <caret line="70" column="28" lean-forward="true" selection-start-line="70" selection-end-line="71" />
+          <folding>
+            <element signature="n#__construct#0;n#usertypes#0;n#!!top" />
+            <element signature="n#insert#0;n#usertypes#0;n#!!top" />
+            <element signature="n#update#0;n#usertypes#0;n#!!top" />
+            <element signature="n#delete#0;n#usertypes#0;n#!!top" />
+            <element signature="n#get_values#0;n#usertypes#0;n#!!top" />
+            <element signature="n#get_root#0;n#usertypes#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Model/database.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="112" column="60" selection-start-line="112" selection-start-column="60" selection-end-line="112" selection-end-column="60" />
+          <folding>
+            <element signature="n#getInstance#0;n#database#0;n#!!top" />
+            <element signature="n#__construct#0;n#database#0;n#!!top" />
+            <element signature="n#connect#0;n#database#0;n#!!top" />
+            <element signature="n#where#0;n#database#0;n#!!top" />
+            <element signature="n#where_like#0;n#database#0;n#!!top" />
+            <element signature="n#insert#0;n#database#0;n#!!top" />
+            <element signature="n#lastId#0;n#database#0;n#!!top" />
+            <element signature="n#delete#0;n#database#0;n#!!top" />
+            <element signature="n#update#0;n#database#0;n#!!top" />
+            <element signature="n#execute#0;n#database#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Model/links.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="53" selection-start-line="53" selection-end-line="53" />
+          <folding>
+            <element signature="n#__construct#0;n#links#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Model/html.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="41" column="5" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
+          <folding>
+            <element signature="n#_create#0;n#html#0;n#!!top" />
+            <element signature="n#_update#0;n#html#0;n#!!top" />
+            <element signature="n#_delete#0;n#html#0;n#!!top" />
+            <element signature="n#_read#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/Model/pages.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="44" column="33" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
+          <folding>
+            <element signature="n#_create#0;n#pages#0;n#!!top" />
+            <element signature="n#_update#0;n#pages#0;n#!!top" />
+            <element signature="n#_delete#0;n#pages#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/View/profile.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/View/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="787">
+          <caret line="55" column="89" selection-start-line="55" selection-start-column="89" selection-end-line="55" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

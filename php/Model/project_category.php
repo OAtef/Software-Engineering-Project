@@ -1,8 +1,9 @@
 <?php
 
-include_once('../config.api/dbConnection.php');
+include_once 'database.php';
+include_once 'crud.php';
 
-class Project_Category
+class project_category
 {
 
   public $id;
@@ -10,20 +11,16 @@ class Project_Category
 
   function __construct(){
 
-    $db = DbConnection::getInstance();
-
-  
-  
   }
 
   function select_categories(){
 
-    $db = DbConnection::getInstance();
+    $db = database::getInstance();
 
     $data = array();
 
     $data["isdeleted"] = 0;
-    $row = DbConnection::select("tb_project_category", $data, null); 
+    $row = database::select("tb_project_category", $data, null); 
 
     $cats = array();
 

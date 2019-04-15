@@ -1,37 +1,38 @@
 <?php
 
-class DbConnection {
+class database {
 
     public $servername = "localhost";
 		public $username = "root";
-		public $password = "";
+		public $password = "mysql";
 		public $db = "software-project";
     public static $con;
-    public $dbConnection;
-    public static $instance;
+		public $dbConnection;
+		public static $instance;
 
-    private function __construct(){
-        $this->dbConnection = $this->connect();
-		}
 
 		public static function getInstance(){// create only one object for DbConnection
 			if(!isset(self::$instance)){
-				self::$instance = new DbConnection();
+				self::$instance = new database();
 			}
 			return self::$instance;
 		}
 
-    public function connect(){
-        self::$con = mysqli_connect($this->servername, $this->username, $this->password);
+    public function __construct() {
+			$this->dbConnection = $this->connect();
+		}
 
-        if (self::$con){
-            mysqli_select_db(self::$con, $this->db);
-            return self::$con;
-        }
-        else{
-            die("Failed to connect: ". mysqli_connect_error());
-        }
-    }
+		public function connect(){
+			self::$con = mysqli_connect($this->servername, $this->username, $this->password);
+
+			if (self::$con){
+					mysqli_select_db(self::$con, $this->db);
+					return self::$con;
+			}
+			else{
+					die("Failed to connect: ". mysqli_connect_error());
+			}
+		}
 
     public static function query($query) {
 
@@ -58,7 +59,7 @@ class DbConnection {
 			return $rows_vals;
 		}
 
-		public static function where($conditions){
+		private function where($conditions){
 			$where = "";
 			$loop = 0;
 			foreach ($conditions as $key => $val) {
@@ -83,7 +84,8 @@ class DbConnection {
 			return $where;
 		}
 
-		public static function where_like($conditions){
+
+		private function where_like($conditions){
 			$where = "";
 			$loop = 0;
 			foreach ($conditions as $key => $val) {
@@ -109,41 +111,24 @@ class DbConnection {
 		}
 
     public static function select($table, $conditions, $like){
-    			$fields = "*";
-    			$where = '';
-    			$like='';
+    	$fields = "*";
+    	$where = '';
+    	$likee='';
 
-    			if (!empty($conditions)) {
-    				$where = self::where($conditions);
-    			}
+    	if (!empty($conditions)) {
+    		$where = self::where($conditions);
+    	}
 
-    			if (!empty($like)) {
-    				$like = self::where_like($like);
-    			}
+    	if (!empty($like)) {
+    		$likee = self::where_like($like);
+    	}
 
-    			$query = "SELECT $fields FROM $table $where $like";
+			$query = "SELECT $fields FROM $table $where $likee";
+			
+    	return self::query($query);
+    }
 
-    			//echo $query;
-
-    			return self::query($query);
-    		}
-
-    // public static function select($table, $conditions){
-		// 	$fields = "*";
-    //   $where = '';
-    //
-		// 	if (!empty($conditions)) {
-		// 		$where = self::where($conditions);
-		// 	}
-    //
-		// 	$query = "SELECT $fields FROM $table $where";
-    //
-		// 	//echo $query;
-    //
-		// 	return self::query($query);
-    // }
-
-    public static function insert($table, $data){
+    public function insert($table, $data){
 
 			$fields = array_keys($data);
 			$values = array_values($data);
@@ -164,15 +149,14 @@ class DbConnection {
 			return mysqli_insert_id(self::$con);
     }
 
-    public static function delete($table, $conditions){
+    public function delete($table, $conditions){
       $where = self::where($conditions);
 
 			$query = "UPDATE $table SET isdeleted=1 " . $where;
-			//echo $query;
 			return self::execute($query);
 		}
 
-    public static function update($table, $data, $conditions){
+    public function update($table, $data, $conditions){
 			$where = "";
 			if (!empty($conditions)) {
 				$where = self::where($conditions);
@@ -188,15 +172,7 @@ class DbConnection {
 			return self::execute($query);
 		}
 
-		public function getAffectedRows(){
-			return mysqli_affected_rows(self::$con);
-    }
-
-    public function disconnect(){
-      return mysqli_close(self::$con);
-		}
-
-		public static function execute($query){
+		public function execute($query){
 			return mysqli_query(self::$con, $query);
 		}
 

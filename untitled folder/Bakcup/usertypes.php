@@ -24,17 +24,17 @@ class usertypes
       $this->usertype_name = $row[0]["usertype_name"];
       $this->parentID =  $row[0]["parentID"];
 
-      // $data1 = array();
-      // $data1["userTypeID"] = $this->parentID;
-      // $data1["isdeleted"] = 0;
-      //
-      // $rows_rout = database::select("rtb_option_usertype", $data1, null);
-      //
-      // $i=0;
-      // while($i < sizeof($rows_rout)){
-      //   $this->rOUT_ids[$i] = $rows_rout[$i]["id"];
-      //   $i++;
-      // }
+      $data1 = array();
+      $data1["userTypeID"] = $this->parentID;
+      $data1["isdeleted"] = 0;
+
+      $rows_rout = database::select("rtb_option_usertype", $data1, null);
+
+      $i=0;
+      while($i < sizeof($rows_rout)){
+        $this->rOUT_ids[$i] = $rows_rout[$i]["id"];
+        $i++;
+      }
 		}
   }
 
@@ -99,45 +99,6 @@ class usertypes
 
           $result[$rows[$i]["id"]] = $rows[$i]["usertype_name"];
           $i++;
-        }
-
-        return $result;
-      }
-    }
-  }
-
-  public static function list_usertypesTest($parentID){
-
-    $db = database::getInstance();
-
-    $result = array();
-    $data = array();
-
-    if($parentID != NULL){
-
-      if(!is_numeric($parentID) && $parentID == "all"){
-
-        $data["isdeleted"] = 0;
-
-        $rows = database::select("tb_usertype", $data, null);
-
-        for ($i=0; $i < sizeof($rows); $i++) {
-
-          $result[$i] = new usertypes($rows[$i]["id"]);
-        }
-
-        return $result;
-      }
-      else if(is_numeric($parentID)){
-
-        $data["parentID"] = $parentID;
-        $data["isdeleted"] = 0;
-
-        $rows = database::select("tb_usertype", $data, null);
-
-        for ($i=0; $i < sizeof($rows); $i++) {
-
-          $result[$i] = new usertypes($rows[$i]["id"]);
         }
 
         return $result;

@@ -19,11 +19,11 @@ if ($_SESSION['user-id'] != -1) {
 }
 
 
-$data = array($userID);
-$type_id = $ut->get_usertype($data);
-
-$data = array($type_id);
-$menu = $p->_read($data, $emptyArr);
+// $data = array($userID);
+// $type_id = $ut->get_usertype($data);
+//
+// $data = array($type_id);
+// $menu = $p->_read($data, $emptyArr);
 
 ?>
 
@@ -40,6 +40,7 @@ $menu = $p->_read($data, $emptyArr);
 
   <!-- Ajax Link -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
   <!-- Custom fonts for this template -->
   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -107,7 +108,7 @@ $menu = $p->_read($data, $emptyArr);
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
-          
+
       <li class="nav-item active">
         <a class="nav-link" id="logbtn" href="#">
           <i class="fas fa-cog fa-pulse"></i>
@@ -181,7 +182,8 @@ $menu = $p->_read($data, $emptyArr);
         </a>
         <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="#" id='settingsBtn'> Settings </a>
+            <a class="collapse-item" href="#" id='settingsBtn'>User Settings</a>
+            <a class="collapse-item" id=''>Other Settings</a>
           </div>
         </div>
       </li>
@@ -373,7 +375,7 @@ $menu = $p->_read($data, $emptyArr);
 		<!-- End of Topbar -->
 
 		</nav>
-       
+
 
         <!-- Main Content -->
 
@@ -481,7 +483,7 @@ $menu = $p->_read($data, $emptyArr);
                 <div class="row">
 
                   <!-- Area Chart -->
-                  <div class="col-xl-8 col-lg-7">
+                  <div class="col-xl-7 col-lg-7">
                     <div class="card shadow mb-4">
                       <!-- Card Header - Dropdown -->
 
@@ -548,18 +550,18 @@ $menu = $p->_read($data, $emptyArr);
                   </div>
                   <!-- Pie Chart -->
 
-                  <div class="col-xl-4 col-lg-5">
+                  <div class="col-xl-5 col-lg-6">
                     <div class="card shadow mb-4">
                       <!-- Card Header - Dropdown -->
                       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Gender Donations</h6>
                         <div class="dropdown no-arrow">
                           <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                           </a>
                           <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                             <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
+                            <a id="ShowGraphBtn" class="dropdown-item" href="#">show Graph</a>
                             <a class="dropdown-item" href="#">Another action</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Something else here</a>
@@ -567,8 +569,8 @@ $menu = $p->_read($data, $emptyArr);
                         </div>
                       </div>
                       <!-- Card Body -->
-                      <div class="card-body">
-                        <div class="chart-pie pt-4 pb-2">
+                      <div id="GenderPieChart" class="card-body">
+                        <!-- <div class="chart-pie pt-4 pb-2">
                           <canvas id="myPieChart"></canvas>
                         </div>
                         <div class="mt-4 text-center small">
@@ -581,11 +583,12 @@ $menu = $p->_read($data, $emptyArr);
                           <span class="mr-2">
                             <i class="fas fa-circle text-info"></i> Referral
                           </span>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>
-                </div>
+
+                </div> <!-- end of row -->
 
                 <div>
 
@@ -683,9 +686,9 @@ $menu = $p->_read($data, $emptyArr);
               </div>
               <div id="theTable"></div>
             </div>
-			
+
 			<div id="update_form_div"></div>
-			
+
 			<div id="insert_form_div">
               <div class='row'>
                 <div class="dropdown mb-4 col-sm-2">
@@ -1271,7 +1274,7 @@ $menu = $p->_read($data, $emptyArr);
 
           </div>
         </div><!-- end of logg -->
-        
+
         <!-- End of Main Content -->
 
         <!-- Footer -->
@@ -1319,6 +1322,9 @@ $menu = $p->_read($data, $emptyArr);
     <script src="../Controller/emails.js"></script>
     <script src="../Controller/projects_part.js"></script>
 
+    <!-- Google Charts API -->
+    <script src="../Controller/Stats/Stats.js"></script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="../../vendor/jquery/jquery.min.js"></script>
     <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -1334,11 +1340,11 @@ $menu = $p->_read($data, $emptyArr);
     <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="../../vendor/chart.js/Chart.min.js"></script>
+    <!-- <script src="../../vendor/chart.js/Chart.min.js"></script> -->
 
     <!-- Page level custom scripts -->
-    <script src="../../js/demo/chart-area-demo.js"></script>
-    <script src="../../js/demo/chart-pie-demo.js"></script>
+    <!-- <script src="../../js/demo/chart-area-demo.js"></script> -->
+    <!-- <script src="../../js/demo/chart-pie-demo.js"></script> -->
 
 </body>
 

@@ -37,23 +37,20 @@ $(document).ready(function(){
     $("#settingsPage").hide();
     $("#logg").hide();
 
-    $.ajax({ url: 'list_usertypes.php',
-    data: {parentID: 0},
-    type: 'POST',
-    dataType: "JSON",
-    success: function(data) {
+    $.ajax({
+      url: '../Controller/UsersController/List_UserTypes.php',
+      data: {parentID: 0},
+      type: 'POST',
+      dataType: "JSON",
+      success: function(data) {
 
-       // var arr = new Array();
+        // mainTypes = data;
 
-       mainTypes = data;
-
-       for (var key in mainTypes) {
-        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>").appendTo("#dropdown-usertype-table1");
-        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>").appendTo("#dropdown-usertype-insert");
-        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>").appendTo("#dropdown-MainUserType");
-        $("<a class='dropdown1 dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>").appendTo("#dropdown-email-table");
-        $("<a class='dropdown-item' id='link-" + key + "'>" + mainTypes[key] + "</a>").appendTo("#dropdown-UserTypes");
-       }
+        $(data).appendTo("#dropdown-usertype-table1");
+        $(data).appendTo("#dropdown-usertype-insert");
+        $(data).appendTo("#dropdown-MainUserType");
+        $(data).appendTo("#dropdown-email-table");
+        $(data).appendTo("#dropdown-UserTypes");
 
     },
     error: function(data){
@@ -273,7 +270,7 @@ $(document).ready(function(){
         $("#emailForm").hide();
         $("#dashboard").hide();
         $("#tableProject").hide();
-        
+
     });
 
     $(document).on('click','.updatebtn',function(e){
@@ -308,26 +305,21 @@ $(document).ready(function(){
         var id = $(this).attr('id');
         parentID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
 
-        $.ajax({ url: 'list_usertypes.php',
-        data: {parentID: parentID},
-        type: 'POST',
-        dataType: "JSON",
-        success: function(data) {
+        $.ajax({
+          url: '../Controller/UsersController/List_UserTypes.php',
+          data: {parentID: parentID},
+          type: 'POST',
+          dataType: "JSON",
+          success: function(data) {
 
-            if(data != null){
+            $('#dropdown-usertype-table2').empty();
+            $("#dropdown-usertype-insert2").empty();
 
-                $('#dropdown-usertype-table2').empty();
-                $("#dropdown-usertype-insert2").empty();
+            $(data).appendTo("#dropdown-usertype-table2");
+            $(data).appendTo("#dropdown-usertype-insert2");
 
-                for (var key in data) {
-                    $("<a class='dropdown2 dropdown-item userTable' id='link-" + key + "'>" + data[key] + "</a>").appendTo("#dropdown-usertype-table2");
-                    $("<a class='dropdown2 dropdown-item insertUser' id='link-" + key + "'>" + data[key] + "</a>").appendTo("#dropdown-usertype-insert2");
-                }
-
-                $('.t2').show();
-                $('.i2').show();
-
-            }
+            $('.t2').show();
+            $('.i2').show();
 
         },
         error: function(data){
@@ -1017,60 +1009,25 @@ function deleteUser(id){
 
 function listAllTypesTable(){
 
-    var div = document.getElementById("allTypesTable");
-    var table = ' <div class="table-responsive"> <br> <table class="table table-bordered userstable" id="dataTable" width="100%" cellspacing="0"> <thead> <tr>';
+  var div = document.getElementById("allTypesTable");
 
-    table += "<th> UserType Name</th>"
-    table += "<th> ParentID Name</th>"
-    table += "<th> Control </th>"
+  $.ajax({
+      url: '../Controller/UsersController/List_UserTypes.php',
+      data: {parentID: "all"},
+      type: 'POST',
+      dataType: "JSON",
+      success: function(data) {
 
-    table += "</tr> </thead> <tfoot> <tr>"
-    table += "<th> UserType Name</th>"
-    table += "<th> ParentID Name</th>"
-	  table += "<th> Control </th>"
-    table += "</tr> </tfoot>";
+        div.innerHTML+= data;
+        typesLoaded = 1;
 
-    $.ajax({
-        url: 'list_usertypes.php',
-        data: {parentID: "all"},
-        type: 'POST',
-        dataType: "JSON",
-        success: function(data) {
-
-          types = data;
-
-          if (data != null) {
-
-            table += "<tbody>";
-
-            for (var x in data) {
-
-            table += "<tr>";
-
-            var list = data[x];
-
-            var userTypename = list[0];
-            var typeParentID = list[1];
-
-            table += "<td>" + userTypename + "</td>";
-            table += "<td>" + typeParentID + "</td>";
-
-            table += "<td> <a id='update-" + x + "' href='#' class='btn btn-primary btn-circle m-r-1em updateTypebtn'><i class='fa fa-edit'></i></a> " +
-                     "<a id='del-" + x + "' href='#' class='btn btn-danger btn-circle deleteTypebtn'><i class='fas fa-trash'></i></a> </td> </tr>";
-
-            }
-            table += '</body>';
-          }
-          div.innerHTML+= table;
-          typesLoaded = 1;
-
+      },
+      error: function(data){
           console.log(data);
-        },
-        error: function(data){
-            console.log(data);
-            $("#errormsg").html(data.responseText);
-        }
-    });
+          $("#errormsg").html(data.responseText);
+      }
+  });
+
 }
 
 function updateType(id){
@@ -1157,8 +1114,8 @@ function listAllOptionsTable(){
     table += "</tr> </tfoot>";
 
     $.ajax({
-        url: 'list_options.php',
-        data: {ListType: "listAll"},
+        url: '../Controller/userC.php',
+        data: {ListType: "listAll", function2call: "list_Options"},
         type: 'POST',
         dataType: "JSON",
         success: function(data) {

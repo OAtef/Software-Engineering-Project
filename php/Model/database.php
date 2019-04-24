@@ -59,7 +59,7 @@ class database {
 			return $rows_vals;
 		}
 
-		private function where($conditions){
+		private static function where($conditions){
 			$where = "";
 			$loop = 0;
 			foreach ($conditions as $key => $val) {
@@ -124,7 +124,7 @@ class database {
     	}
 
 			$query = "SELECT $fields FROM $table $where $likee";
-			
+
     	return self::query($query);
     }
 

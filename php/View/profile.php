@@ -937,44 +937,10 @@ if ($_SESSION['user-id'] != -1) {
                 <!-- Card Body -->
                 <div id="AddTypeSettings" class="card-body" style="display: none">
 
-                  <div id="sucessType_div" class='alert alert-success' style="display: none"> Record was updated. </div>
-                  <div id="errorType_div" class='alert alert-danger' style="display: none"> Something Wrong Happend. </div>
-
-                  <form id="insertUserSubTypeForm" method="post">
-                    <div class="table-responsive">
-                      <table class='table table-hover table-bordered'>
-                        <tbody>
-                          <tr>
-                            <td> Type Name: </td>
-                            <td>
-                              <input type="text" name="TypeName" class='form=control' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td> Parent Type: </td>
-                            <td>
-                              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Type
-                              </button>
-                              <div id="dropdown-MainUserType" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td>
-                              <input id='addSubTypeBtn' type='submit' value='Add Type' class='btn btn-primary' name='addSubTypeBtn' />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </form>
                 </div>
 
                 <div id="allTypesTable">
-                  <div id="sucessTypeTable_div" class='alert alert-success' style="display: none"> Record was updated. </div>
-                  <div id="errorTypeTable_div" class='alert alert-danger' style="display: none"> Something Wrong Happend. </div>
+
 
                 </div>
 
@@ -1324,6 +1290,12 @@ if ($_SESSION['user-id'] != -1) {
 
     <!-- Google Charts API -->
     <script src="../Controller/Stats/Stats.js"></script>
+
+    <!-- UserType Controller -->
+    <script type="text/javascript" src="../Controller/UserTypeControl/UsersType.js"></script>
+
+    <!-- User Option Controller -->
+    <script type="text/javascript" src="../Controller/UserOptionControl/UsersOption.js"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="../../vendor/jquery/jquery.min.js"></script>

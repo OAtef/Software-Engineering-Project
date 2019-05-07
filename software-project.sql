@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.15.7
--- http://www.phpmyadmin.net
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2019 at 08:26 AM
--- Server version: 5.6.37
--- PHP Version: 5.6.31
+-- Generation Time: May 06, 2019 at 02:33 PM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,11 +28,19 @@ SET time_zone = "+00:00";
 -- Table structure for table `rtb_option_payment_method`
 --
 
-CREATE TABLE IF NOT EXISTS `rtb_option_payment_method` (
+CREATE TABLE `rtb_option_payment_method` (
   `id` int(11) NOT NULL,
   `optionID` int(11) NOT NULL,
   `payment_methodID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rtb_option_payment_method`
+--
+
+INSERT INTO `rtb_option_payment_method` (`id`, `optionID`, `payment_methodID`) VALUES
+(1, 1, 2),
+(2, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -38,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `rtb_option_payment_method` (
 -- Table structure for table `rtb_option_usertype`
 --
 
-CREATE TABLE IF NOT EXISTS `rtb_option_usertype` (
+CREATE TABLE `rtb_option_usertype` (
   `id` int(11) NOT NULL,
   `optionID` int(11) NOT NULL,
   `usertypeID` int(11) NOT NULL,
@@ -60,7 +70,7 @@ INSERT INTO `rtb_option_usertype` (`id`, `optionID`, `usertypeID`, `isdeleted`) 
 -- Table structure for table `rtb_project_img`
 --
 
-CREATE TABLE IF NOT EXISTS `rtb_project_img` (
+CREATE TABLE `rtb_project_img` (
   `id` int(11) NOT NULL,
   `projectID` int(11) NOT NULL,
   `imgID` int(11) NOT NULL,
@@ -73,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `rtb_project_img` (
 -- Table structure for table `rtb_usertype_page`
 --
 
-CREATE TABLE IF NOT EXISTS `rtb_usertype_page` (
+CREATE TABLE `rtb_usertype_page` (
   `id` int(11) NOT NULL,
   `usertypeID` int(11) NOT NULL,
   `pageID` int(11) NOT NULL,
@@ -87,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `rtb_usertype_page` (
 -- Table structure for table `rtb_user_phone`
 --
 
-CREATE TABLE IF NOT EXISTS `rtb_user_phone` (
+CREATE TABLE `rtb_user_phone` (
   `id` int(11) NOT NULL,
   `phone_numID` int(11) NOT NULL,
   `userID` int(11) NOT NULL
@@ -99,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `rtb_user_phone` (
 -- Table structure for table `rtb_user_project`
 --
 
-CREATE TABLE IF NOT EXISTS `rtb_user_project` (
+CREATE TABLE `rtb_user_project` (
   `id` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `projectID` int(11) NOT NULL,
@@ -113,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `rtb_user_project` (
 -- Table structure for table `tb_address`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_address` (
+CREATE TABLE `tb_address` (
   `id` int(11) NOT NULL,
   `address_name` varchar(300) NOT NULL,
   `parentID` int(11) NOT NULL DEFAULT '0',
@@ -243,12 +253,20 @@ INSERT INTO `tb_address` (`id`, `address_name`, `parentID`, `isdeleted`) VALUES
 -- Table structure for table `tb_donation_reason`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_donation_reason` (
+CREATE TABLE `tb_donation_reason` (
   `id` int(11) NOT NULL,
   `reason` varchar(300) NOT NULL,
-  `is_send_info` tinyint(4) NOT NULL DEFAULT '0',
-  `sendtoID` int(11) NOT NULL DEFAULT '0'
+  `sendtoID` int(11) NOT NULL DEFAULT '0',
+  `isdeleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_donation_reason`
+--
+
+INSERT INTO `tb_donation_reason` (`id`, `reason`, `sendtoID`, `isdeleted`) VALUES
+(8, 'charity', 0, 0),
+(9, 'gift', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -256,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `tb_donation_reason` (
 -- Table structure for table `tb_event_type`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_event_type` (
+CREATE TABLE `tb_event_type` (
   `id` int(11) NOT NULL,
   `event_type_name` varchar(255) NOT NULL,
   `isdeleted` int(11) NOT NULL DEFAULT '0'
@@ -278,7 +296,7 @@ INSERT INTO `tb_event_type` (`id`, `event_type_name`, `isdeleted`) VALUES
 -- Table structure for table `tb_gender`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_gender` (
+CREATE TABLE `tb_gender` (
   `id` int(11) NOT NULL,
   `gender_name` varchar(300) NOT NULL,
   `isdeleted` int(11) NOT NULL DEFAULT '0'
@@ -298,7 +316,7 @@ INSERT INTO `tb_gender` (`id`, `gender_name`, `isdeleted`) VALUES
 -- Table structure for table `tb_html`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_html` (
+CREATE TABLE `tb_html` (
   `id` int(11) NOT NULL,
   `html` text NOT NULL,
   `pageID` int(11) NOT NULL,
@@ -311,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `tb_html` (
 -- Table structure for table `tb_logins`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_logins` (
+CREATE TABLE `tb_logins` (
   `id` int(11) NOT NULL,
   `email` varchar(300) NOT NULL,
   `password` varchar(300) NOT NULL,
@@ -332,7 +350,7 @@ INSERT INTO `tb_logins` (`id`, `email`, `password`, `userID`, `isdeleted`) VALUE
 -- Table structure for table `tb_nationality`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_nationality` (
+CREATE TABLE `tb_nationality` (
   `id` int(11) NOT NULL,
   `nationality_name` varchar(300) NOT NULL,
   `isdeleted` int(11) NOT NULL DEFAULT '0'
@@ -344,12 +362,20 @@ CREATE TABLE IF NOT EXISTS `tb_nationality` (
 -- Table structure for table `tb_options_payments`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_options_payments` (
+CREATE TABLE `tb_options_payments` (
   `id` int(11) NOT NULL,
   `option_name` varchar(300) NOT NULL,
   `typeID` int(11) NOT NULL,
   `isdeleted` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_options_payments`
+--
+
+INSERT INTO `tb_options_payments` (`id`, `option_name`, `typeID`, `isdeleted`) VALUES
+(1, 'Bank_Account_Number', 1, 0),
+(2, 'Bank_Name', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -357,25 +383,26 @@ CREATE TABLE IF NOT EXISTS `tb_options_payments` (
 -- Table structure for table `tb_options_usertypes`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_options_usertypes` (
+CREATE TABLE `tb_options_usertypes` (
   `id` int(11) NOT NULL,
   `option_name` varchar(300) NOT NULL,
   `typeID` int(11) NOT NULL,
   `ref_table` varchar(300) DEFAULT 'none',
-  `isdeleted` int(11) NOT NULL DEFAULT '0'
+  `isdeleted` int(11) NOT NULL DEFAULT '0',
+  `option_type` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_options_usertypes`
 --
 
-INSERT INTO `tb_options_usertypes` (`id`, `option_name`, `typeID`, `ref_table`, `isdeleted`) VALUES
-(1, 'First Name', 1, 'none', 0),
-(2, 'Last Name', 1, 'none', 0),
-(3, 'Birth Date', 2, 'none', 0),
-(4, 'Gender', 3, 'tb_gender', 0),
-(5, 'Nationality', 3, 'tb_nationality', 0),
-(6, 'Address', 3, 'tb_address', 0);
+INSERT INTO `tb_options_usertypes` (`id`, `option_name`, `typeID`, `ref_table`, `isdeleted`, `option_type`) VALUES
+(1, 'First Name', 1, 'none', 0, 'text'),
+(2, 'Last Name', 1, 'none', 0, 'text'),
+(3, 'Birth Date', 2, 'none', 0, 'date'),
+(4, 'Gender', 3, 'tb_gender', 0, 'select'),
+(5, 'Nationality', 3, 'tb_nationality', 0, 'select'),
+(6, 'Address', 3, 'tb_address', 0, 'select');
 
 -- --------------------------------------------------------
 
@@ -383,7 +410,7 @@ INSERT INTO `tb_options_usertypes` (`id`, `option_name`, `typeID`, `ref_table`, 
 -- Table structure for table `tb_option_payment_values`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_option_payment_values` (
+CREATE TABLE `tb_option_payment_values` (
   `id` int(11) NOT NULL,
   `optionPaymentID` int(11) NOT NULL,
   `value` varchar(300) NOT NULL,
@@ -391,16 +418,23 @@ CREATE TABLE IF NOT EXISTS `tb_option_payment_values` (
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tb_option_payment_values`
+--
+
+INSERT INTO `tb_option_payment_values` (`id`, `optionPaymentID`, `value`, `paymentID`, `userID`) VALUES
+(1, 1, '15', 2, 1);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `tb_option_type`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_option_type` (
+CREATE TABLE `tb_option_type` (
   `id` int(11) NOT NULL,
   `type` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_option_type`
@@ -417,7 +451,7 @@ INSERT INTO `tb_option_type` (`id`, `type`) VALUES
 -- Table structure for table `tb_option_user_values`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_option_user_values` (
+CREATE TABLE `tb_option_user_values` (
   `id` int(11) NOT NULL,
   `optionUserID` int(11) NOT NULL,
   `value` varchar(300) NOT NULL,
@@ -440,7 +474,7 @@ INSERT INTO `tb_option_user_values` (`id`, `optionUserID`, `value`, `userID`, `i
 -- Table structure for table `tb_pages`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_pages` (
+CREATE TABLE `tb_pages` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `class_name` varchar(100) NOT NULL,
@@ -472,7 +506,7 @@ INSERT INTO `tb_pages` (`id`, `name`, `class_name`, `parent`) VALUES
 -- Table structure for table `tb_page_icon`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_page_icon` (
+CREATE TABLE `tb_page_icon` (
   `id` int(11) NOT NULL,
   `icon_code` int(11) NOT NULL,
   `pageID` int(11) NOT NULL
@@ -484,7 +518,7 @@ CREATE TABLE IF NOT EXISTS `tb_page_icon` (
 -- Table structure for table `tb_payment_method`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_payment_method` (
+CREATE TABLE `tb_payment_method` (
   `id` int(11) NOT NULL,
   `method_name` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -503,7 +537,7 @@ INSERT INTO `tb_payment_method` (`id`, `method_name`) VALUES
 -- Table structure for table `tb_phone_numbers`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_phone_numbers` (
+CREATE TABLE `tb_phone_numbers` (
   `id` int(11) NOT NULL,
   `number` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -514,7 +548,7 @@ CREATE TABLE IF NOT EXISTS `tb_phone_numbers` (
 -- Table structure for table `tb_profile_photo`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_profile_photo` (
+CREATE TABLE `tb_profile_photo` (
   `id` int(11) NOT NULL,
   `img_url` varchar(512) NOT NULL,
   `userID` int(11) NOT NULL
@@ -526,7 +560,7 @@ CREATE TABLE IF NOT EXISTS `tb_profile_photo` (
 -- Table structure for table `tb_project`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_project` (
+CREATE TABLE `tb_project` (
   `id` int(11) NOT NULL,
   `project_name` varchar(300) NOT NULL,
   `project_budget` varchar(300) NOT NULL,
@@ -543,7 +577,7 @@ CREATE TABLE IF NOT EXISTS `tb_project` (
 -- Table structure for table `tb_project_category`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_project_category` (
+CREATE TABLE `tb_project_category` (
   `id` int(11) NOT NULL,
   `category_name` varchar(300) NOT NULL,
   `isdeleted` int(11) NOT NULL DEFAULT '0'
@@ -564,7 +598,7 @@ INSERT INTO `tb_project_category` (`id`, `category_name`, `isdeleted`) VALUES
 -- Table structure for table `tb_project_image`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_project_image` (
+CREATE TABLE `tb_project_image` (
   `id` int(11) NOT NULL,
   `img_url` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -575,12 +609,30 @@ CREATE TABLE IF NOT EXISTS `tb_project_image` (
 -- Table structure for table `tb_request_donation`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_request_donation` (
+CREATE TABLE `tb_request_donation` (
   `id` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
-  `donationReasonID` int(11) NOT NULL,
-  `paymentMethodID` int(11) NOT NULL
+  `projectCategory` varchar(30) NOT NULL,
+  `donationReason` varchar(20) NOT NULL,
+  `paymentMethod` varchar(20) NOT NULL,
+  `donationValue` int(11) NOT NULL,
+  `valueTaken` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_request_donation`
+--
+
+INSERT INTO `tb_request_donation` (`id`, `userID`, `projectCategory`, `donationReason`, `paymentMethod`, `donationValue`, `valueTaken`) VALUES
+(1, 1, 'Purification Station', 'charity', 'cash', 8, 0),
+(2, 1, 'Purification Station', 'charity', 'cash', 15, 0),
+(3, 1, 'Purification Station', 'charity', 'cash', 66, 0),
+(4, 1, 'Purification Station', 'charity', 'cash', 88, 0),
+(5, 1, 'Purification Station', 'charity', 'cash', 33, 0),
+(6, 1, 'Purification Station', 'charity', 'cash', 12, 0),
+(7, 1, 'Purification Station', 'charity', 'cash', 45, 0),
+(8, 1, 'Purification Station', 'charity', 'cash', 35, 0),
+(19, 1, 'Purification Station', 'charity', 'cash', 92, 0);
 
 -- --------------------------------------------------------
 
@@ -588,7 +640,7 @@ CREATE TABLE IF NOT EXISTS `tb_request_donation` (
 -- Table structure for table `tb_role`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_role` (
+CREATE TABLE `tb_role` (
   `id` int(11) NOT NULL,
   `role_name` varchar(300) NOT NULL,
   `isdeleted` int(11) NOT NULL DEFAULT '0'
@@ -608,11 +660,19 @@ INSERT INTO `tb_role` (`id`, `role_name`, `isdeleted`) VALUES
 -- Table structure for table `tb_send_through`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_send_through` (
+CREATE TABLE `tb_send_through` (
   `id` int(11) NOT NULL,
   `through_tech` varchar(150) NOT NULL,
   `isdeleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_send_through`
+--
+
+INSERT INTO `tb_send_through` (`id`, `through_tech`, `isdeleted`) VALUES
+(1, 'WhatsApp', 0),
+(2, 'Email', 0);
 
 -- --------------------------------------------------------
 
@@ -620,12 +680,22 @@ CREATE TABLE IF NOT EXISTS `tb_send_through` (
 -- Table structure for table `tb_send_to`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_send_to` (
+CREATE TABLE `tb_send_to` (
   `id` int(11) NOT NULL,
   `receiver_name` varchar(300) NOT NULL,
+  `receiver_mobile` varchar(11) NOT NULL,
+  `receiver_Email` varchar(40) NOT NULL,
   `send_throughID` int(11) NOT NULL,
   `isdeleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_send_to`
+--
+
+INSERT INTO `tb_send_to` (`id`, `receiver_name`, `receiver_mobile`, `receiver_Email`, `send_throughID`, `isdeleted`) VALUES
+(1, 'Shams Eldin', '01001234567', 'shams@gmail.com', 1, 0),
+(9, 'vbn', 'dcfvbn', 'dfghj', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -633,8 +703,9 @@ CREATE TABLE IF NOT EXISTS `tb_send_to` (
 -- Table structure for table `tb_users`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_users` (
+CREATE TABLE `tb_users` (
   `id` int(11) NOT NULL,
+  `rand_number` int(11) NOT NULL,
   `usertypeID` int(11) NOT NULL,
   `isdeleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -643,8 +714,8 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
 -- Dumping data for table `tb_users`
 --
 
-INSERT INTO `tb_users` (`id`, `usertypeID`, `isdeleted`) VALUES
-(1, 5, 0);
+INSERT INTO `tb_users` (`id`, `rand_number`, `usertypeID`, `isdeleted`) VALUES
+(1, 2937, 5, 0);
 
 -- --------------------------------------------------------
 
@@ -652,7 +723,7 @@ INSERT INTO `tb_users` (`id`, `usertypeID`, `isdeleted`) VALUES
 -- Table structure for table `tb_usertype`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_usertype` (
+CREATE TABLE `tb_usertype` (
   `id` int(11) NOT NULL,
   `usertype_name` varchar(300) NOT NULL,
   `parentID` int(11) DEFAULT '0',
@@ -676,7 +747,7 @@ INSERT INTO `tb_usertype` (`id`, `usertype_name`, `parentID`, `isdeleted`) VALUE
 -- Table structure for table `tb_user_log`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_user_log` (
+CREATE TABLE `tb_user_log` (
   `id` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `eventtypeID` int(11) NOT NULL,
@@ -747,7 +818,8 @@ ALTER TABLE `tb_address`
 -- Indexes for table `tb_donation_reason`
 --
 ALTER TABLE `tb_donation_reason`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sendtoID` (`sendtoID`);
 
 --
 -- Indexes for table `tb_event_type`
@@ -816,7 +888,8 @@ ALTER TABLE `tb_option_type`
 ALTER TABLE `tb_option_user_values`
   ADD PRIMARY KEY (`id`),
   ADD KEY `optionUserID` (`optionUserID`),
-  ADD KEY `userID` (`userID`);
+  ADD KEY `userID` (`userID`),
+  ADD KEY `userID_2` (`userID`);
 
 --
 -- Indexes for table `tb_pages`
@@ -874,11 +947,7 @@ ALTER TABLE `tb_project_image`
 -- Indexes for table `tb_request_donation`
 --
 ALTER TABLE `tb_request_donation`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `donationReasonID` (`donationReasonID`),
-  ADD KEY `paymentMethodID` (`paymentMethodID`),
-  ADD KEY `paymentMethodID_2` (`paymentMethodID`),
-  ADD KEY `donationReasonID_2` (`donationReasonID`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tb_role`
@@ -927,25 +996,203 @@ ALTER TABLE `tb_user_log`
 --
 
 --
+-- AUTO_INCREMENT for table `rtb_option_payment_method`
+--
+ALTER TABLE `rtb_option_payment_method`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `rtb_option_usertype`
+--
+ALTER TABLE `rtb_option_usertype`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `rtb_project_img`
+--
+ALTER TABLE `rtb_project_img`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rtb_usertype_page`
+--
+ALTER TABLE `rtb_usertype_page`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `rtb_user_phone`
 --
 ALTER TABLE `rtb_user_phone`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rtb_user_project`
+--
+ALTER TABLE `rtb_user_project`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_address`
+--
+ALTER TABLE `tb_address`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+
+--
+-- AUTO_INCREMENT for table `tb_donation_reason`
+--
+ALTER TABLE `tb_donation_reason`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tb_event_type`
+--
+ALTER TABLE `tb_event_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tb_gender`
+--
+ALTER TABLE `tb_gender`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tb_html`
+--
+ALTER TABLE `tb_html`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_logins`
+--
+ALTER TABLE `tb_logins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_nationality`
+--
+ALTER TABLE `tb_nationality`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_options_payments`
+--
+ALTER TABLE `tb_options_payments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tb_options_usertypes`
+--
+ALTER TABLE `tb_options_usertypes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `tb_option_payment_values`
+--
+ALTER TABLE `tb_option_payment_values`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `tb_option_type`
 --
 ALTER TABLE `tb_option_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tb_option_user_values`
+--
+ALTER TABLE `tb_option_user_values`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tb_pages`
+--
+ALTER TABLE `tb_pages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `tb_page_icon`
+--
+ALTER TABLE `tb_page_icon`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_payment_method`
+--
+ALTER TABLE `tb_payment_method`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tb_phone_numbers`
+--
+ALTER TABLE `tb_phone_numbers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `tb_profile_photo`
 --
 ALTER TABLE `tb_profile_photo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_project`
+--
+ALTER TABLE `tb_project`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_project_category`
+--
+ALTER TABLE `tb_project_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tb_project_image`
+--
+ALTER TABLE `tb_project_image`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tb_request_donation`
+--
+ALTER TABLE `tb_request_donation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `tb_role`
+--
+ALTER TABLE `tb_role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `tb_send_through`
 --
 ALTER TABLE `tb_send_through`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tb_send_to`
+--
+ALTER TABLE `tb_send_to`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tb_users`
+--
+ALTER TABLE `tb_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_usertype`
+--
+ALTER TABLE `tb_usertype`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tb_user_log`
+--
+ALTER TABLE `tb_user_log`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- Constraints for dumped tables
 --
@@ -958,11 +1205,18 @@ ALTER TABLE `rtb_option_payment_method`
   ADD CONSTRAINT `rtb_option_payment_method_ibfk_2` FOREIGN KEY (`payment_methodID`) REFERENCES `tb_payment_method` (`id`);
 
 --
+-- Constraints for table `rtb_option_usertype`
+--
+ALTER TABLE `rtb_option_usertype`
+  ADD CONSTRAINT `rtb_option_usertype_ibfk_1` FOREIGN KEY (`usertypeID`) REFERENCES `tb_usertype` (`id`),
+  ADD CONSTRAINT `rtb_option_usertype_ibfk_2` FOREIGN KEY (`optionID`) REFERENCES `tb_options_usertypes` (`id`);
+
+--
 -- Constraints for table `rtb_project_img`
 --
 ALTER TABLE `rtb_project_img`
-  ADD CONSTRAINT `rtb_project_img_ibfk_1` FOREIGN KEY (`imgID`) REFERENCES `tb_project_image` (`id`),
-  ADD CONSTRAINT `rtb_project_img_ibfk_2` FOREIGN KEY (`projectID`) REFERENCES `tb_project` (`id`);
+  ADD CONSTRAINT `rtb_project_img_ibfk_1` FOREIGN KEY (`projectID`) REFERENCES `tb_project` (`id`),
+  ADD CONSTRAINT `rtb_project_img_ibfk_2` FOREIGN KEY (`imgID`) REFERENCES `tb_project_image` (`id`);
 
 --
 -- Constraints for table `rtb_usertype_page`
@@ -1015,8 +1269,8 @@ ALTER TABLE `tb_options_usertypes`
 --
 ALTER TABLE `tb_option_payment_values`
   ADD CONSTRAINT `tb_option_payment_values_ibfk_1` FOREIGN KEY (`optionPaymentID`) REFERENCES `rtb_option_payment_method` (`id`),
-  ADD CONSTRAINT `tb_option_payment_values_ibfk_2` FOREIGN KEY (`paymentID`) REFERENCES `tb_payment_method` (`id`),
-  ADD CONSTRAINT `tb_option_payment_values_ibfk_3` FOREIGN KEY (`userID`) REFERENCES `tb_users` (`id`);
+  ADD CONSTRAINT `tb_option_payment_values_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `tb_users` (`id`),
+  ADD CONSTRAINT `tb_option_payment_values_ibfk_3` FOREIGN KEY (`paymentID`) REFERENCES `tb_payment_method` (`id`);
 
 --
 -- Constraints for table `tb_option_user_values`
@@ -1061,6 +1315,7 @@ ALTER TABLE `tb_users`
 ALTER TABLE `tb_user_log`
   ADD CONSTRAINT `tb_user_log_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `tb_users` (`id`),
   ADD CONSTRAINT `tb_user_log_ibfk_2` FOREIGN KEY (`eventtypeID`) REFERENCES `tb_event_type` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

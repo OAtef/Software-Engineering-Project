@@ -1,6 +1,5 @@
 <?php
 
-require_once ('../../Model/usertypes.php');
 require_once ('../../Model/users.php');
 require_once ('../../Model/uservalues.php');
 require_once ('../../Model/useroptions.php');
@@ -14,7 +13,6 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
   $function2call = $_POST['function2call'];
   $uv = new User_Values(NULL);
   $user = new Users(NULL);
-  $ut = new usertypes(NULL);
   $TypeOptions = new user_options(NULL);
   $usLinks = new UserLinks();
 
@@ -30,36 +28,6 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
         break;
 
       case 'delete_user' :
-        break;
-
-      case 'insert_subUserType' :
-        $values = $_POST['arr'];
-        $parentID = $_POST['parentID'];
-        $ut->insert($parentID, $values);
-        break;
-
-      case 'List_usertypes' :
-        $parentID = $_POST['parentID'];
-        if ($_POST['parentID'] == 'all') {
-          $x = $ut->list_usertypesTest($parentID);
-          echo json_encode($x);
-        }
-        else {
-          $x = $ut->list_usertypes($parentID);
-          echo json_encode($x);
-        }
-        break;
-
-      case 'update_userType' :
-        $values = $_POST['arr'];
-        $ID = $_POST['typeID'];
-        $ut->update($ID, $values);
-        break;
-
-      case 'delete_Type' :
-        $TypeID = $_POST['typeID'];
-        $ut->delete($TypeID);
-        $TypeOptions->delete($TypeID);
         break;
 
       case 'insert_Option' :

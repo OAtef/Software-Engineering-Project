@@ -39,25 +39,7 @@ if(isset($_POST['function2call']) && !empty($_POST['function2call'])) {
         break;
 
       case 'login' :
-        break;
-
-      case 'insert_subUserType' :
-        $values = $_POST['arr'];
-        $parentID = $_POST['parentID'];
-        $ut->insert($parentID, $values);
-        break;
-
-      case 'update_userType' :
-        $values = $_POST['arr'];
-        $ID = $_POST['typeID'];
-        $ut->update($ID, $values);
-        break;
-
-      case 'delete_Type' :
-        $TypeID = $_POST['typeID'];
-        $ut->delete($TypeID);
-        $TypeOptions->delete($TypeID);
-        break;
+        break
 
         case 'insert_Option' :
         $OptionName = $_POST['OptionName'];

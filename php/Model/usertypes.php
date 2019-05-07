@@ -37,74 +37,73 @@ class usertypes
       // }
 		}
   }
-
-  public static function list_usertypes($parentID){
-
-    $db = database::getInstance();
-
-    $result = array();
-    $mainTypeID = array();
-    $mainTypeName = array();
-    $data = array();
-
-    if($parentID != NULL){
-
-      if(!is_numeric($parentID) && $parentID == "all"){
-
-        $data["isdeleted"] = 0;
-
-        $rows = database::select("tb_usertype", $data, null);
-
-        $i = 0;
-        $j = 0;
-
-        while($i < sizeof($rows)){
-
-          $multiresult = array();
-
-          $UserTypeName = $rows[$i]["usertype_name"];
-
-          $multiresult[0] = $UserTypeName;
-
-          if ($rows[$i]["parentID"] == 0) {
-
-            $mainTypeID[$j] = $rows[$i]["id"];
-            $mainTypeName[$j] = $rows[$i]["usertype_name"];
-
-            $multiresult[1] = 'Main Type';
-            $j++;
-          }else {
-            for ($x=0; $x < sizeof($mainTypeID); $x++) {
-
-              if ($mainTypeID[$x] == $rows[$i]["parentID"]) {
-
-                $multiresult[1] = $mainTypeName[$x];
-              }
-            }
-          }
-          $result[$rows[$i]["id"]] = $multiresult;
-          $i++;
-        }
-        return $result;
-      }
-      else if(is_numeric($parentID)){
-
-        $data["parentID"] = $parentID;
-        $data["isdeleted"] = 0;
-
-        $rows = database::select("tb_usertype", $data, null);
-
-        $i = 0;
-        while($i < sizeof($rows)){
-
-          $result[$rows[$i]["id"]] = $rows[$i]["usertype_name"];
-          $i++;
-        }
-
-        return $result;
-      }
-    }
-  }
+  // public static function list_usertypes($parentID){
+  //
+  //   $db = database::getInstance();
+  //
+  //   $result = array();
+  //   $mainTypeID = array();
+  //   $mainTypeName = array();
+  //   $data = array();
+  //
+  //   if($parentID != NULL){
+  //
+  //     if(!is_numeric($parentID) && $parentID == "all"){
+  //
+  //       $data["isdeleted"] = 0;
+  //
+  //       $rows = database::select("tb_usertype", $data, null);
+  //
+  //       $i = 0;
+  //       $j = 0;
+  //
+  //       while($i < sizeof($rows)){
+  //
+  //         $multiresult = array();
+  //
+  //         $UserTypeName = $rows[$i]["usertype_name"];
+  //
+  //         $multiresult[0] = $UserTypeName;
+  //
+  //         if ($rows[$i]["parentID"] == 0) {
+  //
+  //           $mainTypeID[$j] = $rows[$i]["id"];
+  //           $mainTypeName[$j] = $rows[$i]["usertype_name"];
+  //
+  //           $multiresult[1] = 'Main Type';
+  //           $j++;
+  //         }else {
+  //           for ($x=0; $x < sizeof($mainTypeID); $x++) {
+  //
+  //             if ($mainTypeID[$x] == $rows[$i]["parentID"]) {
+  //
+  //               $multiresult[1] = $mainTypeName[$x];
+  //             }
+  //           }
+  //         }
+  //         $result[$rows[$i]["id"]] = $multiresult;
+  //         $i++;
+  //       }
+  //       return $result;
+  //     }
+  //     else if(is_numeric($parentID)){
+  //
+  //       $data["parentID"] = $parentID;
+  //       $data["isdeleted"] = 0;
+  //
+  //       $rows = database::select("tb_usertype", $data, null);
+  //
+  //       $i = 0;
+  //       while($i < sizeof($rows)){
+  //
+  //         $result[$rows[$i]["id"]] = $rows[$i]["usertype_name"];
+  //         $i++;
+  //       }
+  //
+  //       return $result;
+  //     }
+  //   }
+  // }
 
   public static function list_usertypesTest($parentID){
 
@@ -145,20 +144,15 @@ class usertypes
     }
   }
 
-  public static function insert($parentID, $names){
+  public static function insert($parentID, $name){
     $db = database::getInstance();
 
-      $i = 0;
-      $newarr = self::get_values($names, "=" , "&");
-      while( $i < sizeof($newarr)){
+    $data = array();
+    $data["usertype_name"] = $name;
+    $data["parentID"] = $parentID;
+    $data["isdeleted"] = 0;
 
-        $data = array();
-        $data["usertype_name"] = $newarr[$i];
-        $data["parentID"] = $parentID[$i];
-
-        database::insert("tb_usertype", $data);
-        $i++;
-      }
+    return ($db->insert("tb_usertype", $data));
   }
 
   public function update($id, $name){

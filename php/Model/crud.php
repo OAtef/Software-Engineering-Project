@@ -5,3 +5,4 @@ interface crud {
     public function _update(array $data, array $condition);
     public function _delete(array $data);
 }
+?>

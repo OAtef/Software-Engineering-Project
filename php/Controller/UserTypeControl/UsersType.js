@@ -100,6 +100,9 @@ $(document).on('click', '#addSubTypeBtn', function(e) { // insert
     },
     success: function(data) {
       console.log(data);
+      $("#allTypesTable").hide();
+      $("#allTypesTable").empty();
+      listAllTypesTable();
       $("#sucessType_div").css("display", "block");
 
     },
@@ -153,8 +156,29 @@ $(document).on('click', '.deleteTypebtn', function(e) {
   e.stopImmediatePropagation();
 
   var id = $(this).attr('id');
+  id = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
 
-  deleteType(id);
+  $.ajax({
+    url: '../Controller/UserTypeControl/Delete_Type.php',
+    data: {
+      typeID: typeID
+    },
+    type: 'POST',
+    success: function(data) {
+      $("#sucessType_div").css("display", "block");
+      $("#allTypesTable").hide();
+      $("#allTypesTable").empty();
+      listAllTypesTable();
+      $("#allTypesTable").show();
+      // notifiy done sucessfully
+    },
+    error: function(data) {
+      console.log(data);
+      $("#errorType_div").css("display", "block");
+      //$("#errormsg").html(data.responseText);
+    }
+  });
+
   return false;
 });
 
@@ -166,8 +190,40 @@ $(document).on('click', '.updateTypebtn', function(e) {
   $("#allTypesTable").hide();
 
   var id = $(this).attr('id');
+  typeID = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
 
-  updateType(id);
+  var typename = $("#typename-" + typeID).text();
+  var parentname = $("#parentname-" + typeID).text();
+
+  var formdiv;
+
+  $.ajax({
+    url: '../Controller/UserTypeControl/List_UserTypes.php',
+    data: {
+      parentID: 0,
+      TypeName: typename,
+      ParentName: parentname,
+      DisplayType: "update"
+    },
+    type: 'POST',
+    dataType: "JSON",
+    success: function(data) {
+
+      $("#update_typeForm").empty();
+      $("#allTypesTable").hide();
+      $("#update_typeForm").show();
+
+      formdiv = document.getElementById("update_typeForm");
+
+      formdiv.innerHTML += data;
+
+    },
+    error: function(data) {
+      console.log(data);
+      $("#errormsg").html(data.responseText);
+    }
+  });
+
   return false;
 });
 
@@ -236,68 +292,6 @@ function listAllTypesTable() {
     error: function(data) {
       console.log(data);
       $("#errormsg").html(data.responseText);
-    }
-  });
-}
-
-function updateType(id) {
-
-  typeID = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
-
-  var typename = $("#typename-" + typeID).text();
-  var parentname = $("#parentname-" + typeID).text();
-
-  var formdiv;
-
-  $.ajax({
-    url: '../Controller/UserTypeControl/List_UserTypes.php',
-    data: {
-      parentID: 0,
-      TypeName: typename,
-      ParentName: parentname,
-      DisplayType: "update"
-    },
-    type: 'POST',
-    dataType: "JSON",
-    success: function(data) {
-
-      $("#update_typeForm").empty();
-      $("#allTypesTable").hide();
-      $("#update_typeForm").show();
-
-      formdiv = document.getElementById("update_typeForm");
-
-      formdiv.innerHTML += data;
-
-    },
-    error: function(data) {
-      console.log(data);
-      $("#errormsg").html(data.responseText);
-    }
-  });
-}
-
-function deleteType(id) {
-  var typeID = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
-
-  $.ajax({
-    url: '../Controller/UserTypeControl/Delete_Type.php',
-    data: {
-      typeID: typeID
-    },
-    type: 'POST',
-    success: function(data) {
-      $("#sucessType_div").css("display", "block");
-      $("#allTypesTable").hide();
-      $("#allTypesTable").empty();
-      listAllTypesTable();
-      $("#allTypesTable").show();
-      // notifiy done sucessfully
-    },
-    error: function(data) {
-      console.log(data);
-      $("#errorType_div").css("display", "block");
-      //$("#errormsg").html(data.responseText);
     }
   });
 }

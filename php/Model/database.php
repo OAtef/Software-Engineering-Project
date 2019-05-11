@@ -172,7 +172,7 @@ class database {
 			return self::execute($query);
 		}
 
-		public function execute($query){
+		public static function execute($query){
 			return mysqli_query(self::$con, $query);
 		}
 

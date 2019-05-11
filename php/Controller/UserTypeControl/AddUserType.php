@@ -4,8 +4,11 @@ require_once ('../../Model/usertypes.php');
 require_once ('../../View/Users/UserTypeV.php');
 
 $ut = new usertypes(NULL);
+
 $Condition = $_POST['condition'];
-$parentID = $_POST['parentID'];
+if (isset($_POST['parentID']) && is_numeric($_POST['parentID'])) {
+  $parentID = mysqli_real_escape_string($_POST['parentID']);
+}
 
 switch ($Condition) {
   case 'show':
@@ -15,8 +18,13 @@ switch ($Condition) {
     break;
 
   case 'Add':
-    $values = $_POST['arr'];
-    $parentID = $_POST['parentID'];
+    if (isset($_POST['arr']) && !is_numeric($_POST['arr'])) {
+      $values = mysqli_real_escape_string($_POST['arr']);
+    }
+    if (isset($_POST['parentID']) && is_numeric($_POST['parentID'])) {
+      $parentID = mysqli_real_escape_string($_POST['parentID']);
+    }
+
     echo json_encode($ut->insert($parentID, $values));
     break;
 }

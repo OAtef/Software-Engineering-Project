@@ -971,51 +971,10 @@ if ($_SESSION['user-id'] != -1) {
                 </div>
                 <!-- Card Body -->
                 <div id="AddOptionSettings" class="card-body" style="display: none">
-                  <!-- <input type='Button' class='btn btn-primary' id="MainTypeFormBtn" name='OptionFormBtn' value="Main Type" /> -->
 
-                  <div id="sucessOption_div" class='alert alert-success' style="display: none"> Record was updated. </div>
-                  <div id="errorOption_div" class='alert alert-danger' style="display: none"> Something Wrong Happend. </div>
-
-                  <form id="insertOptionForm" method="post">
-                    <div class="table-responsive">
-                      <table class='table table-hover table-bordered'>
-                        <tbody>
-                          <tr>
-                            <td> Option Name: </td>
-                            <td>
-                              <input type="text" id="OptionName" name="OptionName" class='form=control' />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td> Option Type: </td>
-                            <td>
-                              <input type="text" id="OptionTypeName" name="OptionType" class='form=control' readonly="readonly" />
-                              <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Type
-                              </button>
-                              <div id="dropdown-OptionType" class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" x-placement="top-start" style="position: absolute; transform: translate3d(0px, -105px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                <a class='dropdown-item'>Text</a>
-                                <a class='dropdown-item'>Email</a>
-                                <a class='dropdown-item'>Password</a>
-                                <a class='dropdown-item'>Integer</a>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td>
-                              <input id='addOptionBtn' type='submit' value='Add Option' class='btn btn-primary' name='addOptionBtn' />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </form>
                 </div>
 
                 <div id="allOptionsTable">
-                  <div id="sucessOptionTable_div" class='alert alert-success' style="display: none"> Record was updated. </div>
-                  <div id="errorOptionTable_div" class='alert alert-danger' style="display: none"> Something Wrong Happend. </div>
 
                 </div>
 
@@ -1294,8 +1253,8 @@ if ($_SESSION['user-id'] != -1) {
     <!-- UserType Controller -->
     <script type="text/javascript" src="../Controller/UserTypeControl/UsersType.js"></script>
 
-    <!-- User Option Controller -->
-    <script type="text/javascript" src="../Controller/UserOptionControl/UsersOption.js"></script>
+    <!-- Type Option Controller -->
+    <script type="text/javascript" src="../Controller/TypeOptionControl/UsersOption.js"></script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="../../vendor/jquery/jquery.min.js"></script>

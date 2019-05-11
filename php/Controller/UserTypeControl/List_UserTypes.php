@@ -5,10 +5,10 @@ require_once ('../../View/Users/UserTypeV.php');
 
 $ut = new usertypes(NULL);
 
-$parentID = $_POST['parentID'];
+if (isset($_POST['parentID']) && is_numeric($_POST['parentID'])) {
+  $parentID = mysqli_real_escape_string($_POST['parentID']);
+}
 $Display = $_POST["DisplayType"];
-$typename = NULL;
-$parentname = NULL;
 
 switch ($Display) {
 
@@ -25,8 +25,12 @@ switch ($Display) {
     break;
 
   case 'update':
-    $typename = $_POST["TypeName"];
-    $parentname = $_POST["ParentName"];
+    if (isset($_POST["TypeName"]) && !is_numeric($_POST["TypeName"])) {
+      $typename = mysqli_real_escape_string($_POST["TypeName"]);
+    }
+    if (isset($_POST["ParentName"]) && !is_numeric($_POST["ParentName"])) {
+      $parentname = mysqli_real_escape_string($_POST["ParentName"]);
+    }
 
     $x = $ut->list_usertypesTest($parentID);
     $updateForm = UserTypeV::showUpdate($typename, $parentname, $x);

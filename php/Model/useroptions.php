@@ -8,17 +8,16 @@ class user_options
 
   public $id;
   public $option_name;
+  public $typeID;
+  public $ref_table;
   public $option_type;
-
-  public $headers_rows = array();
 
   function __construct($id) {
 
+    $db = database::getInstance();
+    $data = array();
+
     if($id != NULL){
-
-      $db = database::getInstance();
-
-      $data = array();
 
       $data["id"] = $id;
       $data['isdeleted'] = 0;
@@ -28,87 +27,42 @@ class user_options
       $this->id = $id;
       $this->option_name = $row[0]["option_name"];
       $this->option_type = $row[0]["option_type"];
+      $this->typeID = $row[0]["typeID"];
+      $this->ref_table = $row[0]["ref_table"];
 
     }
   }
 
-  public function select_allOptions($parentID){
+  public function list_options(){
 
+    $db = database::getInstance();
     $data = array();
+    $result = array();
 
-    if($parentID != NULL){
+    $data["isdeleted"] = 0;
 
-      $db = database::getInstance();
+    $rows = database::select("tb_options_usertypes", $data, null);
 
-      if (!is_numeric($parentID) && $parentID == "listAll") {
+    for ($i=0; $i < sizeof($rows); $i++) {
 
-        $data["isdeleted"] = 0;
-
-        $rows = database::select("tb_options_usertypes", $data, null);
-
-        $i = 0;
-
-        while($i < sizeof($rows)){
-
-          $multiresult = array();
-
-          $multiresult[0] = $rows[$i]["option_name"];
-          $multiresult[1] = $rows[$i]["option_type"];
-
-          $result[$rows[$i]["id"]] = $multiresult;
-          $i++;
-        }
-        return $result;
-      }
-
-      if(!is_numeric($parentID) && $parentID == "all"){
-
-        $data["isdeleted"] = 0;
-
-        $row = database::select("tb_options_usertypes", $data, null);
-
-        $i = 0;
-        while($i < sizeof($rows)){
-          $this->headers_rows[$row[$i]["option_name"]] = $row[$i]["option_type"];
-          $i++;
-        }
-      }
-      else if(is_numeric($parentID)){
-
-        //echo $parentID;
-
-        $data["usertypeID"] = $parentID;
-        $data["isdeleted"] = 0;
-
-        $optionIDs = database::select("rtb_option_usertype", $data, null);
-        //echo sizeof($optionIDs);
-
-        $i=0;
-        while($i < sizeof($optionIDs)){
-
-          $data1 = array();
-          $data1["id"] =  $optionIDs[$i]["optionID"];
-          $data1['isdeleted'] = 0;
-
-          $row = database::select("tb_options_usertypes", $data1, null);
-
-          $this->headers_rows[$row[0]["option_name"]] = $row[0]["option_type"];
-
-          $i++;
-        }
-      }
+      $result[$i] = new user_options($rows[$i]["id"]);
     }
+
+    return $result;
   }
 
-  public function insert_option($OptionName, $OptionType){
+  public function insert_option($OptionName, $OptionType, $OptionTypeID){
+
+    $db = database::getInstance();
 
     if (!empty($OptionName) && !empty($OptionType)) {
 
       $data = array();
       $data["option_name"] = $OptionName;
       $data["option_type"] = $OptionType;
+      $data["typeID"] = $OptionTypeID;
 
-      database::insert("tb_options_usertypes", $data);
+      return ($db->insert("tb_options_usertypes", $data));
     }else {
       echo "Empty Fields";
     }
@@ -118,16 +72,17 @@ class user_options
 
     $db = database::getInstance();
 
+    $data1 = array();
+    $data1["optionID"] = $id;
+    database::delete("rtb_option_usertype", $data1);
+
     $data = array();
     $data["id"] = $id;
     database::delete("tb_options_usertypes", $data);
 
-    $data1 = array();
-    $data1["optionID"] = $id;
-    database::delete("rtb_option_usertype", $data1);
   }
 
-  public function update_option($id, $name, $type){
+  public function update_option($id, $name, $type, $typeID){
 
     $db = database::getInstance();
 
@@ -137,8 +92,9 @@ class user_options
     $data = array();
     $data["option_name"] = $name;
     $data["option_type"] = $type;
+    $data["typeID"] = $typeID;
 
-    database::update("tb_options_usertypes", $data, $condition);
+    $db->update("tb_options_usertypes", $data, $condition);
 
   }
 }

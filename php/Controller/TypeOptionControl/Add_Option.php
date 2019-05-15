@@ -3,6 +3,7 @@
 require_once ('../../Model/useroptions.php');
 require_once ('../../View/Users/TypeOptionV.php');
 
+$db = database::getInstance();
 $TypeOptions = new user_options(NULL);
 $Condition = $_POST['condition'];
 
@@ -13,15 +14,14 @@ switch ($Condition) {
     break;
 
   case 'add':
-
-    if (isset($_POST['OptionName']) $$ !is_numeric($_POST['OptionName'])) {
-      $OptionName = mysqli_real_escape_string($_POST['OptionName']);
+    if (isset($_POST['OptionName']) && !is_numeric($_POST['OptionName'])) {
+      $OptionName = mysqli_real_escape_string($db::$con, $_POST['OptionName']);
     }
-    if (isset($_POST['OptionType']) $$ !is_numeric($_POST['OptionType'])) {
-      $OptionType = mysqli_real_escape_string($_POST['OptionType']);
+    if (isset($_POST['OptionType']) && !is_numeric($_POST['OptionType'])) {
+      $OptionType = mysqli_real_escape_string($db::$con, $_POST['OptionType']);
     }
-    if (isset($_POST['OptionTypeID']) $$ is_numeric($_POST['OptionTypeID'])) {
-      $OptionTypeID = mysqli_real_escape_string($_POST['OptionTypeID']);
+    if (isset($_POST['OptionTypeID']) && is_numeric($_POST['OptionTypeID'])) {
+      $OptionTypeID = mysqli_real_escape_string($db::$con, $_POST['OptionTypeID']);
     }
 
     echo json_encode($TypeOptions->insert_option($OptionName, $OptionType, $OptionTypeID));

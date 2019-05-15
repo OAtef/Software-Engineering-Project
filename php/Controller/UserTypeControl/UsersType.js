@@ -156,7 +156,7 @@ $(document).on('click', '.deleteTypebtn', function(e) {
   e.stopImmediatePropagation();
 
   var id = $(this).attr('id');
-  id = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
+  typeID = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
 
   $.ajax({
     url: '../Controller/UserTypeControl/Delete_Type.php',

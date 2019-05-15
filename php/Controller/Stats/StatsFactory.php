@@ -19,10 +19,20 @@ class statsfactory
   public function changeStatType($StatName)
   {
     switch ($StatName) {
-      case 'GenderDonation':
-        return new genderdonation();
+      case 'PaymentMethodDonation':
+        return new paymentmethoddonation();
+        break;
+
+      case 'ProjectCategoryDonation':
+        return new projectcategorydonation();
+        break;
+
+      case 'DonationCard':
+        return new cards("Donation");
         break;
     }
+
+
   }
 }
 

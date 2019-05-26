@@ -1,0 +1,123 @@
+<div class="card-header py-3">
+  <h6 class="m-0 font-weight-bold text-primary"> Dashboard ~ Statistics </h6>
+</div>
+
+    <div class="card-body">
+
+      <div class="container-fluid">
+
+        <div id="StatCards"></div>
+
+        <div class="row">
+
+          <div class="col-xl-12">
+            <div class="card shadow mb-4">
+
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <div class="dropdown no-arrow">
+                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">Graphs:</div>
+                    <a id="PaymentMethodDonationsStat" class="dropdown-item" href="#">Donations per payment method</a>
+                    <a id="ProjectCategoryStat" class="dropdown-item" href="#">Donations for each project category</a>
+                  </div>
+                </div>
+              </div>
+
+              <div id="StatsDiv" class="card-body">
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+<script>
+
+  $.ajax({
+  url: '../controller/Stats/StatsC.php',
+  data: {
+    stat: "DonationCard"
+  },
+  type: 'POST',
+  dataType: "JSON",
+  success: function(data) {
+
+    var div = document.getElementById("StatCards");
+
+    var card = "<div class='col-xl-3 col-md-6 mb-4'><div class='card border-left-primary shadow h-100 py-2'><div class='card-body'>";
+    card += "<div class='row no-gutters align-items-center'><div class='col mr-2'>";
+    card += "<div class='text-xs font-weight-bold text-primary text-uppercase mb-1'>Total Donations Requested Today</div>";
+    card += "<div class='h5 mb-0 font-weight-bold text-gray-800'>"+data+"</div>";
+    card += "</div><div class='col-auto'><i class='fas fa-dollar-sign fa-2x text-gray-300'></i></div></div></div></div></div>";
+
+    div.innerHTML += card;
+  },
+  error: function(data) {
+    console.log(data.responseText);
+  }
+});
+
+google.charts.load('current', {
+  'packages': ['corechart']
+}).then(function() {
+
+  $("#PaymentMethodDonationsStat").click(function() {
+
+    PieStat("PaymentMethodDonation");
+
+  })
+
+  $("#ProjectCategoryStat").click(function() {
+
+    PieStat("ProjectCategoryDonation");
+
+  })
+})
+
+function PieStat(statType) {
+
+  var chartdata = new google.visualization.DataTable();
+
+  chartdata.addColumn('string', 'x');
+  chartdata.addColumn('number', 'y');
+
+  $.ajax({
+    url: "../controller/Stats/StatsC.php",
+    data: {
+      stat: statType
+    },
+    type: "POST",
+    dataType: "JSON",
+    success: function(data) {
+
+      console.log(data);
+
+      for (var key in data) {
+
+        chartdata.addRows([
+          [key, data[key]]
+        ]);
+
+      }
+
+      var options = {
+        'title': statType,
+        'width': 908,
+        'height': 400
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('StatsDiv'));
+      chart.draw(chartdata, options);
+    },
+    error: function(data) {
+      console.log(data.responseText);
+    }
+  });
+}
+
+</script>

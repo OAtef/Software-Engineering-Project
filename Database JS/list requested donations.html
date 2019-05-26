@@ -1,0 +1,205 @@
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary"> Paid Donations </h6>
+</div>
+
+<div class='card-body'>
+
+    <div class="dropdown">
+        <button style=" display: inline-block;width: 120px;" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Choose <span class="caret"></span></button>
+        <ul class="dropdown-menu" id="dropdown-project-categories"></ul>
+    </div>
+
+    <div style="float:right;" id="got_select">
+        <input type="text" id="donated_taken" name="donated_taken" style="width: 120px" disabled>
+    </div>
+    <br>
+    <hr>
+
+
+    <div id='table_block'></div>
+</div>
+
+
+<script>
+
+    var categoryID;
+    var today_value;
+    var value_id;
+    var table;
+    var table_block_div = document.getElementById("table_block");
+
+
+    $.ajax({
+        url: '../controller/project/get_project_categories.php',
+        type: 'POST',
+        dataType: "JSON",
+        success: function(data) {
+            console.log(data);
+            for (var key in data) {
+                $('<li><a style="width: 100%;" class="dropdown7" id="proCat-' + key + '">' + data[key] + '</a></li>').appendTo("#dropdown-project-categories");
+            }
+        },
+        error: function(data){
+            console.log(data);
+        }
+    });
+
+    $(document).on('click','.dropdown7',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $('#table_block').empty();
+
+        var id = $(this).attr('id');
+        categoryID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+        $.ajax({
+            url: '../controller/donation/day_donation.php',
+            data: { categoryID: categoryID},
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+
+                value_id = data[0];
+                today_value = data[1];
+
+                $('#donated_taken').val(today_value);
+
+                console.log(">>" + data);
+
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+
+        $.ajax({
+            url: '../controller/donation/get_donation_table_data.php',
+            data: { categoryID: categoryID},
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+
+                table = " <table id='req_Table'class='table table-striped table-hover table-bordered'> <thead> <tr> ";
+                table += "<th> donation reason </th>";
+                table += "<th> payment method </th>";
+                table += "<th> donation value </th>";
+                table += "<th> received ? </th>";
+                table += "</tr> </thead> <tbody>";
+
+                console.log(data);
+
+                if(data.length != 0){
+
+                    var i = 0;
+                    while(i < data.length){
+
+                        var row = data[i];
+                        var j = 1;
+
+                        table += "<tr id='row-"+ row[0] + "'>";
+                        while(j < row.length){
+                            table += ("<td>" + row[j] + "</td>");
+                            j++;
+                        }
+
+                        table += "<td><button class='revBtn btn btn-primary'  id='rec-"+ row[0] + "' value='" + row[3] + "'  >Recieved</button></td></tr>";
+                        i++;
+                    }
+
+                    table += '</body></table>';
+
+
+                    table_block_div.innerHTML += table;
+                    $('#table_block').show();
+                    $('table.table').dataTable();
+                }
+                else{
+                    table += '<tr > <td colspan="5"> no data exist </td> <tr>';
+                    table_block_div.innerHTML += table;
+                    $('#table_block').show();
+                }
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+
+        return false;
+
+    });
+
+    $(document).on('click','.revBtn',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var id = $(this).attr('id');
+        var btnID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+        var value = $(this).val();
+
+        var donated_taken_value = $('#donated_taken').val();
+
+
+        var calc = parseInt(donated_taken_value, 10) + parseInt(value, 10);
+
+
+        document.getElementById('donated_taken').value = calc;
+
+
+        $.ajax({
+            url: '../controller/donation/remove_request.php',
+            data: { requestID: btnID, value: calc, categoryID: categoryID},
+            type: 'POST',
+            success: function(data){
+
+                if(data['error']){
+                    Swal({type: 'error', title: data['error'],
+                        toast: true, position: 'top-right',
+                        showConfirmButton: false, timer: 3000 });
+                }else{
+                    Swal({type: 'success', title: data['success'],
+                        toast: true, position: 'top-right',
+                        showConfirmButton: false, timer: 3000 });
+                }
+
+                $('#row-'+btnID).remove();
+
+                var rowCount = document.getElementById('req_Table').rows.length;
+
+                if(rowCount == 1){
+
+                    $('#table_block').hide();
+                    $('#table_block').empty();
+
+                    table = " <table id='req_Table'class='table table-striped table-hover table-bordered'> <thead> <tr> ";
+                    table += "<th> donation reason </th>";
+                    table += "<th> payment method </th>";
+                    table += "<th> donation value </th>";
+                    table += "<th> received ? </th>";
+                    table += "</tr> </thead> <tbody>";
+                    table += '<tr > <td colspan="5"> no data exist </td> <tr>';
+
+                    table_block_div.innerHTML = table;
+                    $('#table_block').show();
+
+                }
+
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+
+
+
+
+        return false;
+
+    });
+
+
+
+</script>

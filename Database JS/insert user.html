@@ -1,0 +1,220 @@
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> Insert User </h6>
+    </div>
+
+    <div class='card-body'>
+        <div class="row">        
+            <div id='dropbox_block1' style="display: inline; margin-left: 20px; margin-bottom: 15px"> </div>
+            <div id='dropbox_block2' style="display: inline; margin-left: 50px; margin-bottom: 15px"> </div>
+        </div>
+        
+        <div id='insert_block'></div>
+    </div>
+
+    <script id='dynamicScript'>
+
+    var parentID;
+    var choosen_usertype;
+    var len;
+
+    $.ajax({
+        url: '../controller/user/list_usertypes.php',
+        data: { parentID: 0 },
+        type: 'POST',
+        dataType: "JSON",
+        success: function(data) {
+            console.log(data);
+
+            var dropdown = "<div class='dropdown'>";
+            dropdown += "<button style=' display: inline-block;width: 120px;' class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'> Choose <span class='caret'></span></button>";
+            dropdown += "<ul class='dropdown-menu'>";
+
+            for (var key in data) {
+                dropdown += '<li><a style="width: 100%;" class="dropdown1" id="link-' + key + '">' + data[key] + '</a></li>';
+            }
+
+            $(dropdown).appendTo("#dropbox_block1");
+
+        },
+        error: function(data){
+            console.log(data);
+        }
+    });
+
+    $(document).on('click','.dropdown1',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var id = $(this).attr('id');
+        parentID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+        $.ajax({
+            url: '../controller/user/list_usertypes.php',
+            data: { parentID: parentID },
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+
+                if(data != null){
+
+                    $("#dropbox_block2").hide();
+                    $("#dropbox_block2").empty();
+
+                    var dropdown = "<div class='dropdown'>";
+                    dropdown += "<button style=' display: inline-block;width: 120px;' class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'> Choose <span class='caret'></span></button>";
+                    dropdown += "<ul class='dropdown-menu'>";
+
+                    for (var key in data) {
+                        dropdown += '<li><a style="width: 100%;" class="dropdown2" id="link-' + key + '">' + data[key] + '</a></li>';
+                    }
+
+                    $(dropdown).appendTo("#dropbox_block2");
+
+
+                    $('#dropbox_block2').show();
+                }
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+        return false;
+    });
+
+    $(document).on('click','.dropdown2',function(e){
+        
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var id = $(this).attr('id');
+        choosen_usertype = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+        $('#insert_block').hide();
+        $('#insert_block').empty();
+        
+        var insertdiv = document.getElementById("insert_block");
+
+        $.ajax({
+            url: 'classes/user_insert_form.php',
+            data: {parentID: parentID},
+            type: 'POST',
+            dataType: "JSON",
+            success: function(data) {
+                len = data[0];
+                insertdiv.innerHTML+= data[1];
+                $('#insert_block').show();
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+    });
+
+    $(document).on('click','#insertMember',function(e){
+        $("#insertForm").on('submit', (function(e) {
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            var data = new FormData(this);
+
+            var x = 1;
+            var z = 0;
+            while(z < len){
+                var id = "in-"+x;
+                var value = document.getElementById(id).value;
+                data.append('arr[]', value);
+                z++;
+                x++;
+            }
+
+            data.append('arr[]', document.getElementById("userEmail").value);
+            data.append('arr[]', document.getElementById("userPass").value);
+            data.append('arr[]', document.getElementById("phone_number").value);
+
+            data.append('usertypeID', choosen_usertype);
+
+            $.ajax({
+                url: "../controller/user/add_user.php",
+                type: "POST",
+                data: data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                dataType: 'JSON',
+                success: function(data) {
+
+                    if(data['error']){
+                        Swal({type: 'error', title: data['error'],
+                            toast: true, position: 'top-right',
+                            showConfirmButton: false, timer: 3000 });
+                    }else{
+                        Swal({type: 'success', title: data['success'],
+                            toast: true, position: 'top-right',
+                            showConfirmButton: false, timer: 3000 });
+                        document.getElementById("insertForm").reset();
+                    }
+
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+            return false;
+        }));
+    });
+
+    $(document).on('change', 'select.address1', function(e) {
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var address2id = $(this).children("option:selected").val();
+
+        $.ajax({
+            url: '../controller/user/get_address.php',
+            data: {
+                addressID: address2id
+            },
+            type: 'POST',
+            dataType: "JSON",
+            success: function(data) {
+                $(".address2").html(data);
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    });
+
+    $(document).on('change', 'select.address2', function(e) {
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var address3id = $(this).children("option:selected").val();
+
+        $.ajax({
+            url: '../controller/user/get_address.php',
+            data: {
+                addressID: address3id
+            },
+            type: 'POST',
+            dataType: "JSON",
+            success: function(data) {
+                $(".address3").html(data);
+
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    });
+
+    </script>
+
+
+</div>
+
+

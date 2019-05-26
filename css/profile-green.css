@@ -1,0 +1,148 @@
+.own-table{
+    color:black;
+    border: 1px solid #4b9244;
+}
+
+.own-table .thead-dark th{
+    color: #fff;
+    background-color: #4b9244;
+    border-color: #4b9244;
+}
+
+.own-table td, .own-table tr, .own-table th{
+    border-color: #4b9244;
+}
+
+.own-table tr:hover{
+    background-color: #58c34d;
+    color: white;
+    transition: all .4s;
+    cursor: pointer;
+}
+
+.btn-outline-secondary:hover{
+    color: #fff;
+    background-color: #4b9244;
+    border-color: #4b9244;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    color: white;
+}
+
+.btn-outline-secondary {
+    width: 150px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #2e3035; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background-color: #4b9244; 
+    border: 1px solid #2e3035;
+}
+
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #ffffff; 
+}
+
+@media (max-width: 600px) {
+    .btn-outline-secondary {
+        width: 80px;
+    }
+}
+
+.form-name{
+    color: #4b9244;
+}
+
+.form-control:focus {
+    border-color: #57a847;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(87, 168, 71, 0.61);
+}
+
+.work-lbl{
+    color: #57a847;
+}
+
+.dashboard-counts{
+    background-color: #e3ffe0;
+    color:#2e3035;
+}
+
+.dashboard-counts .count-title i{
+    color:#4b9244;
+}
+
+.reservation-section:hover{
+    border-bottom-color: #4b9244;
+}
+
+.reservation-section-active, .reservation-section-active:hover{
+    border-bottom-color: #4b9244;
+}
+
+.card{
+    border-color: #4b9244;
+}
+
+#card-header{
+    background-color: #4b9244;
+}
+
+.info-label{
+    color: #4b9244;
+}
+
+table tbody .selected {
+    background-color: #58c34d;
+}
+
+.dashboard-counts {
+    top: -9px;
+}
+
+.spinner{
+    background-color: #4b9244;
+}
+
+.section-footer input:checked + .slider {
+    background-color: #4b9244;
+}
+
+.input-div .section-footer{
+    border-top-color: 1px solid #4b9244;
+}
+
+.input-div{
+    border-left: 8px solid #4b9244;
+}
+
+.input-bar ul li:hover{
+    border-bottom-color: #4b9244;
+}
+
+.input-bar{
+    border-left: 8px solid #4b9244;
+}
+
+.ms-container .ms-selectable li.ms-hover, .ms-container .ms-selection li.ms-hover {
+    background-color: #4b9244;
+}
+
+.ms-container .ms-list.ms-focus {
+    border-color: rgba(38, 181, 20, 0.51);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(38, 181, 20, 0.51);
+}

@@ -1,0 +1,17 @@
+
+Create an API key
+
+This allows your application to authenticate to our API and send mail. You can enable or disable additional permissions on the API keys page.
+"water foundation" was successfully created and added to the next step.
+
+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
+
+Configure your application
+
+Configure your application with the settings below.
+Server 	smtp.sendgrid.net
+Ports 	
+25, 587 	(for unencrypted/TLS connections)
+465 	(for SSL connections)
+Username 	apikey
+Password 	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

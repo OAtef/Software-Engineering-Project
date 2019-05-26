@@ -1,0 +1,38 @@
+body{
+    background-color: #2d3035;
+     
+}
+.title{
+    color: white;
+    font-size: 35px;
+    font-style: oblique;
+    font-family: cursive;
+    color: #607D97;
+    
+}
+
+.btn {
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #2d3035;
+    transition-duration: 0.4s;
+    border-top-right-radius: 17px;
+    border-bottom-left-radius: 17px;
+    border: 2px solid #ffffff;
+    color: white;
+    left: 85%;
+    position: fixed;
+    
+}   
+
+.btn:hover {
+    color: #2d3035;
+    background-color: #607D8B;
+    border: 2px solid #607D8B;
+    
+}

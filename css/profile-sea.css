@@ -1,0 +1,148 @@
+.own-table{
+    color:black;
+    border: 1px solid #419392;
+}
+
+.own-table .thead-dark th{
+    color: #fff;
+    background-color: #419392;
+    border-color: #419392;
+}
+
+.own-table td, .own-table tr, .own-table th{
+    border-color: #419392;
+}
+
+.own-table tr:hover{
+    background-color: #419391ba;
+    color: white;
+    transition: all .4s;
+    cursor: pointer;
+}
+
+.btn-outline-secondary:hover{
+    color: #fff;
+    background-color: #419392;
+    border-color: #419392;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    color: white;
+}
+
+.btn-outline-secondary {
+    width: 150px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #2e3035; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background-color: #419392; 
+    border: 1px solid #2e3035;
+}
+
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #ffffff; 
+}
+
+@media (max-width: 600px) {
+    .btn-outline-secondary {
+        width: 80px;
+    }
+}
+
+.form-name{
+    color: #419392;
+}
+
+.form-control:focus {
+    border-color: #419391ba;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(140, 85, 162, 0.56);
+}
+
+.work-lbl{
+    color: #419392;
+}
+
+.dashboard-counts{
+    background-color: #5498973b;
+    color:#2e3035;
+}
+
+.dashboard-counts .count-title i{
+    color:#419392;
+}
+
+.reservation-section:hover{
+    border-bottom-color: #419392;
+}
+
+.reservation-section-active, .reservation-section-active:hover{
+    border-bottom-color: #419392;
+}
+
+.card{
+    border-color: #419392;
+}
+
+#card-header{
+    background-color: #419392;
+}
+
+.info-label{
+    color: #419391;
+}
+
+table tbody .selected {
+    background-color: #419391ba;
+}
+
+.dashboard-counts {
+    top: -4px;
+}
+
+.spinner {
+    background-color: #419392;
+}
+
+.section-footer input:checked + .slider {
+    background-color: #419392;
+}
+
+.input-div .section-footer{
+    border-top-color: 1px solid #419392;
+}
+
+.input-div{
+    border-left: 8px solid #419392;
+}
+
+.input-bar ul li:hover{
+    border-bottom-color: #419392;
+}
+
+.input-bar{
+    border-left: 8px solid #419392;
+}
+
+.ms-container .ms-selectable li.ms-hover, .ms-container .ms-selection li.ms-hover {
+    background-color: #419392;
+}
+
+.ms-container .ms-list.ms-focus {
+    border-color: rgba(65, 147, 145, 0.35);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(65, 147, 145, 0.35);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(65, 147, 145, 0.39);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(65, 147, 145, 0.36);
+}

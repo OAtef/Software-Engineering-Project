@@ -1,0 +1,397 @@
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary"> Paid Donations </h6>
+</div>
+
+<div class='card-body'>
+
+    <div class="dropdown">
+        <button style=" display: inline-block;width: 120px;" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Choose <span class="caret"></span></button>
+        <ul class="dropdown-menu" id="dropdown-project-categories"></ul>
+    </div>
+
+    <div style="float:right;" id="got_select">
+
+        <select id="dropdown-projects" style="block-size: 35px; width: 200px;"></select>
+        <input type="text" id="project_budget" name="project_budget" style="width: 100px" disabled>
+
+    </div>
+    <br>
+    <br>
+
+    <div id="error_div" class='alert alert-danger' style="display: none">  </div>
+
+    <br>
+    <a href="#" id="finishProcess" class="btn btn-primary btn-icon-split">Finish Process</a>
+    <br>
+    <br>
+
+
+    <div id='table_donation_paid_block'><br></div>
+</div>
+
+<script>
+
+    var categoryID;
+    var choosen_project;
+    var choosen_project_budget;
+    var project_taken_money = 0;
+    var last_req = 0;
+    var taken_from_req = 0;
+    var cboxArray = [];
+    var each_req_m = [];
+    var table_donation_paid_div = document.getElementById("table_donation_paid_block");
+
+    $('#got_select').hide();
+    $('#finishProcess').hide();
+
+
+    $.ajax({
+        url: '../controller/project/get_project_categories.php',
+        type: 'POST',
+        dataType: "JSON",
+        success: function(data) {
+            console.log(data);
+            for (var key in data) {
+                $('<li><a style="width: 100%;" class="dropdown8" id="proCat-' + key + '">' + data[key] + '</a></li>').appendTo("#dropdown-project-categories");
+            }
+        },
+        error: function(data){
+            console.log(data);
+        }
+    });
+
+    $(document).on('click','.dropdown8',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $('#dropdown-projects').empty();
+        $('#error_div').empty();
+        $('#table_donation_paid_block').empty();
+        $('#got_select').hide();
+
+        var id = $(this).attr('id');
+        categoryID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+        $.ajax({
+            url: '../controller/donation/select_projects.php',
+            data: { categoryID: categoryID},
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+
+                console.log(data);
+
+                if(typeof data !== 'string'){
+
+                    var i = 0;
+
+                    for (var key in data) {
+                         $('<option style="width: 100%;" class="dropdown9" id="pro-'+ key + '">' + data[key] + '</option>').appendTo("#dropdown-projects");
+                    }
+
+                    $('#got_select').show();
+                    $('#finishProcess').show();
+                    $('#error_div').hide();
+
+                }
+                else{
+
+                    document.getElementById('error_div').innerHTML += data;
+                    $('#error_div').show();
+
+                }
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+
+        $.ajax({
+            url: '../controller/donation/get_paid_donation_table.php',
+            data: { categoryID: categoryID},
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+
+                console.log(data);
+
+                var table = " <table id='paid_table' class='table table-striped table-hover table-bordered'> <thead> <tr> ";
+                table += "<th> checked </th>";
+                table += "<th> donation reason </th>";
+                table += "<th> payment method </th>";
+                table += "<th> Moneybox </th>";
+                table += "</tr> </thead> <tbody>";
+
+                if(typeof data !== 'string'){
+
+                    var i = 0;
+                    while(i < data.length){
+
+                        var row = data[i];
+                        table += "<tr id='row-" + row[0] + "'><td><input class='donorCheck' name='donor' type='checkbox' value='" + (row[0] + ',' + row[3]) + "'/></td>";
+
+                        var j = 1;
+                        while(j < row.length){
+
+                            if(j == (row.length -1)){
+
+                                table += ("<td id='mb-" + row[0] + "'>" + row[j] + "</td>");
+                            }else{
+                                table += ("<td>" + row[j] + "</td>");
+                            }
+
+                            j++;
+                        }
+                        table += "</tr>";
+                        i++;
+                    }
+
+                    table_donation_paid_div.innerHTML += table;
+                    $('#table_donation_paid_block').show();
+                    $('table.table').dataTable();
+                }else{
+
+                    //table += '<tr > <td colspan="5"> no data exist </td> <tr>';
+                    //table_donation_paid_div.innerHTML += table;
+
+                    $('#table_donation_paid_block').hide();
+                    $('#finishProcess').hide();
+                    document.getElementById('error_div').innerHTML += data;
+                    $('#error_div').show();
+
+
+                }
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+
+        return false;
+
+    });
+
+    $(document).on('click','.dropdown9',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        $('#project_budget').empty();
+
+        var id = $(this).attr('id');
+        choosen_project = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+        $.ajax({
+            url: '../controller/donation/get_project_budget.php',
+            data: { projectID: choosen_project},
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+
+                console.log(data);
+
+                if(data != null){
+                    document.getElementById('project_budget').value = data;
+                    choosen_project_budget = parseInt(data, 10);
+                }
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+
+        return false;
+
+    });
+
+    $(document).on('click','.donorCheck',function(e){
+
+        function itemExistsChecker(cboxValue) {
+
+            var array = cboxValue.split(',');
+
+            var len = cboxArray.length;
+            if (len > 0) {
+                for (var i = 0; i < len; i++) {
+                    if (cboxArray[i] == array[0]) {
+                        return true;
+                    }
+                }
+            }
+
+            cboxArray.push(array[0]);
+
+            var donation_val = parseInt(array[1], 10);
+
+
+            if(choosen_project_budget >= donation_val){
+
+                choosen_project_budget -= donation_val;
+                project_taken_money += donation_val;
+
+                each_req_m.push(donation_val);
+
+                $('#project_budget').val(choosen_project_budget);
+            }else{
+
+                taken_from_req = choosen_project_budget;
+                project_taken_money += choosen_project_budget;
+                choosen_project_budget = 0;
+
+                last_req = array[0];
+
+                each_req_m.push(taken_from_req);
+
+
+                $('#project_budget').val(choosen_project_budget);
+
+            }
+
+
+        }
+
+        $('input[type="checkbox"]').each(function() {
+
+            var pv = $('#project_budget').val();
+
+            if(pv == ""){
+
+                alert("you need to choose a project first");
+                $(this).prop("checked", false);
+                return;
+            }
+
+            var cboxValue = $(this).val();
+            var cboxChecked = localStorage.getItem(cboxValue) == 'true' ? true : false;
+
+            $(this).change(function() {
+
+                localStorage.setItem(cboxValue, $(this).is(':checked'));
+
+                if ($(this).is(':checked')) {
+
+                    if(choosen_project_budget != 0){
+                        itemExistsChecker(cboxValue);
+                    }
+                    else{
+                        alert('you cant add more money budget is full');
+                        return;
+                    }
+
+                } else {
+
+                    var array = cboxValue.split(',');
+                    var cboxValueIndex = cboxArray.indexOf(array[0]);
+
+                    if (cboxValueIndex >= 0) {
+
+                        cboxArray.splice( cboxValueIndex, 1 );
+
+
+                        if(choosen_project_budget != 0){
+
+
+                            var donation_val = parseInt(array[1], 10);
+
+                            choosen_project_budget += donation_val;
+                            each_req_m.splice(cboxValueIndex, 1);
+                            $('#project_budget').val(choosen_project_budget);
+
+                        }
+                        else{
+
+                            choosen_project_budget += taken_from_req;
+                            $('#project_budget').val(choosen_project_budget);
+                            each_req_m.splice(cboxValueIndex, 1);
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+
+
+
+
+
+
+        });
+
+    });
+
+    $(document).on('click','#finishProcess',function(e){
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        console.log(cboxArray);
+        console.log(last_req);
+        console.log(taken_from_req);
+        console.log(project_taken_money);
+        console.log(choosen_project);
+        console.log(each_req_m);
+
+        $.ajax({
+            url: '../controller/donation/insert_data_paid.php',
+            data: { selectedIDs: cboxArray, last_req: last_req, taken_from_req: taken_from_req,
+                project_taken_money: project_taken_money, project_id: choosen_project, each_req_m: each_req_m},
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data){
+
+                console.log(data);
+
+                if(data['error']){
+                    Swal({type: 'error', title: data['error'],
+                        toast: true, position: 'top-right',
+                        showConfirmButton: false, timer: 3000 });
+                }else{
+                    Swal({type: 'success', title: data['success'],
+                        toast: true, position: 'top-right',
+                        showConfirmButton: false, timer: 3000 });
+
+                    var i=0;
+                    while(i < cboxArray.length){
+                        $('#row-'+cboxArray[i]).remove();
+                        i++;
+                    }
+
+                    var rowCount = document.getElementById('paid_table').rows.length;
+
+                    if(rowCount == 1){
+
+                        $('#table_donation_paid_block').hide();
+                        $('#table_donation_paid_block').empty();
+                        $('#finishProcess').hide();
+
+                        table = " <table id='paid_table'class='table table-striped table-hover table-bordered'> <thead> <tr> ";
+                        table += "<th> checked </th>";
+                        table += "<th> donation reason </th>";
+                        table += "<th> payment method </th>";
+                        table += "<th> Moneybox </th>";
+                        table += "</tr> </thead> <tbody>";
+                        table += '<tr > <td colspan="5"> no data exist </td> <tr>';
+
+                        table_donation_paid_div.innerHTML = table;
+                        $('#table_donation_paid_block').show();
+
+                    }
+                }
+
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+
+
+        return false;
+
+    });
+
+
+</script>

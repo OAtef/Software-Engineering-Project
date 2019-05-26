@@ -1,0 +1,487 @@
+<style type="text/css">
+    body {
+        color: #566787;
+        background: #f5f5f5;
+        font-family: 'Roboto', sans-serif;
+    }
+    .table-title h2 {
+        margin: 8px 0 0;
+        font-size: 22px;
+    }
+
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+    }
+    table.table-striped tbody tr:nth-of-type(odd) {
+        background-color: #fcfcfc;
+    }
+    table.table-striped.table-hover tbody tr:hover {
+        background: #f5f5f5;
+    }
+    table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+    table.table td:last-child {
+        width: 130px;
+    }
+    table.table td a {
+        display: inline-block;
+        margin: 0 5px;
+    }
+    table.table td a.view {
+        color: #03A9F4;
+    }
+    table.table td a.edit {
+        color: #FFC107;
+    }
+    table.table td a.delete {
+        color: #E34724;
+    }
+    table.table td i {
+        font-size: 19px;
+    }
+</style>
+
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary"> Projects </h6>
+</div>
+<div class="card-body">
+
+    <div class="dropdown">
+        <button style=" display: inline-block;width: 120px;" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> Choose <span class="caret"></span></button>
+        <ul class="dropdown-menu" id="dropdown-project-table"></ul>
+        <br>
+        <br>
+    </div>
+
+    <div id="list_block"></div>
+    <div id="update_block">
+        <div id="pro-update1">
+            <label> Project Name </label>
+            <input type='text' name='proj_name' id='up-proj_name' style="width: 50%;">
+            <select id="up_pro_dropdown" style="block-size: 35px; width: 20%;"></select>
+            <hr>
+            <label> Budget </label>
+            <input type='number' name='budget' id='up-budget' style="width: 25%;">
+            <label> Current Phase </label>
+            <input type='number' name='cphases' id='up-cphases' style='width: 15%;'>
+            <label> Number of Phases </label>
+            <input type='number' name='phases' id='up-phases' style="width: 15%;">
+            <hr>
+            <textarea placeholder="notes on project .." id='up-project_notes' style="width: 100%;height: 200px;" ></textarea>
+            <hr>
+        </div>
+
+        <div id="pro-update2">
+            <label> Choose Team Leader: </label>
+            <div id="up-leaders"></div>
+            <hr>
+        </div>
+
+        <div id="pro-update3">
+            <label> Choose Team Member: </label>
+            <div id="up-members"></div>
+            <hr>
+        </div>
+
+        <div style="margin-left: 37%;">
+            <a href="#" id="previousbtn" class="previous aa">&laquo; Previous</a>
+            <a href="#" id="nextbtn" class="next aa">Next &raquo;</a>
+            <a href="#" id="up-finishbtn" class="next aa"> Done &raquo;&raquo;</a>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    var num = 1;
+    var pro_info = [];
+
+    var projectID;
+    var categoryID;
+    var list_div;
+    var pro_obj_index;
+
+    var upchecked_leaders = [];
+    var upchecked_members = [];
+
+    $( document ).ready(function() {
+
+        $("#update_block").hide();
+
+        $.ajax({
+            url: '../controller/project/get_project_categories.php',
+            type: 'POST',
+            dataType: "JSON",
+            success: function(data) {
+                console.log(data);
+                for (var key in data) {
+                    $('<li><a style="width: 100%;" class="dropdown3" id="proCat-' + key + '">' + data[key] + '</a></li>').appendTo("#dropdown-project-table");
+                    $("<option value='" + key + "'>" + data[key] + "</option>").appendTo("#up_pro_dropdown");
+                }
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+
+        $(document).on('click','.dropdown3',function(e){
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            $("#update_block").hide();
+            $("#list_block").show();
+
+            var id = $(this).attr('id');
+            categoryID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+            $("#list_block").empty();
+
+            list_div = document.getElementById("list_block");
+
+            $.ajax({
+                url: '../controller/project/list_projects.php',
+                data: {categoryID: categoryID},
+                type: 'POST',
+                dataType: "JSON",
+                success: function(data) {
+                    console.log(data);
+
+                    var table = " <table id='pro_table' class='table table-striped table-hover table-bordered'><thead><tr>";
+
+                    table += "<th> Project Name </th>";
+                    table += "<th> Budget </th>";
+                    table += "<th> inTake </th>";
+                    table += "<th> Current Phase </th>";
+                    table += "<th> Control </th>";
+
+                    table += "</tr> </thead> <tbody>";
+
+                    if(Array.isArray(data)){
+
+                        pro_info = data;
+
+                        var obj_size = data.length;
+                        var arr_size = data[0].length;
+
+                        var a =0;
+
+                        while(a < obj_size){
+                            table += "<tr id='row-" + a + "'>";
+                            var b=1;
+                            while (b < arr_size-2){
+                                var arr = data[a];
+                                table += "<td>" + (arr[b]) + "</td>";
+                                b += 1;
+                            }
+
+                            table += "<td> <a id='update-" + a + "' href='#' class='btn btn-primary btn-circle m-r-1em updateBtn'><i class='fa fa-edit'></i></a> " +
+                                "<a id='del-" + a + "' href='#' class='btn btn-danger btn-circle deleteBtn'><i class='fas fa-trash'></i></a> </td> </tr>";
+
+                            a += 1;
+
+                        }
+
+                        table += '</tbody></table>';
+                        list_div.innerHTML += table;
+                        $('#list_block').show();
+                        $('table.table').dataTable();
+                    }
+                    else{
+                        table += "<tr> <td colspan='5'>" + data + "</tr> </td> </tbody></table>";
+                    }
+
+
+
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+
+            return false;
+        });
+
+        $(document).on('click','#nextbtn',function(e){
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            $("#pro-update"+num).hide();
+            num++;
+            $("#pro-update"+num).show();
+
+            if(num == 3){
+                $("#finishbtn").show();
+                $("#up-finishbtn").show();
+                $("#nextbtn").hide();
+            }
+
+            return false;
+
+        });
+
+        $(document).on('click','#previousbtn',function(e){
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            if(num == 1 || num < 1){
+                num = 1;
+            }
+            else{
+
+                $("#pro-update"+num).hide();
+                num--;
+                $("#pro-update"+num).show();
+
+                $("#finishbtn").hide();
+                $("#up-finishbtn").hide();
+                $("#nextbtn").show();
+                return false;
+
+            }
+
+        });
+
+        $(document).on('click','.deleteBtn',function(e){
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            var id = $(this).attr('id');
+            var pro_obj_index = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+            var xx = pro_info[pro_obj_index];
+            projectID = xx[0];
+
+            $.ajax({
+                url: '../controller/project/delete_project.php',
+                data: {projectID: projectID},
+                type: 'POST',
+                success: function(data) {
+                    console.log(data);
+
+                    $('#row-'+pro_obj_index).remove();
+
+                    var totalRowCount = document.getElementById('pro_table').rows.length;
+
+                    if(totalRowCount == 1){
+                        var pro_table = document.getElementById("pro_table");
+                        pro_table.innerHTML+= '<tr> <td colspan="3"> No Data Exist </td> </tr> ';
+                    }
+
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+            return false;
+
+        });
+
+        $(document).on('click','.updateBtn',function(e){
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            var id = $(this).attr('id');
+            pro_obj_index = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+            var xx = pro_info[pro_obj_index];
+
+            $("#list_block").hide();
+            $("#update_block").show();
+            $("#pro-update2").hide();
+            $("#pro-update3").hide();
+            $("#up-finishbtn").hide();
+
+            var leaderss = document.getElementById("up-leaders");
+            var memberss = document.getElementById("up-members");
+
+
+            $.ajax({
+                url: '../controller/project/list_project_members.php',
+                data: {projectID: xx[0]},
+                type: 'POST',
+                dataType: "JSON",
+                success: function(data) {
+
+                    console.log(data)
+
+                    checked_leaders = data[0];
+                    checked_members = data[1];
+                },
+                error: function(data){
+                    console.log(data.responseText);
+                }
+            });
+
+            $.ajax({
+                url: '../controller/project/get_chooseTable.php',
+                data: {state: 'update'},
+                type: 'POST',
+                dataType: "JSON",
+                success: function(data) {
+
+                    console.log(data);
+
+                    //email_list_div.innerHTML += upper_table_content;
+                    leaderss.innerHTML += data[0];
+                    memberss.innerHTML += data[1];
+
+                    $('.leaderCheckup').each(function(){
+                        var val = $(this).val();
+                        if($.inArray(val, checked_leaders) !== -1){
+                            $(this).prop('checked', true);
+                        }
+                    });
+
+                    $('.memberCheckup').each(function(){
+                        var val = $(this).val();
+                        if($.inArray(val, checked_members) !== -1){
+                            $(this).prop('checked', true);
+                        }
+                    });
+
+                },
+                error: function(data){
+                    console.log(data.responseText);
+                }
+            });
+
+            $("#up-proj_name").val(xx[1]);
+            $("#up-budget").val(xx[2]);
+            $("#up-cphases").val(xx[4]);
+            $("#up-phases").val(xx[5]);
+            $("#up-project_notes").val(xx[6]);
+
+            $("#update_block").show();
+            $("#list_block").hide();
+
+            return false;
+        });
+
+        $(document).on('click','#up-finishbtn',function(e){
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            var arr = new Array();
+            var project = pro_info[pro_obj_index];
+
+            arr.push($("#up-proj_name").val());
+            arr.push($("#up-budget").val());
+            arr.push($("#up-phases").val());
+            arr.push($("#up-cphases").val());
+            arr.push($("#up-project_notes").val());
+
+
+                $.ajax({
+                    url: '../controller/project/update_project.php',
+                    data: {pro_info: arr, projectID: project[0], checked_leaders: upchecked_leaders, checked_members: upchecked_members},
+                    type: 'POST',
+                    dataType: "JSON",
+                    success: function(data) {
+                        if(data['error']){
+                            Swal({type: 'error', title: data['error'],
+                                toast: true, position: 'top-right',
+                                showConfirmButton: false, timer: 3000 });
+                        }else{
+                            Swal({type: 'success', title: data['success'],
+                                toast: true, position: 'top-right',
+                                showConfirmButton: false, timer: 3000 });
+                        }
+                    },
+                    error: function(data){
+                        console.log(data);
+                    }
+                });
+
+            return false;
+        });
+
+        $(document).on('click','.leaderCheckup',function(e){
+
+            function itemExistsCheckerL(lboxValue) {
+
+                var len = upchecked_leaders.length;
+                if (len > 0) {
+                    for (var i = 0; i < len; i++) {
+                        if (upchecked_leaders[i] == lboxValue) {
+                            return true;
+                        }
+                    }
+                }
+
+                upchecked_leaders.push(lboxValue);
+
+            }
+
+            $('input[name="leader"]').each(function() {
+
+                var lboxValue = $(this).val();
+                var lboxChecked = localStorage.getItem(lboxValue) == 'true' ? true : false;
+
+                $(this).change(function() {
+
+                    localStorage.setItem(lboxValue, $(this).is(':checked'));
+
+                    if ($(this).is(':checked')) {
+                        itemExistsCheckerL(lboxValue);
+                    } else {
+                        var lboxValueIndex = upchecked_leaders.indexOf(lboxValue);
+                        if (lboxValueIndex >= 0) {
+                            upchecked_leaders.splice( lboxValueIndex, 1 );
+                        }
+                    }
+
+                });
+
+            });
+
+        });
+
+        $(document).on('click','.memberCheckup',function(e){
+
+            function itemExistsCheckerL(mboxValue) {
+                var len = upchecked_members.length;
+                if (len > 0) {
+                    for (var i = 0; i < len; i++) {
+                        if (upchecked_members[i] == mboxValue) {
+                            return true;
+                        }
+                    }
+                }
+                upchecked_members.push(mboxValue);
+            }
+
+            $('input[name="member"]').each(function() {
+
+                var mboxValue = $(this).val();
+                var mboxChecked = localStorage.getItem(mboxValue) == 'true' ? true : false;
+
+                $(this).change(function() {
+
+                    localStorage.setItem(mboxValue, $(this).is(':checked'));
+
+                    if ($(this).is(':checked')) {
+                        itemExistsCheckerL(mboxValue);
+                    } else {
+                        var mboxValueIndex = upchecked_members.indexOf(mboxValue);
+                        if (mboxValueIndex >= 0) {
+                            upchecked_members.splice( mboxValueIndex, 1 );
+                        }
+                    }
+
+                });
+
+            });
+
+        });
+
+    });
+
+</script>

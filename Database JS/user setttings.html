@@ -1,0 +1,673 @@
+<div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary"> Settings </h6>
+</div>
+
+<br>
+<br>
+
+<div id="settingsPage" class="container-fluid">
+    <div class="row">
+      <div class="col-xl-6 col-lg-6">
+          <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Members Types Control</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                      <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                          <div class="dropdown-header">Control Options:</div>
+                              <a class="dropdown-item" href="#" id="ShowAddTypeSettingsBtn">Add</a>
+                              <a class="dropdown-item" href="#" id="ShowListTypeSettingsBtn">List</a>
+                      </div>
+                  </div>
+              </div>
+
+              <div id="AddTypeSettings" class="card-body" style="display: none"></div>
+              <div id="allTypesTable"></div>
+              <div id="update_typeForm"></div>
+          </div>
+      </div>
+
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Control User Types Options</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Control Options:</div>
+                            <a class="dropdown-item" href="#" id="showAddOptionBtn">Add</a>
+                            <a class="dropdown-item" href="#" id="showListOptionBtn">List</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="AddOptionSettings" class="card-body" style="display: none"></div>
+                <div id="allOptionsTable"></div>
+                <div id="update_OptionForm"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+  var typeID;
+  var addparentID;
+  var typesLoaded = 0;
+  var typesAddLoaded = 0;
+
+  $.ajax({
+    url: '../controller/UserTypeControl/List_UserTypes.php',
+    data: {
+      parentID: 0,
+      DisplayType: "single"
+    },
+    type: 'POST',
+    dataType: "JSON",
+    success: function(data) {
+
+      $(data).appendTo("#dropdown-usertype-table1");
+      $(data).appendTo("#dropdown-usertype-insert");
+      // $(data).appendTo("#dropdown-MainUserType");
+      $(data).appendTo("#dropdown-email-table");
+      $(data).appendTo("#dropdown-UserTypes");
+
+    },
+    error: function(data) {
+      console.log(data);
+      $("#errormsg").html(data.responseText);
+    }
+  });
+
+  $(document).on('click', '#ShowAddTypeSettingsBtn', function(e) {
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    if (typesAddLoaded == 0) {
+      $.ajax({
+        url: '../controller/UserTypeControl/AddUserType.php',
+        data: {
+          parentID: 0,
+          condition: "show"
+        },
+        type: 'POST',
+        dataType: "JSON",
+        success: function(data) {
+
+          var div = document.getElementById("AddTypeSettings");
+
+          div.innerHTML += data;
+
+          typesAddLoaded = 1;
+
+        },
+        error: function(data) {
+          console.log(data);
+        }
+      });
+    }
+
+    $("#allTypesTable").hide();
+    $("#update_typeForm").hide();
+    $("#AddTypeSettings").show();
+
+    return false;
+  });
+
+  $(document).on('click', '#ShowListTypeSettingsBtn', function(e) {
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    if (typesLoaded != 1) {
+      listAllTypesTable();
+    }
+
+    $("#AddTypeSettings").hide();
+    $("#allTypesTable").show();
+    $("#update_typeForm").hide();
+
+    return false;
+  });
+
+  $(document).on('click', '#addSubTypeBtn', function(e) { // insert
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    // var form_arr = $('#insertUserSubTypeForm').serialize();
+    // form_arr += '&';
+
+    // var form_arr = $('#TypeName').val();
+    var xyz = document.getElementById("TypeName").value;
+    // console.log(xyz);
+
+    $.ajax({
+      url: "../controller/UserTypeControl/AddUserType.php",
+      type: "POST",
+      dataType: "JSON",
+      data: {
+        condition: 'Add',
+        parentID: addparentID,
+        arr: xyz
+      },
+      success: function(data) {
+
+        if(data['error']){
+            Swal({type: 'error', title: data['error'],
+                toast: true, position: 'top-right',
+                showConfirmButton: false, timer: 3000 });
+        }else{
+            Swal({type: 'success', title: data['success'],
+                toast: true, position: 'top-right',
+                showConfirmButton: false, timer: 3000 });
+                $("#allTypesTable").hide();
+                $("#allTypesTable").empty();
+                listAllTypesTable();
+        }
+        console.log(data);
+        // $("#sucessType_div").css("display", "block");
+
+      },
+      error: function(data) {
+        console.log(data);
+        // $("#errorType_div").css("display", "block");
+        //$("#errormsg").html(data.responseText);
+      }
+    });
+    return false;
+  });
+
+  $(document).on('click', '.dropdown1', function(e) {
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var id = $(this).attr('id');
+    parentID = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
+
+    $.ajax({
+      url: '../controller/UserTypeControl/List_UserTypes.php',
+      data: {
+        parentID: parentID,
+        DisplayType: "single"
+      },
+      type: 'POST',
+      dataType: "JSON",
+      success: function(data) {
+
+        $('#dropdown-usertype-table2').empty();
+        $("#dropdown-usertype-insert2").empty();
+
+        $(data).appendTo("#dropdown-usertype-table2");
+        $(data).appendTo("#dropdown-usertype-insert2");
+
+        $('.t2').show();
+        $('.i2').show();
+
+      },
+      error: function(data) {
+        console.log(data);
+      }
+    });
+    return false;
+  });
+
+  $(document).on('click', '.deleteTypebtn', function(e) {
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var id = $(this).attr('id');
+    typeID = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
+
+    $.ajax({
+      url: '../controller/UserTypeControl/Delete_Type.php',
+      data: {
+        typeID: typeID
+      },
+      dataType: "JSON",
+      type: 'POST',
+      success: function(data) {
+
+        if(data['error']){
+            Swal({type: 'error', title: data['error'],
+                toast: true, position: 'top-right',
+                showConfirmButton: false, timer: 3000 });
+        }else{
+            Swal({type: 'success', title: data['success'],
+                toast: true, position: 'top-right',
+                showConfirmButton: false, timer: 3000 });
+                $("#allTypesTable").hide();
+                $("#allTypesTable").empty();
+                listAllTypesTable();
+                $("#allTypesTable").show();
+        }
+        // $("#sucessType_div").css("display", "block");
+        // notifiy done sucessfully
+      },
+      error: function(data) {
+        console.log(data);
+        // $("#errorType_div").css("display", "block");
+        //$("#errormsg").html(data.responseText);
+      }
+    });
+
+    return false;
+  });
+
+  $(document).on('click', '.updateTypebtn', function(e) {
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    $("#allTypesTable").hide();
+
+    var id = $(this).attr('id');
+    typeID = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
+
+    var typename = $("#typename-" + typeID).text();
+    var parentname = $("#parentname-" + typeID).text();
+
+    var formdiv;
+
+    $.ajax({
+      url: '../controller/UserTypeControl/List_UserTypes.php',
+      data: {
+        parentID: 0,
+        TypeName: typename,
+        ParentName: parentname,
+        DisplayType: "update"
+      },
+      type: 'POST',
+      dataType: "JSON",
+      success: function(data) {
+
+        $("#update_typeForm").empty();
+        $("#allTypesTable").hide();
+        $("#update_typeForm").show();
+
+        formdiv = document.getElementById("update_typeForm");
+
+        formdiv.innerHTML += data;
+
+      },
+      error: function(data) {
+        console.log(data);
+        // $("#errormsg").html(data.responseText);
+      }
+    });
+
+    return false;
+  });
+
+  $(document).on('click', '.EditDropdown', function(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var id = $(this).attr('id');
+    addparentID = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
+
+    if ($("#ParentTypeName").length > 0) {
+      document.getElementById("ParentTypeName").value = $(this).text();
+    }
+    if ($("#AddParentTypeName").length > 0) {
+      document.getElementById("AddParentTypeName").value = $(this).text();
+    }
+
+  });
+
+  $(document).on('click', '#saveTypeChangesBtn', function(e) { // update
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var name = $('#typeName').val();
+
+    console.log(name);
+    console.log(typeID);
+
+    $.ajax({
+      url: "../controller/UserTypeControl/Update_UserTypes.php",
+      type: "POST",
+      data: {
+        typeID: typeID,
+        arr: name,
+        parentID: addparentID
+      },
+      dataType: "JSON",
+      success: function(data) {
+
+        if(data['error']){
+            Swal({type: 'error', title: data['error'],
+                toast: true, position: 'top-right',
+                showConfirmButton: false, timer: 3000 });
+        }else{
+            Swal({type: 'success', title: data['success'],
+                toast: true, position: 'top-right',
+                showConfirmButton: false, timer: 3000 });
+                $("#allTypesTable").hide();
+                $("#allTypesTable").empty();
+                listAllTypesTable();
+        }
+
+        console.log(data);
+        // $("#sucessTypeUpdate_div").css("display", "block");
+      },
+      error: function(data) {
+        console.log(data);
+        // $("#errorTypeUpdate_div").css("display", "block");
+        //$("#errormsg").html(data.responseText);
+      }
+    });
+    return false;
+  });
+
+  function listAllTypesTable() {
+
+    var div = document.getElementById("allTypesTable");
+
+    $.ajax({
+      url: '../controller/UserTypeControl/List_UserTypes.php',
+      data: {
+        parentID: "all",
+        DisplayType: "all"
+      },
+      type: 'POST',
+      dataType: "JSON",
+      success: function(data) {
+
+        div.innerHTML += data;
+        typesLoaded = 1;
+
+      },
+      error: function(data) {
+        console.log(data);
+        $("#errormsg").html(data.responseText);
+      }
+    });
+  }
+
+
+  var optionID;
+  var optionTypeID;
+  var optionsLoaded = 0;
+  var optionsAddLoaded = 0;
+
+  $(document).on('click', '#showAddOptionBtn', function(e) {
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    if (optionsAddLoaded == 0) {
+      $.ajax({
+        url: '../controller/TypeOptionControl/Add_Option.php',
+        data: {
+          condition: "show"
+        },
+        type: 'POST',
+        dataType: "JSON",
+        success: function(data) {
+
+          var div = document.getElementById("AddOptionSettings");
+
+          div.innerHTML += data;
+
+          optionsAddLoaded = 1;
+
+        },
+        error: function(data) {
+          console.log(data);
+        }
+      });
+    }
+
+    $("#allOptionsTable").hide();
+    $("#update_OptionForm").hide();
+    $("#AddOptionSettings").show();
+
+    return false;
+  });
+
+  $(document).on('click', '#showListOptionBtn', function(e) {
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    if (optionsLoaded != 1) {
+      listAllOptionsTable();
+    }
+
+    $("#AddOptionSettings").hide();
+    $("#allOptionsTable").show();
+    $("#update_OptionForm").hide();
+
+    return false;
+  });
+
+  $(document).on('click', '#addOptionBtn', function(e) { // insert
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var optionName = document.getElementById("OptionName").value;
+    var optionType = document.getElementById("OptionTypeName").value;
+
+    $.ajax({
+      url: "../controller/TypeOptionControl/Add_Option.php",
+      type: "POST",
+      dataType: "JSON",
+      data: {
+        condition: "add",
+        OptionName: optionName,
+        OptionType: optionType,
+        OptionTypeID: optionTypeID
+      },
+      success: function(data) {
+
+        if(data['error']){
+            Swal({type: 'error', title: data['error'],
+                toast: true, position: 'top-right',
+                showConfirmButton: false, timer: 3000 });
+        }else{
+            Swal({type: 'success', title: data['success'],
+                toast: true, position: 'top-right',
+                showConfirmButton: false, timer: 3000 });
+                $("#allOptionsTable").hide();
+                $("#allOptionsTable").empty();
+                listAllOptionsTable();
+        }
+
+        console.log(data);
+        // $("#sucessOption_div").css("display", "block");
+
+      },
+      error: function(data) {
+        console.log(data);
+        // $("#errorOption_div").css("display", "block");
+        //$("#errormsg").html(data.responseText);
+      }
+    });
+    return false;
+  });
+
+  $(document).on('click', '.updateOptionbtn', function(e) {
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    $("#allOptionsTable").hide();
+
+    var id = $(this).attr('id');
+    optionID = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
+
+    var optionname = $("#optionname-" + optionID).text();
+    var optiontype = $("#optiontype-" + optionID).text();
+
+    var formdiv;
+
+    $.ajax({
+      url: '../controller/TypeOptionControl/list_TypeOption.php',
+      data: {
+        DisplayType: "update",
+        optionName: optionname,
+        typeName: optiontype
+      },
+      type: 'POST',
+      dataType: "JSON",
+      success: function(data) {
+
+        $("#update_OptionForm").empty();
+        $("#allOptionsTable").hide();
+        $("#update_OptionForm").show();
+
+        formdiv = document.getElementById("update_OptionForm");
+
+        formdiv.innerHTML += data;
+
+      },
+      error: function(data) {
+        console.log(data);
+        $("#errormsg").html(data.responseText);
+      }
+    });
+
+    return false;
+  });
+
+  $(document).on('click', '.deleteOptionbtn', function(e) {
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var id = $(this).attr('id');
+
+    optionID = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
+
+    $.ajax({
+      url: '../controller/TypeOptionControl/Delete_Option.php',
+      data: {
+        optionID: optionID
+      },
+      type: 'POST',
+      dataType: "JSON",
+      success: function(data) {
+
+        if(data['error']){
+            Swal({type: 'error', title: data['error'],
+                toast: true, position: 'top-right',
+                showConfirmButton: false, timer: 3000 });
+        }else{
+            Swal({type: 'success', title: data['success'],
+                toast: true, position: 'top-right',
+                showConfirmButton: false, timer: 3000 });
+                $("#allOptionsTable").hide();
+                $("#allOptionsTable").empty();
+                listAllOptionsTable();
+                $("#allOptionsTable").show();
+        }
+
+        console.log(data);
+        // $("#sucessOption_div").css("display", "block");
+        // notifiy done sucessfully
+      },
+      error: function(data) {
+        console.log(data);
+        // $("#errorOption_div").css("display", "block");
+        //$("#errormsg").html(data.responseText);
+      }
+    });
+    return false;
+  });
+
+  $(document).on('click', '#saveOptionChangesBtn', function(e) { // update
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var name = $('#UpdateOptionName').val();
+    var type = $('#UpdateOptionTypeName').val();
+
+    $.ajax({
+      url: "../controller/TypeOptionControl/Update_Option.php",
+      type: "POST",
+      dataType: "JSON",
+      data: {
+        optionID: optionID,
+        name: name,
+        type: type,
+        typeID: optionTypeID
+      },
+      success: function(data) {
+
+        if(data['error']){
+            Swal({type: 'error', title: data['error'],
+                toast: true, position: 'top-right',
+                showConfirmButton: false, timer: 3000 });
+        }else{
+            Swal({type: 'success', title: data['success'],
+                toast: true, position: 'top-right',
+                showConfirmButton: false, timer: 3000 });
+                $("#allOptionsTable").hide();
+                $("#allOptionsTable").empty();
+                listAllOptionsTable();
+        }
+
+        console.log(data);
+        // $("#sucessOptionUpdate_div").css("display", "block");
+      },
+      error: function(data) {
+        console.log(data);
+        // $("#errorOptionUpdate_div").css("display", "block");
+        //$("#errormsg").html(data.responseText);
+      }
+    });
+    return false;
+  });
+
+  $(document).on('click', '.OptionTypesDropdown', function(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    var id = $(this).attr('id');
+    optionTypeID = id.substr(id.indexOf('-') + 1, id.indexOf('-'));
+
+    if ($("#OptionTypeName").length > 0) {
+      document.getElementById("OptionTypeName").value = $(this).text();
+    }
+    if ($("#UpdateOptionTypeName").length > 0) {
+      document.getElementById("UpdateOptionTypeName").value = $(this).text();
+    }
+
+  });
+
+  function listAllOptionsTable() {
+
+    var div = document.getElementById("allOptionsTable");
+
+    $.ajax({
+      url: '../controller/TypeOptionControl/list_TypeOption.php',
+      data: {
+        DisplayType: "all",
+      },
+      type: 'POST',
+      dataType: "JSON",
+      success: function(data) {
+
+        div.innerHTML += data;
+        optionsLoaded = 1;
+
+      },
+      error: function(data) {
+        console.log(data);
+        $("#errormsg").html(data.responseText);
+      }
+    });
+  }
+
+</script>

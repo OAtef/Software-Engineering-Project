@@ -1,0 +1,155 @@
+body{
+    margin: 0px;
+    background: linear-gradient(30deg,#7b6f00,#FFEB3B);
+    height: 100vh;
+    width: 100vw;
+}
+
+.login{
+    position: relative;
+    top: 15vh;
+    width: 500px;
+    height: auto;
+    margin-left: 25%;
+    margin-right: 25%;
+    padding: 50px;
+    box-shadow: 0 4px 10px black;
+    background-color: white;
+}    
+
+.login div{
+    position: relative;
+    margin: 15px;
+    margin-top: 30px;
+}
+
+.login .logo{
+    width: 200px;
+    height: 150px;
+}
+
+input{
+    position: relative;
+    width: 70%;
+    outline: none;
+    color: #000000;
+    font-size: 18px;
+    padding-left: 8px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+label{
+    position: absolute;
+    left: 70px;
+    top: -9px;
+    font-weight:bold;
+    padding: 10px 0;
+    font-size: 20px;
+    color: #000;
+    pointer-events: none;
+    transition: .5s;
+}
+
+input:focus ~label, input:valid ~label{
+    top: -26px;
+    color: #d2bc37;
+    font-weight: bolder;
+    font-size: 17px;
+}
+
+input:focus, input:valid {
+    border-bottom: 1px solid #c9b230;
+}
+
+button{
+    background-color: transparent;
+    border:1px solid black;
+    width: 140px;
+    height: 40px;
+    border-radius: 8px;
+    margin-top: 25px;
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+}
+
+button:hover{
+    cursor: pointer;
+    background-color: #c9b230;
+    border-color: #c9b230;
+    color: white;
+}
+
+/*Extra small devices (portrait phones, less than 576px)*/
+@media (max-width: 575.98px) { 
+    .login {
+        top: 10vh;
+        width: 70vw;
+        padding: 25px;
+        padding-right: 38px;
+        margin: 0;
+    }
+
+    label {
+        left: 5px;
+        top: -13px;
+    }
+
+    input {
+        width: 100%;
+    }
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    .login {
+        top: 10vh;
+        width: 70vw;
+        padding: 25px;
+        padding-right: 38px;
+        margin: 0;
+        margin-bottom: 30px;
+    }
+
+    label {
+        left: 5px;
+        top: -13px;
+    }
+
+    input {
+        width: 100%;
+    }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) and (max-width: 991.98px) { 
+    .login {
+        top: 10vh;
+        width: 70vw;
+        padding: 25px;
+        padding-right: 38px;
+        margin: 0;
+        margin-bottom: 30px;
+    }
+
+    label {
+        left: 5px;
+        top: -13px;
+    }
+
+    input {
+        width: 100%;
+    }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) { 
+
+}

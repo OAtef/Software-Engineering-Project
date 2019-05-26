@@ -1,0 +1,535 @@
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background-color: transparent !important;
+    background-image: none !important;
+    color: rgb(0, 0, 0) !important;
+}
+
+a:hover{
+    cursor: pointer !important;
+}
+
+#img-shape img{
+    border-radius: 50%;
+}
+
+nav#sidebar .avatar {
+    min-width: 70px;
+    max-width: 100px;
+    min-height: 70px;
+    max-height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+    padding: 7px;
+}
+
+.avatar img{
+    width: 50px;
+    height: 50px;
+}
+
+nav#sidebar .sidebar-header {
+    padding: 20px 20px;
+}
+
+.add-duration{
+    font-size: 36px;
+    padding-right: 9px;
+    top: 6px;
+    color: #34d834;
+}
+
+.remove-duration{
+    font-size: 42px;
+    top: 5px;
+    width: 20%;
+    left: -10px;
+    color: red;
+}
+
+.add-duration:hover, .remove-duration:hover{
+    cursor: pointer;
+}
+
+/* Tooltip container */
+.container-hover {
+    position: relative;
+    display: inline-block;
+    /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.container-hover .container-hover-text {
+    visibility: hidden;
+    width: 128px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    z-index: 1;
+    bottom: 64%;
+    left: 65%;
+    margin-left: -60px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.container-hover .container-hover-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.container-hover:hover .container-hover-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.work-lbl{
+    font-weight: 600;
+    font-size: 1.25rem;
+    white-space: nowrap;
+}
+
+.duration-lbl{
+    font-weight: 500;
+    font-size: 1.2rem;
+    white-space: nowrap;
+}
+
+.add-duration .container-hover-text{
+    left: 28px;
+    bottom: 81%;
+    width: 115px;
+}
+
+.btn-img-responsive{
+    white-space: nowrap;
+    margin-right: 15%;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+.todo input {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.todo .addBtn {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.form-photo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 25px;
+    background-color: white;
+}
+
+.form-name{
+    font-size: 25px;
+}
+
+.form-title{
+    margin-bottom: 50px;
+}
+
+.dose-info-table tr:hover{
+    cursor: auto;
+    background-color: white;
+    color: black;
+}
+
+.editbtn, .reserve-btn{
+    border-radius: 2px;
+    border-color: #57a847 !important;
+    border-style: solid;
+}
+
+.editbtn:hover, .reserve-btn:hover{
+    border-radius: 2px;
+    border-color: #57a847;
+    border-style: solid;
+    background-color: #57a847;
+    box-shadow: 0 4px 10px black;
+}
+
+.btn-del{
+    border-radius: 2px;
+    border-color: #dc3545 !important;
+    border-style: solid;
+}
+
+.btn-del:hover{
+    border-radius: 2px;
+    border-color: #dc3545;
+    border-style: solid;
+    background-color: #dc3545;
+    box-shadow: 0 4px 10px black;
+}
+
+table tbody .selected{
+    color: white;
+    border-top-color: white;
+}
+
+.left-duration:before{
+    content: '\f104';
+    display: inline-block;
+    font-family: 'FontAwesome';
+    color: white;
+    position: relative;
+    margin-right:5px;
+}
+
+.right-duration:after{
+    content: '\f104';
+    display: inline-block;
+    transform:rotateZ(180deg);
+    font-family: 'FontAwesome';
+    color: white;
+    position: relative;
+    margin-left:5px;
+    top:2px;
+}
+
+.left-duration:hover:before{
+    right:7px;
+}
+
+.right-duration:hover:after{
+    left:7px;
+}
+
+.dashboard-counts{
+    padding-top: 11px;
+    position: relative;
+}
+
+.dashboard-counts .count-title span{
+    font-size:0.8em;
+    color:#aaa;
+    display:block;
+}
+
+.dashboard-counts .count-title i{
+    font-size:1.5em;
+}
+.dashboard-counts .icon{
+    margin-right:10px;
+}
+
+.dashboard-counts strong{
+    font-size:0.9em;
+    font-weight:500;
+    color:#555;
+    display:block
+}
+
+.dashboard-counts .count-number{
+    font-size:2.2em;
+    font-weight:300;
+}
+
+@media (max-width: 991px){
+    .dashboard-counts div[class*='col-']{
+        margin-bottom:20px;
+    }
+}
+
+@media (min-width: 768px){
+    .dashboard-counts strong{
+        font-size:1em;
+    }
+    .dashboard-counts span{
+        font-size:0.9em;
+    }
+    .dashboard-counts .count-number{
+        font-size:3em;
+    }
+}
+
+.reservation-section:hover{
+    cursor: pointer;
+    border-bottom-width: 5px;
+    border-bottom-style: dotted;
+}
+
+.reservation-section-active, .reservation-section-active:hover{
+    border-bottom-width: 5px;
+    border-bottom-style: solid;
+}
+
+.card{
+    border: none;
+    border-radius: 6px;
+}
+
+#card-header{
+    border-radius: 6px;
+}
+
+.card-body{
+    background-color: white;
+    color: #000b0c;
+    border-radius: 6px;
+    margin: 3px;
+}
+
+.info-label{
+    font-weight: bold;
+}
+
+.visit-status{
+    color: white;
+    padding: 3px;
+    width: 90px;
+    text-align: center;
+}
+
+.Waiting{
+    background-color: red;
+}
+
+.Finished{
+    background-color: #27b532;
+}
+
+.Postponed{
+    background-color: #FF9800;
+    color: white;
+    border: none;
+}
+
+.Inside{
+    background-color: #0842d4;
+}
+
+.row-finished{
+    text-decoration: line-through;
+}
+
+.input-bar{
+    box-shadow: 0 4px 10px;
+    text-align: center;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    background-color: #ffffff;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+    z-index: 1;
+}
+
+.input-bar ul{
+    margin: 0;
+    padding: 0;
+}
+
+.input-bar ul li{
+    list-style-type: none;
+    padding: 5px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    color: #330202;
+    font-weight: bold;
+    display: inline-flex;
+    border-bottom: 5px solid #ffffff;
+    border-top: 5px solid #ffffff;
+}
+
+.input-bar ul li:hover{
+    cursor: pointer;
+    transition: all 1s;
+}
+
+.input-div{
+    padding-right: 13px;
+    box-shadow: 0 4px 10px #2e3035;
+    padding-left: 13px;
+    padding-top: 15px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.input-div .section-footer{
+    padding-top: 10px;
+    height: 48px;
+    padding-bottom: 0px;
+    color: black;
+    border-bottom-right-radius: 10px;
+    position: relative;
+}
+
+/* The switch - the box around the slider */
+.section-footer .switch {
+    position: relative;
+    display: inline-block;
+    width: 55px;
+    height: 27px;
+}
+
+/* Hide default HTML checkbox */
+.section-footer .switch input {
+    display:none;
+}
+
+/* The slider */
+.section-footer .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.section-footer .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.section-footer input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.section-footer .slider.round {
+    border-radius: 34px;
+}
+
+.section-footer .slider.round:before {
+    border-radius: 50%;
+}
+
+.slider-label{
+    font-size: 18px;
+    position: relative;
+    font-weight: bold;
+}
+
+.is-required{
+    position: relative;
+    right: -15px;
+}
+
+.add-option{
+    font-size: 36px;
+    position: relative;
+    padding-right: 9px;
+    top: -9px;
+    left: -5px;
+    color: #34d834;
+}
+
+.remove-option{
+    font-size: 42px;
+    position: relative;
+    top: -15px;
+    width: 20%;
+    left: 5px;
+    color: red;
+}
+
+.add-option .container-hover-text{
+    bottom: 90%;
+    left: 19%;
+}
+
+.add-option:hover, .remove-option:hover{
+    cursor: pointer;
+}
+
+.checkbox-div{
+    height: 40px;
+}
+
+.generate-medicine-selected{
+    text-decoration: line-through;
+}
+
+.medicine-table-form{
+    margin-bottom: 25px;
+}
+
+.loader{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    top: 16vh;
+    margin: 100px auto;
+    -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+    animation: sk-rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-rotateplane {
+    0% { -webkit-transform: perspective(120px) }
+    50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+    100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+
+@keyframes sk-rotateplane {
+    0% { 
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
+    } 50% { 
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
+    } 100% { 
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    }
+}
+
+.tr-extra-data:hover{
+    background-color: transparent !important;
+    cursor: default !important;
+    color: black !important;
+}
+
+.swal2-radio.blocking-options{
+    display: block !important;
+}
+
+.blocking-options label{
+    display: block !important;
+    padding: 0 14% !important;
+    margin: 0 !important;
+    margin-bottom: 0.5rem !important;
+}

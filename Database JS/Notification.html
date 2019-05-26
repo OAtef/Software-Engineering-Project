@@ -1,0 +1,328 @@
+    <style type="text/css">
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+        }
+        .table-wrapper {
+            background: #fff;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+        .table-title {
+            padding-bottom: 10px;
+            margin: 0 0 10px;
+        }
+        .table-title h2 {
+            margin: 8px 0 0;
+            font-size: 22px;
+        }
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+        }
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        table.table td:last-child {
+            width: 130px;
+        }
+        table.table td a {
+            display: inline-block;
+            margin: 0 5px;
+        }
+        table.table td a.view {
+            color: #03A9F4;
+        }
+        table.table td a.edit {
+            color: #FFC107;
+        }
+        table.table td a.delete {
+            color: #E34724;
+        }
+        table.table td i {
+            font-size: 19px;
+        }
+    </style>
+
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"> Manual Mailing </h6>
+    </div>
+
+    <div class='card-body'>
+        <div class="row dropboxes">        
+            <div id='dropbox_block5' style="display: inline; margin-left: 20px; margin-bottom: 15px"> </div>
+            <div id='dropbox_block6' style="display: inline; margin-left: 50px; margin-bottom: 15px"> </div>
+        </div>
+    </div>
+
+    <div id='email_list_block'></div>
+    
+    <div id='email_send_block'>
+        <a href="#" style="margin-bottom: 10px;margin-left: 5px;" class="btn btn-primary btn-icon-split" id='back_to_email_list'>
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-left"></i>
+            </span>
+            <span class="text">Back</span>
+        </a>
+        <br>
+        <form method="post" id="reused_form">
+            <label for="subject">Subject</label>
+            <input id="subject" type="text" name="subject" maxlength="50" required>
+            <br>
+            <label for="message">Message:</label>
+            <textarea id="message" name="Message" rows="10" maxlength="800" style="width:100%" required></textarea>
+            <br>
+            <br>
+            <a href="#" class="btn btn-facebook btn-block" id="SendEmailBtn"> Send</a>
+        </form>
+    </div>
+
+    <script>
+
+        var parentID;
+        var choosen_usertype;
+        var emails = [];
+        var pnumbers = [];
+        var cboxArray = [];
+
+        $('#email_list_block').hide();
+        $('#email_send_block').hide();
+
+        $.ajax({
+            url: '../controller/user/list_usertypes.php',
+            data: { parentID: 0 },
+            type: 'POST',
+            dataType: "JSON",
+            success: function(data) {
+                console.log(data);
+
+                var dropdown = "<div class='dropdown'>";
+                dropdown += "<button style=' display: inline-block;width: 120px;' class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'> Choose <span class='caret'></span></button>";
+                dropdown += "<ul class='dropdown-menu'>";
+
+                for (var key in data) {
+                    dropdown += '<li><a style="width: 100%;" class="dropdown5" id="link-' + key + '">' + data[key] + '</a></li>';
+                }
+                $(dropdown).appendTo("#dropbox_block5");
+
+
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+
+        $(document).on('click','.dropdown5',function(e){
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            var id = $(this).attr('id');
+            parentID = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+            $.ajax({
+                url: '../controller/user/list_usertypes.php',
+                data: { parentID: parentID },
+                type: 'POST',
+                dataType: 'JSON',
+                success: function(data){
+
+                    if(data != null){
+
+                        $("#dropbox_block6").hide();
+                        $("#dropbox_block6").empty();
+
+                        $('#email_list_block').hide();
+
+
+                        var dropdown = "<div class='dropdown'>";
+                        dropdown += "<button style=' display: inline-block;width: 120px;' class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'> Choose <span class='caret'></span></button>";
+                        dropdown += "<ul class='dropdown-menu'>";
+
+                        for (var key in data) {
+                            dropdown += '<li><a style="width: 100%;" class="dropdown6" id="link-' + key + '">' + data[key] + '</a></li>';
+                        }
+
+                        $(dropdown).appendTo("#dropbox_block6");
+
+
+                        $('#dropbox_block6').show();
+                    }
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+            return false;
+        });
+
+        $(document).on('click','.dropdown6',function(e){
+            
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            var id = $(this).attr('id');
+            choosen_usertype = id.substr(id.indexOf('-')+1, id.indexOf('-'));
+
+            $('#email_list_block').hide();
+            $('#email_list_block').empty();
+            
+            var email_list_div = document.getElementById("email_list_block");
+
+            $.ajax({
+                url: 'classes/user_email_form.php',
+                data: {parentID: parentID, usertypeID: choosen_usertype},
+                type: 'POST',
+                dataType: "JSON",
+                success: function(data) {
+                        emails = data[0];
+                        pnumbers = data[1];
+                        email_list_div.innerHTML += data[2];
+                        email_list_div.innerHTML += '<br>'+
+                            '<a href="#" class="btn btn-primary btn-icon-split" id="tosendform" style="display: inline; float: right;margin-right: 20px;">'+
+                            '<span class="icon text-white-50">'+
+                            '<i class="fas fa-arrow-right"></i>'+
+                            ' </span>'+
+                            '<span class="text">write email</span>'+
+                            '</a>';
+
+                        $('#email_list_block').show();
+                        $('table.table').dataTable();
+
+                },
+                error: function(data){
+                    console.log(data.responseText);
+                }
+            });
+        });
+
+        $(document).on('click','#tosendform',function(e){ // SAVE THE SELECTED EMAILS IN AN ARRAY
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            $(".dropboxes").hide();
+            $("#email_list_block").hide();
+            $("#email_send_block").show();
+
+                return false;      
+        });
+
+        $(document).on('click','#back_to_email_list',function(e){
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            $(".dropboxes").show();
+            $("#email_list_block").show();
+            $("#email_send_block").hide();
+
+                return false;      
+        });
+
+        $(document).on('click','#SendEmailBtn',function(e){
+            
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            var subject = $('#subject').val();
+            var message = $('#message').val();
+
+            var notify_emails = [];
+            var notify_numbers = [];
+
+            var index = 0;
+            for (var key in emails) {
+
+                if(index < cboxArray.length){
+
+                    notify_emails[index] = emails[cboxArray[index]];
+                    notify_numbers[index] = pnumbers[cboxArray[index]];
+                    index ++;
+                }
+            }
+
+            $.ajax({
+                url: '../controller/notification/manual.php',
+                data: {emails: notify_emails, numbers: notify_numbers, subject: subject, message: message},
+                type: 'POST',
+                dataType: "JSON",
+                success: function(data) {
+                    if(data['error']){
+                        Swal({type: 'error', title: data['error'],
+                            toast: true, position: 'top-right',
+                            showConfirmButton: false, timer: 3000 });
+                    }else{
+                        Swal({type: 'success', title: data['success'],
+                            toast: true, position: 'top-right',
+                            showConfirmButton: false, timer: 3000 });
+                    }
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+        });
+
+        $(document).on('click','.checkboxClass',function(e){
+
+            function itemExistsChecker(cboxValue) {
+                
+                var len = cboxArray.length;           
+                if (len > 0) {
+                    for (var i = 0; i < len; i++) {
+                        if (cboxArray[i] == cboxValue) {
+                            return true;
+                        }
+                    }
+                }
+                        
+                cboxArray.push(cboxValue);
+
+            }
+
+            $('input[type="checkbox"]').each(function() {
+
+                var cboxValue = $(this).val();
+                var cboxChecked = localStorage.getItem(cboxValue) == 'true' ? true : false;
+
+                // On checkbox change add/remove the vehicle value from the array based on the choice
+                $(this).change(function() {
+                    
+                    localStorage.setItem(cboxValue, $(this).is(':checked'));
+                        
+                    if ($(this).is(':checked')) {
+
+                    itemExistsChecker(cboxValue);
+
+                    } else {
+
+                    // Delete the vehicle value from the array if its checkbox is unchecked
+                    var cboxValueIndex = cboxArray.indexOf(cboxValue);
+                    
+                    if (cboxValueIndex >= 0) {
+                        cboxArray.splice( cboxValueIndex, 1 );
+                    }
+                            
+                    }
+                        
+                    //console.log(cboxArray);
+                        
+                });
+            
+            });
+
+        });
+
+
+
+    </script>
